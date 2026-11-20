@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.introduccion",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "introduccion",
+  "titulo": "Introducción",
+  "descripcion": "La introducción es un mapa: dice adónde va el lector y por qué le importa.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

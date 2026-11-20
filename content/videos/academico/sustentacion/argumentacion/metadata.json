@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.sustentacion.argumentacion",
+  "area": "academico",
+  "categoria": "sustentacion",
+  "subtema": "argumentacion",
+  "titulo": "Argumentación",
+  "descripcion": "Argumentar es mostrar por qué tus decisiones tenían sentido.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

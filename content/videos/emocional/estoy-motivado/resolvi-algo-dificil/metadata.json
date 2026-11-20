@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-motivado.resolvi-algo-dificil",
+  "area": "emocional",
+  "categoria": "estoy-motivado",
+  "subtema": "resolvi-algo-dificil",
+  "titulo": "Resolví algo difícil",
+  "descripcion": "Detente a reconocer lo que lograste: lo que aprendiste te servirá en el próximo reto.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

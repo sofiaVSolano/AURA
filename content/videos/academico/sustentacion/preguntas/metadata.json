@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.sustentacion.preguntas",
+  "area": "academico",
+  "categoria": "sustentacion",
+  "subtema": "preguntas",
+  "titulo": "Preguntas del jurado",
+  "descripcion": "Las preguntas del jurado son una conversación, no un ataque.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

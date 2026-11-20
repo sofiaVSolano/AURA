@@ -1,0 +1,83 @@
+.halo {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Cuadrado centrado y mayor que la escena: las formas orgánicas quedan completas
+   y el recorte lo hace el borde de la escena, no el SVG. */
+.formas {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  width: max(130%, 56rem);
+  height: auto;
+  aspect-ratio: 1;
+  /* Paralaje: el contenedor puede definir --px/--py (-1…1) según el puntero */
+  translate: calc(-50% + var(--px, 0) * -26px) calc(-50% + var(--py, 0) * -18px);
+  transition: translate 900ms var(--ease-salida);
+}
+
+.forma1 {
+  fill: var(--morado-800);
+  opacity: 0.55;
+}
+
+.forma2 {
+  fill: var(--violeta-600);
+  opacity: 0.35;
+}
+
+/* El foco de luz cálida detrás del contenido */
+.luz {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 8%;
+  margin-inline: auto;
+  width: min(120vw, 46rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(227 243 249 / 0.32) 0%,
+    rgb(191 163 241 / 0.22) 38%,
+    rgb(191 163 241 / 0) 70%
+  );
+  translate: calc(var(--px, 0) * 18px) calc(var(--py, 0) * 12px);
+  transition: translate 700ms var(--ease-salida);
+}
+
+/* Momento de autor: el halo se abre una vez (clip-path circular) */
+.abrir .luz {
+  animation: abrir-halo var(--dur-autor) var(--ease-entrada) 120ms both;
+}
+
+.abrir .formas {
+  animation: asentar calc(var(--dur-autor) * 1.4) var(--ease-entrada) both;
+}
+
+@keyframes abrir-halo {
+  from {
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0.4;
+  }
+  to {
+    clip-path: circle(50% at 50% 50%);
+    opacity: 1;
+  }
+}
+
+@keyframes asentar {
+  from {
+    transform: scale(1.04) rotate(-2deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .abrir .luz,
+  .abrir .formas {
+    animation: none;
+  }
+}

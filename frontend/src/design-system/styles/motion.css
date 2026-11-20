@@ -1,0 +1,89 @@
+/* ==========================================================================
+   AURA · Motion global
+   - Transiciones de vista (View Transitions API) entre rutas.
+   - Textura de grano (estática).
+   - Ruta de movimiento reducido.
+   Principios y tiempos: docs/09-sistema-de-diseno.md § Motion.
+   ========================================================================== */
+
+/* — Cambio de vista: fundido con desenfoque breve; nunca bloquea la interacción — */
+::view-transition-old(root) {
+  animation: vista-sale var(--dur-media) var(--ease-salida) both;
+}
+
+::view-transition-new(root) {
+  animation: vista-entra var(--dur-vista) var(--ease-entrada) both;
+}
+
+/* La esfera de AURA viaja entre Inicio y Mi AURA como elemento compartido */
+::view-transition-group(esfera-aura) {
+  animation-duration: var(--dur-vista);
+  animation-timing-function: var(--ease-movimiento);
+}
+
+@keyframes vista-sale {
+  to {
+    opacity: 0;
+    filter: blur(3px);
+  }
+}
+
+@keyframes vista-entra {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: scale(0.996);
+  }
+}
+
+/* — Grano tipo impresión (estático, decorativo, nunca sobre texto pequeño sin contraste) — */
+.textura-grano {
+  position: relative;
+  isolation: isolate;
+}
+
+.textura-grano::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--grano-opacidad);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.4 -0.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  mix-blend-mode: multiply;
+}
+
+[data-ambito='emocional'] .textura-grano::after,
+[data-ambito='mi-aura'] .textura-grano::after,
+.textura-grano:is([data-ambito='emocional'], [data-ambito='mi-aura'])::after {
+  mix-blend-mode: screen;
+  filter: invert(1);
+}
+
+/* — Movimiento reducido: se conservan los cambios de estado (opacidad, color),
+     se elimina el desplazamiento espacial y los bucles — */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--dur-instante);
+    animation-name: vista-fundido;
+  }
+
+  ::view-transition-group(esfera-aura) {
+    animation-duration: 0s;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes vista-fundido {
+  from {
+    opacity: 0;
+  }
+}

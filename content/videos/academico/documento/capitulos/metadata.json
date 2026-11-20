@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.capitulos",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "capitulos",
+  "titulo": "Capítulos",
+  "descripcion": "Cada capítulo debería responder una pregunta que el lector ya se hizo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

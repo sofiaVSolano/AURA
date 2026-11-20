@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "id": "general",
+  "nombre": "Ruta general del proyecto de grado",
+  "nota": "Esta ruta es orientativa. Cada institución, disciplina y modalidad organiza el proyecto a su manera, y casi ningún proyecto avanza en línea recta: puedes empezar por donde lo necesites y volver cuando quieras.",
+  "etapas": [
+    {
+      "id": "planteamiento",
+      "titulo": "Planteamiento",
+      "descripcion": "Dar forma a la idea: qué te inquieta, qué problema hay detrás y qué quieres preguntar.",
+      "temas": [
+        { "id": "idea", "titulo": "La idea", "resumen": "De una inquietud o interés a un tema que se pueda trabajar." },
+        { "id": "problema", "titulo": "Planteamiento del problema", "resumen": "Describir la situación, sus causas, sus consecuencias y sus límites." },
+        { "id": "pregunta", "titulo": "Pregunta de investigación", "resumen": "Convertir el problema en una pregunta clara y abordable." },
+        { "id": "justificacion", "titulo": "Justificación", "resumen": "Explicar por qué vale la pena y para quién." }
+      ]
+    },
+    {
+      "id": "diseno",
+      "titulo": "Diseño",
+      "descripcion": "Decidir qué vas a lograr, hasta dónde llegarás y cómo lo harás.",
+      "temas": [
+        { "id": "objetivos", "titulo": "Objetivos", "resumen": "Qué vas a lograr, expresado de forma observable y coherente." },
+        { "id": "alcance", "titulo": "Alcance", "resumen": "Qué incluye y qué no incluye tu proyecto." },
+        { "id": "antecedentes", "titulo": "Antecedentes", "resumen": "Qué se ha hecho antes y en qué se diferencia tu trabajo." },
+        { "id": "marco-teorico", "titulo": "Marco teórico", "resumen": "Los conceptos y teorías que sostienen tu trabajo." },
+        { "id": "metodologia", "titulo": "Metodología", "resumen": "Cómo vas a obtener y analizar la información." }
+      ]
+    },
+    {
+      "id": "desarrollo",
+      "titulo": "Desarrollo",
+      "descripcion": "Llevar el plan a la práctica y obtener resultados.",
+      "temas": [
+        { "id": "planificacion", "titulo": "Planificación", "resumen": "Organizar tareas, tiempos y entregas de forma realista." },
+        { "id": "implementacion", "titulo": "Implementación o trabajo de campo", "resumen": "Construir, aplicar o recoger lo que planeaste." },
+        { "id": "experimentacion", "titulo": "Experimentación", "resumen": "Probar, medir y ajustar con método." },
+        { "id": "datos-y-resultados", "titulo": "Datos y resultados", "resumen": "Organizar lo obtenido y presentarlo con claridad." }
+      ]
+    },
+    {
+      "id": "documento",
+      "titulo": "Documento",
+      "descripcion": "Escribir el trabajo para que otras personas lo entiendan y lo valoren.",
+      "temas": [
+        { "id": "resumen", "titulo": "Resumen", "resumen": "El trabajo completo en pocas líneas: propósito, método, resultados y conclusión." },
+        { "id": "abstract", "titulo": "Abstract", "resumen": "La versión en inglés del resumen, con sus particularidades." },
+        { "id": "introduccion", "titulo": "Introducción", "resumen": "Situar al lector y anticipar el recorrido del documento." },
+        { "id": "capitulos", "titulo": "Capítulos", "resumen": "Organizar el contenido para que avance con lógica." },
+        { "id": "discusion", "titulo": "Discusión", "resumen": "Interpretar los resultados y conversar con otros trabajos." },
+        { "id": "conclusiones", "titulo": "Conclusiones", "resumen": "Responder a los objetivos con lo que realmente encontraste." },
+        { "id": "referencias", "titulo": "Referencias", "resumen": "Reconocer las fuentes con el estilo que pide tu institución." },
+        { "id": "anexos", "titulo": "Anexos", "resumen": "Material de apoyo que no cabe en el cuerpo del documento." }
+      ]
+    },
+    {
+      "id": "sustentacion",
+      "titulo": "Sustentación",
+      "descripcion": "Presentar y conversar sobre lo que construiste.",
+      "temas": [
+        { "id": "estructura", "titulo": "Estructura de la presentación", "resumen": "Un hilo que lleve de la pregunta a los aportes." },
+        { "id": "diapositivas", "titulo": "Diapositivas", "resumen": "Apoyos visuales que acompañan, no que repiten." },
+        { "id": "argumentacion", "titulo": "Argumentación", "resumen": "Sostener tus decisiones con evidencia." },
+        { "id": "preguntas", "titulo": "Preguntas del jurado", "resumen": "Prepararte para conversar, no para defenderte." },
+        { "id": "manejo-del-tiempo", "titulo": "Manejo del tiempo", "resumen": "Distribuir el tiempo para decir lo importante." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.me-siento-perdido.que-espera-mi-director",
+  "area": "emocional",
+  "categoria": "me-siento-perdido",
+  "subtema": "que-espera-mi-director",
+  "titulo": "No entiendo qué espera mi director",
+  "descripcion": "Preguntar también es avanzar: llevar dudas concretas a tu director o directora facilita la conversación.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

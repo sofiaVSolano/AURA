@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "id": "planteamiento",
+  "titulo": "Laboratorio de planteamiento del problema",
+  "descripcion": "Distingue las piezas de un planteamiento y reconoce qué hace que un problema sea investigable.",
+  "tema": "problema",
+  "actividades": [
+    {
+      "tipo": "clasificar",
+      "id": "piezas",
+      "titulo": "Reconoce cada pieza",
+      "consigna": "Indica qué función cumple cada fragmento dentro del planteamiento.",
+      "categorias": [
+        { "id": "contexto", "nombre": "Contexto" },
+        { "id": "situacion", "nombre": "Situación problemática" },
+        { "id": "causas", "nombre": "Causas" },
+        { "id": "consecuencias", "nombre": "Consecuencias" },
+        { "id": "delimitacion", "nombre": "Delimitación" }
+      ],
+      "items": [
+        { "id": "a", "texto": "En la plaza de mercado del barrio trabajan cerca de 80 vendedores de frutas y verduras.", "categoria": "contexto", "explicacion": "Es contexto: describe dónde y con quiénes ocurre la situación." },
+        { "id": "b", "texto": "Cada semana se desecha alrededor de una tonelada de alimentos aún aptos para el consumo.", "categoria": "situacion", "explicacion": "Es la situación problemática: lo que ocurre y no debería, con un dato de magnitud." },
+        { "id": "c", "texto": "Los vendedores no cuentan con espacios refrigerados ni con canales para donar los excedentes.", "categoria": "causas", "explicacion": "Son causas: explican por qué ocurre el desperdicio." },
+        { "id": "d", "texto": "Esto genera pérdidas económicas para los vendedores y residuos que saturan el sistema de recolección.", "categoria": "consecuencias", "explicacion": "Son consecuencias: muestran qué provoca la situación." },
+        { "id": "e", "texto": "Este trabajo se centra en los vendedores de frutas de la plaza durante el segundo semestre de 2026.", "categoria": "delimitacion", "explicacion": "Es delimitación: precisa qué parte del problema, dónde y cuándo." }
+      ]
+    },
+    {
+      "tipo": "elegir",
+      "id": "investigable",
+      "titulo": "¿Cuál es más investigable?",
+      "consigna": "En cada par, elige el planteamiento que permite investigar mejor.",
+      "preguntas": [
+        {
+          "id": "p1",
+          "enunciado": "¿Cuál plantea mejor un problema?",
+          "opciones": [
+            { "id": "a", "texto": "No existe una aplicación para gestionar turnos en el hospital.", "adecuada": false, "explicacion": "Describe la ausencia de una solución, no el problema que viven las personas." },
+            { "id": "b", "texto": "Los pacientes esperan en promedio tres horas para ser atendidos y muchos abandonan la sala sin consulta.", "adecuada": true, "explicacion": "Describe una situación concreta y medible que afecta a personas." }
+          ]
+        },
+        {
+          "id": "p2",
+          "enunciado": "¿Cuál está mejor delimitado?",
+          "opciones": [
+            { "id": "a", "texto": "La contaminación del agua en el país.", "adecuada": false, "explicacion": "Es demasiado amplio para un proyecto de grado: no precisa lugar, periodo ni aspecto." },
+            { "id": "b", "texto": "La presencia de coliformes en el agua de tres quebradas del municipio durante la temporada de lluvias.", "adecuada": true, "explicacion": "Precisa qué se mide, dónde y cuándo; se puede investigar con recursos realistas." }
+          ]
+        }
+      ]
+    }
+  ]
+}

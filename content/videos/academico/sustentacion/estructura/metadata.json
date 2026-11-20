@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.sustentacion.estructura",
+  "area": "academico",
+  "categoria": "sustentacion",
+  "subtema": "estructura",
+  "titulo": "Estructura de la presentación",
+  "descripcion": "Una presentación es una historia: problema, camino y hallazgo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

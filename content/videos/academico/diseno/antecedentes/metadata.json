@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.diseno.antecedentes",
+  "area": "academico",
+  "categoria": "diseno",
+  "subtema": "antecedentes",
+  "titulo": "Antecedentes",
+  "descripcion": "Los antecedentes no son una lista de lecturas: muestran el hueco que tu trabajo viene a llenar.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

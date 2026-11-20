@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.tengo-miedo.hablar-en-publico",
+  "area": "emocional",
+  "categoria": "tengo-miedo",
+  "subtema": "hablar-en-publico",
+  "titulo": "Hablar en público",
+  "descripcion": "Sentir nervios antes de hablar es una reacción del cuerpo, no una prueba de que no estás preparado o preparada.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

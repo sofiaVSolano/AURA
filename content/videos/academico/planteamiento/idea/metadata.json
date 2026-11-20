@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.planteamiento.idea",
+  "area": "academico",
+  "categoria": "planteamiento",
+  "subtema": "idea",
+  "titulo": "La idea",
+  "descripcion": "Una buena idea suele nacer de algo que te inquieta en tu entorno, no de un tema de moda.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

@@ -1,0 +1,20 @@
+.encabezado {
+  display: grid;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-7) var(--espacio-6);
+}
+
+.titulo {
+  font-size: var(--texto-3xl);
+  max-width: 16ch;
+}
+
+.intro {
+  max-width: 58ch;
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+}
+
+.intro > * + * {
+  margin-top: var(--espacio-3);
+}

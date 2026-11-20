@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-desmotivado.perdi-el-proposito",
+  "area": "emocional",
+  "categoria": "estoy-desmotivado",
+  "subtema": "perdi-el-proposito",
+  "titulo": "Perdí el propósito",
+  "descripcion": "Recordar por qué empezaste, o descubrir un motivo nuevo, puede reconectarte con tu proyecto.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

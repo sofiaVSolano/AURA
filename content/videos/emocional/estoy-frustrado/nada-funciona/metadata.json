@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-frustrado.nada-funciona",
+  "area": "emocional",
+  "categoria": "estoy-frustrado",
+  "subtema": "nada-funciona",
+  "titulo": "Nada funciona",
+  "descripcion": "Cuando todo parece fallar, detenerte un momento a ver qué sí funcionó puede cambiar tu perspectiva.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

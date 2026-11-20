@@ -1,0 +1,183 @@
+.onboarding {
+  display: grid;
+  gap: var(--espacio-4);
+  min-height: calc(100dvh - 60px);
+  padding-block: var(--espacio-5) var(--espacio-7);
+}
+
+@media (min-width: 56rem) {
+  .onboarding {
+    grid-template-columns: 5fr 6fr;
+    align-items: center;
+    gap: var(--espacio-8);
+  }
+}
+
+/* — Vista previa viva — */
+.vista {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-2);
+}
+
+.vista svg {
+  width: min(52vw, 260px);
+  height: auto;
+}
+
+@media (min-width: 56rem) {
+  .vista {
+    position: sticky;
+    top: 96px;
+  }
+
+  .vista svg {
+    width: min(30vw, 340px);
+  }
+}
+
+.leyendaVista {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  text-align: center;
+  min-height: 1.6em;
+}
+
+/* — Panel de pasos — */
+.panel {
+  display: grid;
+  gap: var(--espacio-5);
+  max-width: 36rem;
+}
+
+.progreso {
+  display: flex;
+  gap: var(--espacio-2);
+  padding: 0;
+  list-style: none;
+}
+
+.punto {
+  height: 6px;
+  flex: 1;
+  border-radius: var(--radio-pildora);
+  background: var(--color-borde);
+  overflow: hidden;
+  position: relative;
+}
+
+.punto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-acento);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-vista) var(--ease-entrada);
+}
+
+.punto[data-estado]::after {
+  transform: scaleX(1);
+}
+
+.punto[data-estado='actual']::after {
+  background: linear-gradient(90deg, var(--color-acento), var(--violeta-200));
+}
+
+/* Cada paso entra desde la dirección del avance */
+.paso {
+  --dir: 1;
+  display: grid;
+  gap: var(--espacio-5);
+  animation: entrar var(--dur-vista) var(--ease-entrada) both;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateX(calc(var(--dir) * 28px));
+    filter: blur(4px);
+  }
+}
+
+.titulo {
+  font-size: var(--texto-2xl);
+  outline: none;
+}
+
+.texto {
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+  max-width: 46ch;
+}
+
+.respuesta {
+  padding: var(--espacio-4);
+  border-radius: var(--radio-md);
+  background: var(--color-acento-suave);
+  color: var(--color-acento-texto);
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  line-height: 1.4;
+  animation: entrar var(--dur-vista) var(--ease-entrada) both;
+}
+
+.navegacion {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  padding-block-start: var(--espacio-2);
+}
+
+.adelante {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+  margin-inline-start: auto;
+}
+
+.atras svg {
+  transform: scaleX(-1);
+}
+
+.ahoraNo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--objetivo-tactil);
+  padding-inline: var(--espacio-2);
+  font-weight: 600;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-3);
+}
+
+.privacidad {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.privacidad svg {
+  flex: none;
+  margin-top: 0.2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paso,
+  .respuesta {
+    animation-name: aparecer;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}

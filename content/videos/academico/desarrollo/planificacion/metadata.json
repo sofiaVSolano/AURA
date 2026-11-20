@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.desarrollo.planificacion",
+  "area": "academico",
+  "categoria": "desarrollo",
+  "subtema": "planificacion",
+  "titulo": "Planificación",
+  "descripcion": "Un plan realista incluye tiempo para lo que saldrá mal.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

@@ -1,0 +1,34 @@
+/* Disposición común de las páginas de cada ámbito */
+.lista {
+  display: grid;
+  gap: var(--espacio-5);
+}
+
+@media (min-width: 48rem) {
+  .rejilla {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    gap: var(--espacio-4);
+    padding: 0;
+  }
+}
+
+.rejilla {
+  display: grid;
+  gap: var(--espacio-4);
+  padding: 0;
+}
+
+.seccion {
+  display: grid;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-6);
+}
+
+.seccion > h2 {
+  font-size: var(--texto-xl);
+}
+
+.aviso {
+  max-width: var(--medida-lectura);
+}

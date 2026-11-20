@@ -1,0 +1,101 @@
+.barra {
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+.cabecera {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+}
+
+.valor {
+  color: var(--color-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.pista {
+  height: 10px;
+  border-radius: var(--radio-pildora);
+  background: var(--color-superficie-2);
+  overflow: hidden;
+  box-shadow: inset 0 0 0 var(--borde-fino) var(--color-borde);
+}
+
+.relleno {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--color-acento), var(--violeta-400));
+  transform-origin: left center;
+  transition: transform var(--dur-vista) var(--ease-salida);
+}
+
+/* — Pasos — */
+.pasos {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.paso {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: var(--espacio-3);
+  padding-block-end: var(--espacio-4);
+}
+
+/* Línea que une los pasos: un camino, no una carrera */
+.paso:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: calc(0.75rem - 1px);
+  inset-block: 1.75rem 0.25rem;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--color-borde);
+}
+
+.marcador {
+  display: grid;
+  place-items: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-top: 0.1em;
+  border-radius: 50%;
+  border: 2px solid var(--color-borde-control);
+  background: var(--color-superficie);
+  color: var(--color-sobre-acento);
+}
+
+.en-curso .marcador {
+  border-color: var(--color-acento);
+  box-shadow: 0 0 0 4px var(--color-acento-suave);
+}
+
+.explorado .marcador {
+  border-color: var(--color-acento);
+  background: var(--color-acento);
+}
+
+.pasoTexto {
+  display: grid;
+}
+
+.pasoTitulo {
+  font-weight: 600;
+}
+
+.pasoEstado {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .relleno {
+    transition-duration: 0s;
+  }
+}

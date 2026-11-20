@@ -1,0 +1,130 @@
+.boton {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: var(--objetivo-tactil);
+  padding-inline: var(--espacio-5);
+  border: var(--borde-fino) solid transparent;
+  border-radius: var(--radio-pildora);
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+  /* Etiquetas largas (p. ej. «Siguiente: …») parten línea en lugar de desbordar */
+  max-width: 100%;
+  text-align: center;
+  text-wrap: balance;
+  padding-block: var(--espacio-2);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--dur-instante) var(--ease-salida),
+    background-color var(--dur-rapida) ease,
+    border-color var(--dur-rapida) ease,
+    color var(--dur-rapida) ease;
+}
+
+/* Respuesta táctil inmediata al presionar */
+.boton:active:not([aria-disabled='true']) {
+  transform: scale(0.97);
+}
+
+.boton[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.boton[data-cargando] {
+  cursor: progress;
+  opacity: 1;
+}
+
+.sm {
+  min-height: 36px;
+  padding-inline: var(--espacio-4);
+  font-size: var(--texto-sm);
+}
+
+.md {
+  font-size: var(--texto-md);
+}
+
+.lg {
+  min-height: 52px;
+  padding-inline: var(--espacio-6);
+  font-size: var(--texto-lg);
+}
+
+.primario {
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  box-shadow: var(--sombra-1);
+}
+
+.secundario {
+  background: transparent;
+  color: var(--color-acento-texto);
+  border-color: var(--color-borde-control);
+}
+
+.sutil {
+  background: transparent;
+  color: var(--color-acento-texto);
+  padding-inline: var(--espacio-3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primario:hover:not([aria-disabled='true']) {
+    background: var(--color-acento-hover);
+  }
+
+  .secundario:hover:not([aria-disabled='true']),
+  .sutil:hover:not([aria-disabled='true']) {
+    background: var(--color-acento-suave);
+  }
+
+  .boton:hover .iconoFin {
+    transform: translateX(3px);
+  }
+}
+
+.icono,
+.iconoFin {
+  flex: none;
+}
+
+.iconoFin {
+  transition: transform var(--dur-rapida) var(--ease-salida);
+}
+
+/* Cargando: la etiqueta se atenúa y aparece un pulso; el ancho no cambia */
+.boton[data-cargando] .etiqueta,
+.boton[data-cargando] .icono,
+.boton[data-cargando] .iconoFin {
+  opacity: 0;
+}
+
+.indicador {
+  position: absolute;
+  width: 1.1em;
+  height: 1.1em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-inline-end-color: transparent;
+  animation: girar 700ms linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .indicador {
+    animation: none;
+    border-inline-end-color: currentColor;
+    opacity: 0.6;
+  }
+}

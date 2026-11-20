@@ -1,0 +1,122 @@
+/* ==========================================================================
+   AURA · Tokens semánticos por ámbito
+   Cada ámbito se activa con data-ambito en el contenedor de la app.
+   Los componentes solo consumen estas variables.
+   ========================================================================== */
+
+/* Inicio — lavanda clara: acogedor, mucho espacio */
+:root,
+[data-ambito='inicio'] {
+  color-scheme: light;
+  --color-fondo: var(--lavanda-50);
+  --color-superficie: var(--blanco);
+  --color-superficie-2: var(--lavanda-100);
+  --color-texto: var(--tinta-900);
+  --color-texto-suave: var(--tinta-600);
+  --color-borde: var(--lavanda-200);
+  --color-borde-control: var(--tinta-400);
+  --color-acento: var(--morado-600);
+  --color-acento-hover: var(--morado-700);
+  --color-acento-texto: var(--morado-700);
+  --color-acento-suave: var(--morado-50);
+  --color-sobre-acento: var(--blanco);
+  --color-resalte: var(--morado-100);
+  --color-foco: var(--morado-600);
+  --color-seleccion: var(--morado-200);
+  --color-exito: var(--exito-700);
+  --color-exito-fondo: var(--exito-100);
+  --color-aviso: var(--aviso-700);
+  --color-aviso-fondo: var(--aviso-100);
+  --color-error: var(--error-700);
+  --color-error-fondo: var(--error-100);
+  --color-info: var(--info-700);
+  --color-info-fondo: var(--info-100);
+  --grano-opacidad: 0.07;
+}
+
+/* AURA académica — papel editorial, tinta y acento morado; ocre solo como resalte */
+[data-ambito='academico'] {
+  color-scheme: light;
+  --color-fondo: var(--papel-50);
+  --color-superficie: var(--blanco);
+  --color-superficie-2: var(--papel-100);
+  --color-texto: var(--tinta-900);
+  --color-texto-suave: var(--tinta-600);
+  --color-borde: var(--papel-200);
+  --color-borde-control: var(--tinta-400);
+  --color-acento: var(--morado-600);
+  --color-acento-hover: var(--morado-700);
+  --color-acento-texto: var(--morado-700);
+  --color-acento-suave: var(--morado-50);
+  --color-sobre-acento: var(--blanco);
+  --color-resalte: var(--ocre-200);
+  --color-foco: var(--morado-600);
+  --color-seleccion: var(--ocre-200);
+  --color-exito: var(--exito-700);
+  --color-exito-fondo: var(--exito-100);
+  --color-aviso: var(--aviso-700);
+  --color-aviso-fondo: var(--aviso-100);
+  --color-error: var(--error-700);
+  --color-error-fondo: var(--error-100);
+  --color-info: var(--info-700);
+  --color-info-fondo: var(--info-100);
+  --grano-opacidad: 0.09;
+}
+
+/* AURA emocional — noche índigo con luz cálida: contención, no exposición */
+[data-ambito='emocional'] {
+  color-scheme: dark;
+  --color-fondo: var(--indigo-950);
+  --color-superficie: var(--indigo-900);
+  --color-superficie-2: var(--indigo-850);
+  --color-texto: var(--indigo-100);
+  --color-texto-suave: var(--indigo-300);
+  --color-borde: var(--indigo-700);
+  --color-borde-control: var(--indigo-500);
+  --color-acento: var(--morado-300);
+  --color-acento-hover: var(--morado-200);
+  --color-acento-texto: var(--morado-200);
+  --color-acento-suave: var(--indigo-800);
+  --color-sobre-acento: var(--indigo-950);
+  --color-resalte: var(--indigo-800);
+  --color-foco: var(--luz-100);
+  --color-seleccion: var(--morado-800);
+  --color-exito: var(--exito-300);
+  --color-exito-fondo: var(--exito-950);
+  --color-aviso: var(--aviso-300);
+  --color-aviso-fondo: var(--aviso-950);
+  --color-error: var(--error-300);
+  --color-error-fondo: var(--error-950);
+  --color-info: var(--info-300);
+  --color-info-fondo: var(--info-950);
+  --grano-opacidad: 0.1;
+}
+
+/* Mi AURA — cosmos azul-violeta: el espacio propio */
+[data-ambito='mi-aura'] {
+  color-scheme: dark;
+  --color-fondo: var(--indigo-975);
+  --color-superficie: var(--indigo-900);
+  --color-superficie-2: var(--indigo-850);
+  --color-texto: var(--indigo-100);
+  --color-texto-suave: var(--indigo-300);
+  --color-borde: var(--indigo-700);
+  --color-borde-control: var(--indigo-500);
+  --color-acento: var(--violeta-300);
+  --color-acento-hover: var(--violeta-200);
+  --color-acento-texto: var(--violeta-200);
+  --color-acento-suave: var(--indigo-800);
+  --color-sobre-acento: var(--indigo-975);
+  --color-resalte: var(--indigo-800);
+  --color-foco: var(--luz-100);
+  --color-seleccion: var(--violeta-600);
+  --color-exito: var(--exito-300);
+  --color-exito-fondo: var(--exito-950);
+  --color-aviso: var(--aviso-300);
+  --color-aviso-fondo: var(--aviso-950);
+  --color-error: var(--error-300);
+  --color-error-fondo: var(--error-950);
+  --color-info: var(--info-300);
+  --color-info-fondo: var(--info-950);
+  --grano-opacidad: 0.12;
+}

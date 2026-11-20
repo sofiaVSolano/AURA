@@ -1,0 +1,137 @@
+.campo,
+.grupo {
+  display: grid;
+  gap: var(--espacio-2);
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.etiqueta {
+  font-weight: 650;
+  padding: 0;
+}
+
+.opcional {
+  font-weight: 400;
+  color: var(--color-texto-suave);
+}
+
+.ayuda {
+  display: block;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.control {
+  width: 100%;
+  min-height: var(--objetivo-tactil);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-fino) solid var(--color-borde-control);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  transition:
+    border-color var(--dur-rapida) ease,
+    box-shadow var(--dur-rapida) ease;
+}
+
+.control::placeholder {
+  color: var(--color-texto-suave);
+  opacity: 1;
+}
+
+.control:focus-visible {
+  outline: none;
+  border-color: var(--color-foco);
+  box-shadow: 0 0 0 3px var(--color-foco);
+}
+
+.area {
+  min-height: 8rem;
+  resize: vertical;
+  line-height: var(--interlineado-texto);
+}
+
+.conError .control {
+  border-color: var(--color-error);
+  border-width: 2px;
+}
+
+.pie {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--espacio-3);
+}
+
+.pie:empty {
+  display: none;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  color: var(--color-error);
+}
+
+.error svg {
+  flex: none;
+  margin-top: 0.2em;
+}
+
+.contador {
+  margin-inline-start: auto;
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.opciones {
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+.opcion {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--espacio-3);
+  align-items: start;
+  min-height: var(--objetivo-tactil);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: var(--borde-fino) solid var(--color-borde);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-rapida) ease,
+    background-color var(--dur-rapida) ease;
+}
+
+.opcion:has(:checked) {
+  border-color: var(--color-acento);
+  background: var(--color-acento-suave);
+}
+
+.opcion:has(:focus-visible) {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.radio {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.15em;
+  accent-color: var(--color-acento);
+}
+
+.radio:focus-visible {
+  outline: none;
+}
+
+.opcionTitulo {
+  display: block;
+  font-weight: 600;
+}

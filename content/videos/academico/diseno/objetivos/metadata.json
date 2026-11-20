@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.diseno.objetivos",
+  "area": "academico",
+  "categoria": "diseno",
+  "subtema": "objetivos",
+  "titulo": "Objetivos",
+  "descripcion": "Si no puedes imaginar cómo comprobar un objetivo, todavía no está listo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

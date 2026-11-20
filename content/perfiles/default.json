@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "id": "default",
+  "nombre": "AURA · perfil general",
+  "institucion": null,
+  "recursos": {
+    "introduccion": null,
+    "contactos": []
+  },
+  "proyecto": {
+    "nombreTrabajo": null,
+    "ruta": "general"
+  }
+}

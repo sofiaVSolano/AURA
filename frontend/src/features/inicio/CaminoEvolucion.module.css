@@ -1,0 +1,167 @@
+.camino {
+  position: relative;
+  padding: var(--espacio-8) var(--margen-pagina) var(--espacio-7);
+  background: linear-gradient(180deg, var(--color-fondo), color-mix(in srgb, var(--morado-100) 55%, var(--color-fondo)) 45%, var(--color-fondo));
+}
+
+.titulo {
+  max-width: var(--ancho-contenido);
+  margin-inline: auto;
+  font-size: var(--texto-3xl);
+  max-inline-size: 14ch;
+}
+
+@media (min-width: 56rem) {
+  .titulo {
+    max-inline-size: none;
+    padding-inline-start: 0;
+  }
+}
+
+.contenido {
+  display: grid;
+  max-width: var(--ancho-contenido);
+  margin-inline: auto;
+}
+
+@media (min-width: 56rem) {
+  .contenido {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--espacio-7);
+  }
+}
+
+/* El personaje queda fijo mientras pasan las etapas */
+.escenario {
+  position: sticky;
+  inset-block-start: 64px;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-3);
+  padding-block: var(--espacio-4);
+  height: fit-content;
+  background: color-mix(in srgb, var(--color-fondo) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border-radius: 0 0 var(--radio-lg) var(--radio-lg);
+}
+
+.escenario svg {
+  width: min(42vw, 180px);
+  height: auto;
+}
+
+@media (min-width: 56rem) {
+  .escenario {
+    inset-block-start: 18vh;
+    padding-block: var(--espacio-6);
+    background: none;
+    backdrop-filter: none;
+  }
+
+  .escenario svg {
+    width: min(32vw, 340px);
+  }
+}
+
+.luz {
+  position: absolute;
+  inset: 10% 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--morado-300) 45%, transparent), transparent 65%);
+  z-index: -1;
+}
+
+.medidor {
+  display: flex;
+  gap: var(--espacio-2);
+  padding: 0;
+  list-style: none;
+}
+
+.medidor li {
+  width: 28px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-borde);
+  transition: background-color var(--dur-media) ease;
+}
+
+.medidor li[data-activo] {
+  background: var(--color-acento);
+}
+
+/* — Pasos — */
+.pasos {
+  display: grid;
+  padding: 0;
+  list-style: none;
+}
+
+.paso {
+  display: grid;
+  align-content: center;
+  gap: var(--espacio-3);
+  min-height: 62vh;
+  padding-block: var(--espacio-6);
+  opacity: 0.32;
+  transform: translateY(8px);
+  transition:
+    opacity var(--dur-vista) var(--ease-salida),
+    transform var(--dur-vista) var(--ease-salida);
+}
+
+@media (min-width: 56rem) {
+  .paso {
+    min-height: 78vh;
+  }
+}
+
+.activo {
+  opacity: 1;
+  transform: none;
+}
+
+.numero {
+  font-size: var(--texto-sm);
+  font-weight: 650;
+  color: var(--color-acento-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.nombre {
+  font-size: var(--texto-2xl);
+}
+
+.descripcion {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-xl);
+  line-height: 1.35;
+  max-width: 26ch;
+}
+
+.como {
+  color: var(--color-texto-suave);
+  max-width: 40ch;
+}
+
+.cierre {
+  max-width: 46ch;
+  margin-inline: auto;
+  padding-block-start: var(--espacio-5);
+  font-size: var(--texto-lg);
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.cierre strong {
+  color: var(--color-texto);
+}
+
+/* Si el navegador no observa el scroll o hay movimiento reducido, todo es legible */
+@media (prefers-reduced-motion: reduce) {
+  .paso {
+    opacity: 1;
+    transform: none;
+  }
+}

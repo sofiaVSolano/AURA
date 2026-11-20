@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-agotado.cansado-de-corregir",
+  "area": "emocional",
+  "categoria": "estoy-agotado",
+  "subtema": "cansado-de-corregir",
+  "titulo": "Estoy cansado de corregir",
+  "descripcion": "Corregir una y otra vez cansa; reconocer ese cansancio también es cuidar tu trabajo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

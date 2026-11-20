@@ -1,0 +1,100 @@
+.pagina {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--espacio-5);
+  max-width: 52rem;
+  padding-block: var(--espacio-5) var(--espacio-6);
+}
+
+.migas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.cabecera {
+  display: grid;
+  justify-items: start;
+  gap: var(--espacio-3);
+}
+
+.titulo {
+  font-size: var(--texto-3xl);
+}
+
+.descripcion {
+  max-width: 54ch;
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+}
+
+.guia {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--objetivo-tactil);
+  font-weight: 650;
+}
+
+/* Actividades: se pueden recorrer en cualquier orden */
+.pasos {
+  display: flex;
+  gap: var(--espacio-2);
+  padding: 0 0 var(--espacio-2);
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.pasos li {
+  flex: none;
+  scroll-snap-align: start;
+}
+
+.paso {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--objetivo-tactil);
+  padding: var(--espacio-2) var(--espacio-4) var(--espacio-2) var(--espacio-2);
+  border: var(--borde-fino) solid var(--color-borde);
+  border-radius: var(--radio-pildora);
+  background: var(--color-superficie);
+  color: var(--color-texto-suave);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  transition:
+    background-color var(--dur-rapida) ease,
+    color var(--dur-rapida) ease,
+    border-color var(--dur-rapida) ease;
+}
+
+.paso:hover {
+  border-color: var(--color-acento);
+}
+
+.pasoActual {
+  border-color: var(--color-acento);
+  background: var(--color-acento-suave);
+  color: var(--color-acento-texto);
+}
+
+.numero {
+  display: grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-fondo);
+  font-variant-numeric: tabular-nums;
+}
+
+.zona {
+  padding: var(--espacio-5);
+  border-radius: var(--radio-lg);
+  background: var(--color-fondo);
+  border: var(--borde-fino) solid var(--color-borde);
+  box-shadow: var(--sombra-1);
+}

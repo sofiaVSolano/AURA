@@ -1,0 +1,36 @@
+# Dependencias y compilación
+node_modules/
+dist/
+*.tsbuildinfo
+.vite/
+
+# Variables de entorno locales (pueden contener valores privados)
+.env.local
+.env.*.local
+
+# Medios pesados: se sirven desde el servidor, no se versionan
+frontend/public/media/**/*.mp4
+frontend/public/media/**/*.webm
+frontend/public/media/**/*.mov
+frontend/public/media/**/*.vtt.bak
+EstiloPagina/*.mp4
+
+# Logs y sistema
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Medios finales de los videos (se publican en el servidor, no en Git)
+content/videos/**/*.mp4
+content/videos/**/*.webm
+content/videos/**/*.mov
+
+# Video de prueba del reproductor (se genera con npm run fixture:video)
+frontend/tests/fixtures/*.mp4

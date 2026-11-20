@@ -1,0 +1,186 @@
+.entrada {
+  position: relative;
+  padding: var(--espacio-7) var(--margen-pagina) var(--espacio-8);
+  background:
+    radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--morado-700) 45%, transparent), transparent 70%),
+    var(--color-fondo);
+}
+
+.cabecera {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-3);
+  max-width: 40rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.compania {
+  animation: entrar var(--dur-autor) var(--ease-entrada) both;
+}
+
+.pregunta {
+  font-size: var(--texto-3xl);
+  font-weight: 500;
+  animation: entrar var(--dur-autor) var(--ease-entrada) 120ms both;
+}
+
+.bajada {
+  max-width: 42ch;
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+  animation: entrar var(--dur-autor) var(--ease-entrada) 240ms both;
+}
+
+.bajada strong {
+  color: var(--color-texto);
+  font-weight: 600;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(6px);
+  }
+}
+
+/* — Constelación de emociones: orgánica, no una cuadrícula rígida — */
+.constelacion {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--espacio-5) var(--espacio-3);
+  max-width: 64rem;
+  margin: var(--espacio-7) auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 48rem) {
+  .constelacion {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--espacio-6) var(--espacio-5);
+  }
+
+  /* Desfase vertical alterno: la fila respira como un cielo, no como una tabla */
+  .estrella:nth-child(4n + 2),
+  .estrella:nth-child(4n + 4) {
+    margin-top: var(--espacio-7);
+  }
+
+  .estrella:nth-child(5) {
+    grid-column-start: 1;
+    margin-inline-start: 50%;
+  }
+}
+
+.estrella {
+  animation: entrar var(--dur-vista) var(--ease-entrada) both;
+  animation-delay: calc(var(--i) * 80ms + 360ms);
+}
+
+.emocion {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3);
+  border-radius: var(--radio-lg);
+  color: var(--color-texto);
+  text-align: center;
+  text-decoration: none;
+  /* Paralaje: cada orbe se mueve a distinta profundidad */
+  translate: calc(var(--px, 0) * (6px + var(--i) * 2px)) calc(var(--py, 0) * (4px + var(--i) * 1.5px));
+  transition:
+    translate 900ms var(--ease-salida),
+    transform var(--dur-media) var(--ease-salida);
+}
+
+.orbe {
+  margin-block-end: var(--espacio-2);
+}
+
+.nombre {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  font-weight: 560;
+  line-height: 1.2;
+}
+
+.descripcion {
+  max-width: 24ch;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    opacity var(--dur-media) ease,
+    max-height var(--dur-vista) var(--ease-salida);
+}
+
+/* El orbe crece y aparece su descripción al acercarse o enfocar */
+.emocion:hover .orbe,
+.emocion:focus-visible .orbe {
+  transform: scale(1.1);
+  box-shadow:
+    inset 0 -10px 24px hsl(var(--matiz) 60% 30% / 0.35),
+    0 24px 60px -10px hsl(var(--matiz) 80% 55% / 0.7);
+}
+
+.emocion:hover .descripcion,
+.emocion:focus-visible .descripcion {
+  opacity: 1;
+  max-height: 8em;
+}
+
+.emocion:active {
+  transform: scale(0.97);
+}
+
+@media (hover: none) {
+  .descripcion {
+    display: none;
+  }
+}
+
+/* — Guardados y aviso — */
+.seccion {
+  display: grid;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-7) var(--espacio-3);
+}
+
+.seccion > h2 {
+  font-size: var(--texto-2xl);
+}
+
+.lista {
+  display: grid;
+  gap: var(--espacio-2);
+  padding: 0;
+}
+
+.aviso {
+  max-width: var(--medida-lectura);
+  padding-block: var(--espacio-6);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .compania,
+  .pregunta,
+  .bajada,
+  .estrella {
+    animation-name: aparecer;
+  }
+
+  .emocion {
+    translate: none;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}

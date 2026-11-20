@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.tengo-miedo.no-terminar-a-tiempo",
+  "area": "emocional",
+  "categoria": "tengo-miedo",
+  "subtema": "no-terminar-a-tiempo",
+  "titulo": "No terminar a tiempo",
+  "descripcion": "Cuando el tiempo preocupa, dividir el trabajo en pasos pequeños y concretos ayuda a recuperar algo de control.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

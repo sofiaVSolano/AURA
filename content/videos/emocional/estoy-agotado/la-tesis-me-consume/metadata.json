@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-agotado.la-tesis-me-consume",
+  "area": "emocional",
+  "categoria": "estoy-agotado",
+  "subtema": "la-tesis-me-consume",
+  "titulo": "La tesis me consume",
+  "descripcion": "Tu proyecto es importante, pero no es todo lo que eres.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-frustrado.mi-codigo-falla",
+  "area": "emocional",
+  "categoria": "estoy-frustrado",
+  "subtema": "mi-codigo-falla",
+  "titulo": "Mi código falla",
+  "descripcion": "Los errores son información: leerlos con calma y en partes pequeñas suele acercarte a la solución.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

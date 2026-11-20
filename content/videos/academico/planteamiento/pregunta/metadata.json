@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.planteamiento.pregunta",
+  "area": "academico",
+  "categoria": "planteamiento",
+  "subtema": "pregunta",
+  "titulo": "Pregunta de investigación",
+  "descripcion": "Una buena pregunta es lo bastante pequeña para responderla y lo bastante importante para que valga la pena.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

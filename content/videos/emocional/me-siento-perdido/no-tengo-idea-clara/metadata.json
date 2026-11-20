@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.me-siento-perdido.no-tengo-idea-clara",
+  "area": "emocional",
+  "categoria": "me-siento-perdido",
+  "subtema": "no-tengo-idea-clara",
+  "titulo": "No tengo una idea clara",
+  "descripcion": "Las ideas claras suelen llegar después de explorar; está bien empezar con preguntas.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

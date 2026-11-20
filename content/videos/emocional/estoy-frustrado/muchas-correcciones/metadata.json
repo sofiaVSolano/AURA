@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-frustrado.muchas-correcciones",
+  "area": "emocional",
+  "categoria": "estoy-frustrado",
+  "subtema": "muchas-correcciones",
+  "titulo": "Recibí muchas correcciones",
+  "descripcion": "Las correcciones hablan del trabajo, no de ti; señalan hacia dónde puede crecer tu proyecto.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

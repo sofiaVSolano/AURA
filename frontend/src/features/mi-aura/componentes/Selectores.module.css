@@ -1,0 +1,169 @@
+.grupo {
+  display: grid;
+  gap: var(--espacio-3);
+  border: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+
+.leyenda {
+  padding: 0;
+  font-weight: 650;
+  margin-block-end: var(--espacio-2);
+}
+
+.nota {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+/* — Colores — */
+.colores {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--espacio-3);
+}
+
+@media (min-width: 36rem) {
+  .colores {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+
+.color {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-1);
+  cursor: pointer;
+}
+
+.muestra {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 -4px 10px rgb(0 0 0 / 0.18),
+    0 0 0 2px transparent;
+  transition:
+    transform var(--dur-rapida) var(--ease-salida),
+    box-shadow var(--dur-rapida) ease;
+}
+
+.marca {
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity var(--dur-rapida) ease,
+    transform var(--dur-media) var(--ease-salida);
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.4));
+}
+
+.color:hover .muestra {
+  transform: scale(1.08);
+}
+
+.color:active .muestra {
+  transform: scale(0.94);
+}
+
+.color:has(:checked) .muestra {
+  box-shadow:
+    inset 0 -4px 10px rgb(0 0 0 / 0.18),
+    0 0 0 3px var(--color-fondo),
+    0 0 0 5px var(--color-acento);
+}
+
+.color:has(:checked) .marca {
+  opacity: 1;
+  transform: none;
+}
+
+.color:has(:focus-visible) .muestra {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 6px;
+}
+
+.nombre {
+  font-size: var(--texto-xs);
+  font-weight: 600;
+  color: var(--color-texto-suave);
+  text-align: center;
+}
+
+.color:has(:checked) .nombre,
+.visual:has(:checked) .nombre {
+  color: var(--color-texto);
+}
+
+/* — Opciones visuales (forma, expresión, decoraciones) — */
+.visuales {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7.5rem, 1fr));
+  gap: var(--espacio-3);
+}
+
+.visual {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: var(--espacio-2);
+  padding: var(--espacio-3);
+  border-radius: var(--radio-md);
+  border: 2px solid var(--color-borde);
+  background: var(--color-superficie);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-rapida) ease,
+    background-color var(--dur-rapida) ease,
+    transform var(--dur-rapida) var(--ease-salida);
+}
+
+.visual:hover:not(.bloqueado) {
+  border-color: var(--color-borde-control);
+}
+
+.visual:active:not(.bloqueado) {
+  transform: scale(0.97);
+}
+
+.visual:has(:checked) {
+  border-color: var(--color-acento);
+  background: var(--color-acento-suave);
+}
+
+.visual:has(:focus-visible) {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.vista {
+  display: grid;
+  place-items: center;
+  min-height: 72px;
+  transition: transform var(--dur-media) var(--ease-salida);
+}
+
+.visual:has(:checked) .vista {
+  transform: scale(1.06);
+}
+
+.bloqueado {
+  cursor: not-allowed;
+  border-style: dashed;
+}
+
+.bloqueado .vista {
+  opacity: 0.35;
+  filter: grayscale(0.8) blur(1px);
+}
+
+.bloqueo {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  text-align: center;
+  line-height: 1.35;
+}

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-motivado.veo-resultados",
+  "area": "emocional",
+  "categoria": "estoy-motivado",
+  "subtema": "veo-resultados",
+  "titulo": "Veo resultados",
+  "descripcion": "Celebrar los avances, aunque sean pequeños, ayuda a sostener el esfuerzo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

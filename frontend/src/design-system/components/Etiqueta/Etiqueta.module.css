@@ -1,0 +1,39 @@
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: 26px;
+  padding: 0.125rem 0.625rem;
+  border-radius: var(--radio-pildora);
+  font-size: var(--texto-xs);
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  width: fit-content;
+}
+
+.neutro {
+  background: var(--color-superficie-2);
+  color: var(--color-texto-suave);
+}
+
+.emocional,
+.aura {
+  background: var(--color-acento-suave);
+  color: var(--color-acento-texto);
+}
+
+.academico {
+  background: var(--color-resalte);
+  color: var(--color-texto);
+}
+
+.pendiente {
+  background: var(--color-aviso-fondo);
+  color: var(--color-aviso);
+}
+
+.exito {
+  background: var(--color-exito-fondo);
+  color: var(--color-exito);
+}

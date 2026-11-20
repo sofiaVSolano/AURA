@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "problema",
+  "titulo": "Planteamiento del problema",
+  "queEs": "Es la descripción de una situación que necesita ser comprendida, explicada o transformada. Muestra qué está pasando, por qué ocurre, qué consecuencias tiene y en qué contexto concreto lo vas a estudiar.",
+  "paraQueSirve": "Sostiene todo el proyecto: de él salen la pregunta, los objetivos y la justificación. Un problema bien planteado hace evidente por qué tu trabajo es necesario y hasta dónde llega.",
+  "queDebeIncluir": [
+    { "elemento": "Contexto", "descripcion": "Dónde y en qué marco ocurre la situación (lugar, población, sector, tiempo)." },
+    { "elemento": "Situación problemática", "descripcion": "Qué está pasando que no debería pasar, o qué falta. Idealmente con evidencia." },
+    { "elemento": "Causas", "descripcion": "Factores que explican o contribuyen a la situación, según lo que se sabe." },
+    { "elemento": "Consecuencias", "descripcion": "Qué ocurre, o podría ocurrir, si la situación continúa." },
+    { "elemento": "Delimitación", "descripcion": "Qué parte del problema abordarás tú: población, lugar, periodo o aspecto específico." }
+  ],
+  "comoSeOrganiza": [
+    { "paso": "De lo general a lo particular", "descripcion": "Empieza por el contexto amplio y acércate al caso concreto que vas a estudiar." },
+    { "paso": "Muestra la situación con evidencia", "descripcion": "Datos, estudios previos u observaciones que muestren que el problema existe." },
+    { "paso": "Explica causas y consecuencias", "descripcion": "Conecta por qué ocurre con lo que provoca." },
+    { "paso": "Delimita y conecta con tu pregunta", "descripcion": "Cierra precisando qué aspecto abordarás; de ahí nacerá tu pregunta de investigación." }
+  ],
+  "ejemplo": {
+    "contexto": "Ejemplo ilustrativo (inventado) de un proyecto en educación. Selecciona cada fragmento para ver qué función cumple.",
+    "fragmentos": [
+      { "elemento": "Contexto", "texto": "En los colegios públicos rurales del municipio, la mayoría de estudiantes accede a internet solo desde el teléfono de un familiar.", "explicacion": "Sitúa el lugar, la población y una condición clave." },
+      { "elemento": "Situación problemática", "texto": "Desde que las tareas se publican en una plataforma en línea, el 40 % de los estudiantes de grado noveno entrega con retraso o no entrega.", "explicacion": "Describe qué pasa, con un dato que muestra la magnitud." },
+      { "elemento": "Causas", "texto": "Los docentes señalan el acceso limitado a dispositivos y la falta de orientación sobre cómo usar la plataforma.", "explicacion": "Propone explicaciones respaldadas por quienes viven la situación." },
+      { "elemento": "Consecuencias", "texto": "Esto afecta sus calificaciones y aumenta el riesgo de que repitan el año.", "explicacion": "Muestra por qué importa resolverlo." },
+      { "elemento": "Delimitación", "texto": "Este trabajo se centra en los estudiantes de noveno de dos colegios durante el primer semestre de 2026.", "explicacion": "Precisa qué parte del problema se abordará, dónde y cuándo." }
+    ]
+  },
+  "erroresFrecuentes": [
+    { "enLugarDe": "«No existe una aplicación para…»", "prueba": "Describir qué dificultad viven las personas por esa ausencia.", "porque": "La falta de una solución no es el problema; el problema es la situación que esa falta provoca." },
+    { "enLugarDe": "Plantear un problema tan amplio que no cabe en un proyecto de grado.", "prueba": "Delimitar población, lugar, periodo o aspecto.", "porque": "Un problema delimitado se puede investigar con los recursos y el tiempo que tienes." },
+    { "enLugarDe": "Afirmar causas sin respaldo.", "prueba": "Apoyarlas en datos, estudios u observaciones, y citarlos.", "porque": "Las causas sin evidencia son suposiciones y debilitan el planteamiento." }
+  ],
+  "recomendaciones": [
+    "Intenta explicar tu problema en dos frases a alguien fuera de tu carrera.",
+    "Pregúntate: ¿quién se ve afectado y cómo lo sé?",
+    "Revisa que tu pregunta de investigación se desprenda directamente de la delimitación."
+  ],
+  "dependeDe": [
+    "Algunas instituciones piden el problema como un apartado narrativo y otras como «descripción» y «formulación» por separado.",
+    "En proyectos de desarrollo tecnológico o de intervención, el problema puede plantearse como una necesidad de un usuario o una organización.",
+    "La extensión y el tipo de evidencia esperados cambian según la disciplina y la modalidad del proyecto."
+  ],
+  "orientativo": [],
+  "laboratorio": "planteamiento",
+  "relacionados": ["idea", "pregunta", "justificacion", "objetivos"]
+}

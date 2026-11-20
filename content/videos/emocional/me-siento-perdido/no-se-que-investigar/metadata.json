@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.me-siento-perdido.no-se-que-investigar",
+  "area": "emocional",
+  "categoria": "me-siento-perdido",
+  "subtema": "no-se-que-investigar",
+  "titulo": "No sé qué investigar",
+  "descripcion": "Lo que te genera curiosidad, o incluso incomodidad, puede ser una buena pista para tu tema.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

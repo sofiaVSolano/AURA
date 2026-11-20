@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-frustrado.trabajo-y-no-avanzo",
+  "area": "emocional",
+  "categoria": "estoy-frustrado",
+  "subtema": "trabajo-y-no-avanzo",
+  "titulo": "Trabajo y no avanzo",
+  "descripcion": "A veces el avance aún no se ve; registrar lo que haces cada día puede mostrarte el camino recorrido.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

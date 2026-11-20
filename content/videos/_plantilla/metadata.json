@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.categoria.subtema",
+  "area": "emocional",
+  "categoria": "categoria",
+  "subtema": "subtema",
+  "titulo": "Título breve y humano",
+  "descripcion": "Idea principal del video, en una frase.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

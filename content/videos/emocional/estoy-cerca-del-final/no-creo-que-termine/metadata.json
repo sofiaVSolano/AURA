@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-cerca-del-final.no-creo-que-termine",
+  "area": "emocional",
+  "categoria": "estoy-cerca-del-final",
+  "subtema": "no-creo-que-termine",
+  "titulo": "No creo que ya termine",
+  "descripcion": "Llegar al final puede sentirse irreal; mira cuánto has recorrido para llegar hasta aquí.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

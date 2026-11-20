@@ -1,0 +1,105 @@
+.modal {
+  width: min(32rem, calc(100vw - 2 * var(--margen-pagina)));
+  max-height: min(85dvh, 44rem);
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radio-lg);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  box-shadow: var(--sombra-3);
+  /* Entrada y salida centradas (los modales no se anclan a su disparador) */
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--dur-media) var(--ease-salida),
+    transform var(--dur-media) var(--ease-salida),
+    overlay var(--dur-media) allow-discrete,
+    display var(--dur-media) allow-discrete;
+}
+
+.modal:not([open]) {
+  opacity: 0;
+  transform: translateY(8px) scale(0.97);
+  transition-duration: var(--dur-rapida);
+}
+
+@starting-style {
+  .modal[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+.modal::backdrop {
+  background: rgb(14 11 34 / 0.55);
+  backdrop-filter: blur(3px);
+  transition:
+    opacity var(--dur-media) ease,
+    overlay var(--dur-media) allow-discrete,
+    display var(--dur-media) allow-discrete;
+}
+
+.modal:not([open])::backdrop {
+  opacity: 0;
+}
+
+@starting-style {
+  .modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+.contenido {
+  display: grid;
+  gap: var(--espacio-4);
+  padding: var(--espacio-5);
+}
+
+.cabecera {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--espacio-4);
+}
+
+.titulo {
+  font-size: var(--texto-xl);
+}
+
+.descripcion {
+  color: var(--color-texto-suave);
+}
+
+.cerrar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  margin: calc(var(--espacio-2) * -1);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-texto-suave);
+}
+
+.cerrar:hover {
+  background: var(--color-superficie-2);
+  color: var(--color-texto);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+  gap: var(--espacio-3);
+  padding-top: var(--espacio-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal,
+  .modal:not([open]) {
+    transform: none;
+  }
+}

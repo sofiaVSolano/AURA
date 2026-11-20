@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.referencias",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "referencias",
+  "titulo": "Referencias",
+  "descripcion": "Citar es reconocer el trabajo de otros y permitir que el lector lo encuentre.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

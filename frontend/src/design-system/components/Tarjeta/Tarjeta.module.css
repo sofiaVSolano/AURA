@@ -1,0 +1,50 @@
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-5);
+  border-radius: var(--radio-lg);
+  background: var(--color-superficie);
+  box-shadow: var(--sombra-1);
+  list-style: none;
+}
+
+.interactiva {
+  transition:
+    transform var(--dur-rapida) var(--ease-salida),
+    box-shadow var(--dur-media) var(--ease-salida);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .interactiva:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-2);
+  }
+}
+
+.interactiva:active {
+  transform: scale(0.99);
+}
+
+/* El foco del enlace se dibuja alrededor de toda la tarjeta */
+.interactiva:has(.enlace:focus-visible) {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 3px;
+}
+
+.enlace {
+  color: inherit;
+  text-decoration: none;
+}
+
+.enlace:focus-visible {
+  outline: none;
+}
+
+.enlace::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}

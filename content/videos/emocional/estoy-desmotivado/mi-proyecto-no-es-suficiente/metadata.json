@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-desmotivado.mi-proyecto-no-es-suficiente",
+  "area": "emocional",
+  "categoria": "estoy-desmotivado",
+  "subtema": "mi-proyecto-no-es-suficiente",
+  "titulo": "Mi proyecto no es suficientemente bueno",
+  "descripcion": "Un proyecto de grado no tiene que ser perfecto para ser valioso.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

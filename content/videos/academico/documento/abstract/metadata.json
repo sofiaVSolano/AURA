@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.abstract",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "abstract",
+  "titulo": "Abstract",
+  "descripcion": "Un buen abstract no es una traducción literal: es el mismo resumen pensado en inglés.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

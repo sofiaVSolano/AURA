@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.planteamiento.problema",
+  "area": "academico",
+  "categoria": "planteamiento",
+  "subtema": "problema",
+  "titulo": "Planteamiento del problema",
+  "descripcion": "Un problema investigable se ve en las personas a las que afecta, no en la falta de una solución.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

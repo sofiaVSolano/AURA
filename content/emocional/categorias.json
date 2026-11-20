@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "pregunta": "¿Cómo te sientes hoy?",
+  "categorias": [
+    {
+      "id": "tengo-miedo",
+      "nombre": "Tengo miedo",
+      "descripcion": "El miedo suele aparecer cuando algo nos importa. Aquí puedes mirarlo con calma.",
+      "matiz": 268,
+      "relacionadas": [
+        "estoy-cerca-del-final",
+        "me-siento-perdido"
+      ],
+      "subtemas": [
+        {
+          "id": "hablar-en-publico",
+          "titulo": "Hablar en público"
+        },
+        {
+          "id": "no-ser-suficiente",
+          "titulo": "No ser lo suficientemente bueno"
+        },
+        {
+          "id": "que-el-proyecto-fracase",
+          "titulo": "Que el proyecto fracase"
+        },
+        {
+          "id": "no-terminar-a-tiempo",
+          "titulo": "No terminar a tiempo"
+        }
+      ]
+    },
+    {
+      "id": "estoy-frustrado",
+      "nombre": "Estoy frustrado",
+      "descripcion": "Cuando el esfuerzo no da los resultados esperados, la frustración es comprensible.",
+      "matiz": 18,
+      "relacionadas": [
+        "estoy-agotado",
+        "estoy-desmotivado"
+      ],
+      "subtemas": [
+        {
+          "id": "nada-funciona",
+          "titulo": "Nada funciona"
+        },
+        {
+          "id": "mi-codigo-falla",
+          "titulo": "Mi código falla"
+        },
+        {
+          "id": "muchas-correcciones",
+          "titulo": "Recibí muchas correcciones"
+        },
+        {
+          "id": "trabajo-y-no-avanzo",
+          "titulo": "Trabajo y no avanzo"
+        }
+      ]
+    },
+    {
+      "id": "me-siento-perdido",
+      "nombre": "Me siento perdido",
+      "descripcion": "Sentirse sin rumbo es parte de muchos procesos de investigación.",
+      "matiz": 215,
+      "relacionadas": [
+        "tengo-miedo",
+        "estoy-motivado"
+      ],
+      "subtemas": [
+        {
+          "id": "no-se-empezar",
+          "titulo": "No sé por dónde empezar"
+        },
+        {
+          "id": "no-tengo-idea-clara",
+          "titulo": "No tengo una idea clara"
+        },
+        {
+          "id": "no-se-que-investigar",
+          "titulo": "No sé qué investigar"
+        },
+        {
+          "id": "que-espera-mi-director",
+          "titulo": "No entiendo qué espera mi director"
+        }
+      ]
+    },
+    {
+      "id": "estoy-agotado",
+      "nombre": "Estoy agotado",
+      "descripcion": "El cansancio es una señal que merece atención, no algo que debas ignorar.",
+      "matiz": 300,
+      "relacionadas": [
+        "estoy-frustrado",
+        "estoy-desmotivado"
+      ],
+      "subtemas": [
+        {
+          "id": "la-tesis-me-consume",
+          "titulo": "La tesis me consume"
+        },
+        {
+          "id": "vida-y-proyecto",
+          "titulo": "No equilibro vida y proyecto"
+        },
+        {
+          "id": "cansado-de-corregir",
+          "titulo": "Estoy cansado de corregir"
+        },
+        {
+          "id": "necesito-descansar",
+          "titulo": "Necesito descansar"
+        }
+      ]
+    },
+    {
+      "id": "estoy-desmotivado",
+      "nombre": "Estoy desmotivado",
+      "descripcion": "Las ganas van y vienen. No estás solo ni sola en esto.",
+      "matiz": 245,
+      "relacionadas": [
+        "estoy-agotado",
+        "estoy-motivado"
+      ],
+      "subtemas": [
+        {
+          "id": "perdi-las-ganas",
+          "titulo": "Perdí las ganas"
+        },
+        {
+          "id": "perdi-el-proposito",
+          "titulo": "Perdí el propósito"
+        },
+        {
+          "id": "me-comparo",
+          "titulo": "Me comparo con otros"
+        },
+        {
+          "id": "mi-proyecto-no-es-suficiente",
+          "titulo": "Mi proyecto no es suficientemente bueno"
+        }
+      ]
+    },
+    {
+      "id": "estoy-motivado",
+      "nombre": "Estoy motivado",
+      "descripcion": "Ese impulso es valioso. Aprovechémoslo con cuidado.",
+      "matiz": 42,
+      "relacionadas": [
+        "estoy-cerca-del-final",
+        "me-siento-perdido"
+      ],
+      "subtemas": [
+        {
+          "id": "una-idea-nueva",
+          "titulo": "Tengo una idea nueva"
+        },
+        {
+          "id": "resolvi-algo-dificil",
+          "titulo": "Resolví algo difícil"
+        },
+        {
+          "id": "veo-resultados",
+          "titulo": "Veo resultados"
+        },
+        {
+          "id": "quiero-avanzar",
+          "titulo": "Quiero avanzar"
+        }
+      ]
+    },
+    {
+      "id": "estoy-cerca-del-final",
+      "nombre": "Estoy cerca del final",
+      "descripcion": "El cierre trae emociones mezcladas. Es normal sentirlas todas.",
+      "matiz": 165,
+      "relacionadas": [
+        "tengo-miedo",
+        "estoy-motivado"
+      ],
+      "subtemas": [
+        {
+          "id": "me-preocupa-la-sustentacion",
+          "titulo": "Me preocupa la sustentación"
+        },
+        {
+          "id": "temo-no-responder",
+          "titulo": "Temo no saber responder"
+        },
+        {
+          "id": "presentar-resultados",
+          "titulo": "No sé cómo presentar resultados"
+        },
+        {
+          "id": "no-creo-que-termine",
+          "titulo": "No creo que ya termine"
+        }
+      ]
+    }
+  ]
+}

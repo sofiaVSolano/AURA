@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.tengo-miedo.no-ser-suficiente",
+  "area": "emocional",
+  "categoria": "tengo-miedo",
+  "subtema": "no-ser-suficiente",
+  "titulo": "No ser lo suficientemente bueno",
+  "descripcion": "Tu valor no depende de un resultado académico; estar aprendiendo es parte del proceso.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.diseno.alcance",
+  "area": "academico",
+  "categoria": "diseno",
+  "subtema": "alcance",
+  "titulo": "Alcance",
+  "descripcion": "Decir lo que tu proyecto no hará es tan importante como decir lo que hará.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

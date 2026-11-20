@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-motivado.una-idea-nueva",
+  "area": "emocional",
+  "categoria": "estoy-motivado",
+  "subtema": "una-idea-nueva",
+  "titulo": "Tengo una idea nueva",
+  "descripcion": "Anota tu idea y piensa cómo se conecta con tu objetivo antes de cambiar todo el rumbo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

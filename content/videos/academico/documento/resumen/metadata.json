@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.resumen",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "resumen",
+  "titulo": "Resumen",
+  "descripcion": "Escribe el resumen al final: es el único texto que muchos leerán completo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

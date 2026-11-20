@@ -1,0 +1,22 @@
+.marco {
+  display: grid;
+  place-items: end start;
+  aspect-ratio: 16 / 9;
+  padding: var(--espacio-5);
+  border-radius: var(--radio-lg);
+  background: color-mix(in srgb, hsl(var(--matiz) 40% 50%) 8%, var(--color-superficie));
+  box-shadow: inset 0 0 0 1px var(--color-borde);
+}
+
+.texto {
+  display: grid;
+  gap: var(--espacio-1);
+  max-width: 40ch;
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
+.texto strong {
+  color: var(--color-texto);
+  font-size: var(--texto-md);
+}

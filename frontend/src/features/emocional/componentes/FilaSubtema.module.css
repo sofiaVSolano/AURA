@@ -1,0 +1,175 @@
+.fila {
+  list-style: none;
+  animation: subir var(--dur-vista) var(--ease-entrada) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.enlace {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr auto;
+  gap: var(--espacio-4);
+  align-items: center;
+  padding: var(--espacio-3);
+  border-radius: var(--radio-lg);
+  color: inherit;
+  text-decoration: none;
+  transition:
+    background-color var(--dur-media) ease,
+    transform var(--dur-media) var(--ease-salida);
+}
+
+@media (min-width: 40rem) {
+  .enlace {
+    grid-template-columns: 12rem 1fr auto;
+    gap: var(--espacio-5);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .enlace:hover {
+    background: var(--color-superficie);
+    transform: translateX(4px);
+  }
+
+  .enlace:hover .portada {
+    transform: rotate(-1.5deg) scale(1.03);
+  }
+
+  .enlace:hover .flecha {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+
+  .enlace:hover .forma {
+    transform: scale(1.15) rotate(12deg);
+  }
+}
+
+.enlace:active {
+  transform: scale(0.99);
+}
+
+/* Portada: en blanco hasta que exista la ilustración (solo grano y un matiz suave) */
+.portada {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radio-md);
+  background: color-mix(in srgb, hsl(var(--matiz) 40% 50%) 10%, var(--color-superficie-2));
+  box-shadow: inset 0 0 0 1px var(--color-borde);
+  transition: transform var(--dur-vista) var(--ease-salida);
+}
+
+.forma {
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 58% 42% 52% 48% / 46% 56% 44% 54%;
+  background: hsl(var(--matiz) 60% 70% / 0.28);
+  transition: transform var(--dur-vista) var(--ease-salida);
+}
+
+.play {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+}
+
+.texto {
+  display: grid;
+  gap: var(--espacio-1);
+  min-width: 0;
+}
+
+.categoria {
+  font-size: var(--texto-xs);
+  font-weight: 650;
+  color: var(--color-acento-texto);
+}
+
+.titulo {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  font-weight: 560;
+  line-height: 1.25;
+}
+
+.idea {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 40rem) {
+  .idea {
+    display: none;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-1);
+}
+
+.duracion {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.visto {
+  height: 4px;
+  margin-top: var(--espacio-2);
+  border-radius: 2px;
+  background: var(--color-borde);
+  overflow: hidden;
+}
+
+.visto span {
+  display: block;
+  height: 100%;
+  background: var(--color-acento);
+  transform-origin: left;
+}
+
+.flecha {
+  color: var(--color-acento-texto);
+  opacity: 0.6;
+  transition:
+    transform var(--dur-rapida) var(--ease-salida),
+    opacity var(--dur-rapida) ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fila {
+    animation-name: aparecer;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}

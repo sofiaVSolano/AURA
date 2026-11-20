@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "preguntas",
+  "titulo": "Preguntas del jurado",
+  "queEs": "Es el momento de la sustentación en que el jurado conversa contigo sobre tu trabajo: pide precisiones, explora tus decisiones y propone otras miradas.",
+  "paraQueSirve": "Permite mostrar que comprendes tu proyecto más allá del documento: por qué decidiste lo que decidiste, qué alcances y límites tiene y cómo podría continuar.",
+  "queDebeIncluir": [
+    { "elemento": "Escucha completa", "descripcion": "Entender la pregunta antes de responder; pedir que la repitan está bien." },
+    { "elemento": "Respuesta directa", "descripcion": "Empezar respondiendo lo que se preguntó, en una frase." },
+    { "elemento": "Evidencia", "descripcion": "Apoyar la respuesta en tus datos, tu método o tus fuentes." },
+    { "elemento": "Reconocimiento de límites", "descripcion": "Admitir lo que el trabajo no abarca y cómo podría abordarse." },
+    { "elemento": "Cierre breve", "descripcion": "Volver a la idea central sin extenderse." }
+  ],
+  "comoSeOrganiza": [
+    { "paso": "Escucha y toma nota", "descripcion": "Anota palabras clave de la pregunta; ganas unos segundos para pensar." },
+    { "paso": "Responde primero", "descripcion": "Una frase que conteste de forma directa." },
+    { "paso": "Sostén con evidencia", "descripcion": "Un dato, un resultado o una decisión metodológica." },
+    { "paso": "Cierra o reconoce", "descripcion": "Termina con la idea central o con el límite y la posible continuación." }
+  ],
+  "ejemplo": {
+    "contexto": "Ejemplo ilustrativo (inventado). Pregunta: «¿Por qué solo dos colegios? ¿No limita eso sus conclusiones?» Selecciona cada fragmento.",
+    "fragmentos": [
+      { "elemento": "Respuesta directa", "texto": "Sí, limita su alcance, y por eso las conclusiones se plantean solo para contextos similares.", "explicacion": "Reconoce la observación sin ponerse a la defensiva." },
+      { "elemento": "Evidencia", "texto": "Elegimos esos dos colegios porque tenían condiciones de conectividad comparables, lo que permitió aislar el efecto de la guía.", "explicacion": "Explica la decisión metodológica que hay detrás." },
+      { "elemento": "Límite y continuación", "texto": "Un siguiente paso sería replicarlo en colegios con otras condiciones de acceso.", "explicacion": "Convierte el límite en una línea de trabajo futuro." }
+    ]
+  },
+  "erroresFrecuentes": [
+    { "enLugarDe": "Responder antes de que termine la pregunta.", "prueba": "Escuchar completo y tomar una nota breve.", "porque": "Evita responder algo distinto de lo que se preguntó." },
+    { "enLugarDe": "Defenderse de toda observación.", "prueba": "Reconocer lo válido y explicar tus razones.", "porque": "El jurado valora el criterio, no la ausencia de límites." },
+    { "enLugarDe": "Improvisar una respuesta que no conoces.", "prueba": "Decir que no lo sabes y cómo lo abordarías.", "porque": "Es una respuesta honesta y muestra pensamiento investigador." }
+  ],
+  "recomendaciones": [
+    "Prepara las preguntas más probables sobre método, resultados, límites y aportes.",
+    "Ensaya respuestas de alrededor de un minuto, en voz alta.",
+    "Ten a mano diapositivas de respaldo con datos que quizá te pidan."
+  ],
+  "dependeDe": [
+    "La duración de la sesión de preguntas y su dinámica (al final o durante la presentación) dependen de cada institución.",
+    "Algunas sustentaciones son públicas y otras solo con el jurado; algunas incluyen preguntas del público."
+  ],
+  "orientativo": [{ "dato": "Respuesta típica", "valor": "Entre 45 segundos y 2 minutos, según la pregunta." }],
+  "laboratorio": "sustentacion",
+  "relacionados": ["argumentacion", "manejo-del-tiempo", "estructura", "conclusiones"]
+}

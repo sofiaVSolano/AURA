@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.desarrollo.implementacion",
+  "area": "academico",
+  "categoria": "desarrollo",
+  "subtema": "implementacion",
+  "titulo": "Implementación o trabajo de campo",
+  "descripcion": "Documentar mientras haces ahorra semanas al escribir.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

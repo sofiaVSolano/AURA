@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.documento.discusion",
+  "area": "academico",
+  "categoria": "documento",
+  "subtema": "discusion",
+  "titulo": "Discusión",
+  "descripcion": "Discutir es conversar con otros autores a partir de tus resultados.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

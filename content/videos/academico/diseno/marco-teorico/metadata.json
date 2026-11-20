@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.diseno.marco-teorico",
+  "area": "academico",
+  "categoria": "diseno",
+  "subtema": "marco-teorico",
+  "titulo": "Marco teórico",
+  "descripcion": "El marco teórico son las gafas con las que miras tu problema: elige pocas y úsalas de verdad.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

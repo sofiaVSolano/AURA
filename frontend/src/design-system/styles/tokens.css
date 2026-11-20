@@ -1,0 +1,137 @@
+/* ==========================================================================
+   AURA · Tokens primitivos
+   Fuente única de valores. Los componentes NO usan primitivos directamente:
+   usan los tokens semánticos de themes.css. Ver docs/09-sistema-de-diseno.md.
+   Todos los colores en hex sólido: tests/contraste.test.ts los valida.
+   ========================================================================== */
+:root {
+  /* — Morado: identidad de AURA — */
+  --morado-50: #f6f2fe;
+  --morado-100: #ece3fc;
+  --morado-200: #d9c8f8;
+  --morado-300: #bfa3f1;
+  --morado-400: #a07de6;
+  --morado-500: #8259d6;
+  --morado-600: #6a41bc;
+  --morado-700: #563399;
+  --morado-800: #432879;
+  --morado-900: #2f1c55;
+
+  /* — Violeta: el azul-violeta del aura (ref. estilo1.2) — */
+  --violeta-200: #cdcbfb;
+  --violeta-300: #a9a6f7;
+  --violeta-400: #8e87f2;
+  --violeta-500: #7468e4;
+  --violeta-600: #5b4fc9;
+
+  /* — Lavanda: superficies claras teñidas — */
+  --lavanda-50: #f8f6fd;
+  --lavanda-100: #f0ecfa;
+  --lavanda-200: #e1daf3;
+  --lavanda-300: #cbc0e8;
+
+  /* — Índigo: la noche (ref. estilo1.3) — */
+  --indigo-975: #0e0b22;
+  --indigo-950: #120e27;
+  --indigo-900: #1b1538;
+  --indigo-850: #221b45;
+  --indigo-800: #2b2354;
+  --indigo-700: #3c3470;
+  --indigo-600: #554c8f;
+  --indigo-500: #7f77b3;
+  --indigo-300: #bdb5dc;
+  --indigo-100: #f2effb;
+
+  /* — Papel y tinta: lo editorial (ref. estilo1.1) — */
+  --papel-50: #fcfaf7;
+  --papel-100: #f5f1ea;
+  --papel-200: #eae4d9;
+  --tinta-900: #1c1729;
+  --tinta-700: #3d3650;
+  --tinta-600: #575069;
+  --tinta-400: #857e97;
+  --blanco: #ffffff;
+
+  /* — Acentos cálidos (con moderación) — */
+  --luz-100: #e3f3f9;
+  --coral-300: #f2a08f;
+  --coral-500: #d9604a;
+  --ocre-200: #efe0b4;
+  --ocre-600: #8c6d1f;
+
+  /* — Estados semánticos — */
+  --exito-100: #ddf1e7;
+  --exito-300: #8fd8b2;
+  --exito-700: #22704f;
+  --exito-950: #12291f;
+  --aviso-100: #fbebc8;
+  --aviso-300: #f2c46b;
+  --aviso-700: #855600;
+  --aviso-950: #2e220c;
+  --error-100: #fadcdc;
+  --error-300: #f6a3a3;
+  --error-700: #a4262c;
+  --error-950: #36161c;
+  --info-100: #dee7fb;
+  --info-300: #a8c0f6;
+  --info-700: #2e5fc0;
+  --info-950: #152443;
+
+  /* — Tipografía — */
+  --fuente-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --fuente-texto: 'Atkinson Hyperlegible Next Variable', 'Segoe UI', system-ui, sans-serif;
+  /* Escala fluida mobile-first (≈1.25 en móvil → ≈1.333 en escritorio) */
+  --texto-xs: 0.8125rem;
+  --texto-sm: 0.9375rem;
+  --texto-md: 1.0625rem;
+  --texto-lg: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --texto-xl: clamp(1.4375rem, 1.25rem + 0.8vw, 1.875rem);
+  --texto-2xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.625rem);
+  --texto-3xl: clamp(2.25rem, 1.6rem + 3vw, 4.25rem);
+  --interlineado-texto: 1.6;
+  --interlineado-titulo: 1.1;
+  --medida-lectura: 66ch;
+
+  /* — Espacio (base 4px) — */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1rem;
+  --espacio-5: 1.5rem;
+  --espacio-6: 2rem;
+  --espacio-7: 3rem;
+  --espacio-8: 4rem;
+  --espacio-9: 6rem;
+  --margen-pagina: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --ancho-contenido: 72rem;
+
+  /* — Forma — */
+  --radio-sm: 8px;
+  --radio-md: 12px;
+  --radio-lg: 16px;
+  --radio-organico: 58% 42% 48% 52% / 46% 54% 46% 54%;
+  --radio-pildora: 999px;
+  --borde-fino: 1px;
+  --objetivo-tactil: 44px;
+
+  /* — Profundidad: sombras con desplazamiento y desenfoque suave — */
+  --sombra-1: 0 1px 2px rgb(28 23 41 / 0.06), 0 2px 6px rgb(28 23 41 / 0.06);
+  --sombra-2: 0 4px 10px rgb(28 23 41 / 0.08), 0 12px 28px rgb(28 23 41 / 0.08);
+  --sombra-3: 0 12px 24px rgb(18 14 39 / 0.18), 0 32px 64px rgb(18 14 39 / 0.22);
+
+  /* — Motion (ver docs/09 § Motion) — */
+  --dur-instante: 120ms;
+  --dur-rapida: 180ms;
+  --dur-media: 280ms;
+  --dur-vista: 420ms;
+  --dur-autor: 900ms;
+  --dur-respiracion: 5600ms;
+  --ease-salida: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-entrada: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-movimiento: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-respiracion: cubic-bezier(0.45, 0, 0.55, 1);
+
+  /* — Capas — */
+  --capa-nav: 20;
+  --capa-modal: 50;
+}

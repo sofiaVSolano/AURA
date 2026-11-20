@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "id": "resumen",
+  "titulo": "Resumen",
+  "queEs": "Es una versión breve y autónoma de todo tu trabajo. Quien lo lee debe entender qué problema abordaste, cómo lo hiciste, qué encontraste y qué significa, sin haber leído el resto del documento.",
+  "paraQueSirve": "Es lo primero que leen jurados, directores y buscadores académicos. Ayuda a decidir si el trabajo es relevante para quien lo consulta y, por eso, determina en gran parte su visibilidad.",
+  "queDebeIncluir": [
+    { "elemento": "Contexto y problema", "descripcion": "Una o dos frases que sitúen la situación que motivó el trabajo." },
+    { "elemento": "Objetivo", "descripcion": "Qué buscaba lograr el proyecto, en coherencia con el objetivo general." },
+    { "elemento": "Metodología", "descripcion": "Cómo se hizo: enfoque, participantes o datos, técnicas principales." },
+    { "elemento": "Resultados", "descripcion": "Los hallazgos principales, idealmente con datos concretos." },
+    { "elemento": "Conclusión", "descripcion": "Qué significan los resultados y cuál es el aporte." },
+    { "elemento": "Palabras clave", "descripcion": "Términos que ayudan a encontrar el trabajo; muchas instituciones piden entre 3 y 6." }
+  ],
+  "comoSeOrganiza": [
+    { "paso": "Del problema al objetivo", "descripcion": "Empieza por lo que motivó el trabajo y di qué buscaste lograr." },
+    { "paso": "Del objetivo al método", "descripcion": "Explica en una o dos frases cómo lo hiciste." },
+    { "paso": "Del método a los resultados", "descripcion": "Presenta lo que encontraste, no lo que esperabas encontrar." },
+    { "paso": "De los resultados a la conclusión", "descripcion": "Cierra con lo que significan y su aporte." }
+  ],
+  "ejemplo": {
+    "contexto": "Ejemplo ilustrativo (inventado) de un proyecto de ingeniería. Selecciona cada fragmento para ver qué función cumple.",
+    "fragmentos": [
+      { "elemento": "Contexto y problema", "texto": "Las pequeñas bibliotecas comunitarias registran sus préstamos en papel, lo que dificulta saber qué libros se usan y cuáles se pierden.", "explicacion": "Sitúa el problema en una frase concreta, sin rodeos ni historia general." },
+      { "elemento": "Objetivo", "texto": "Este proyecto desarrolló una aplicación móvil sencilla para registrar préstamos sin conexión a internet.", "explicacion": "Expresa lo que se buscó lograr y anticipa una restricción clave (sin conexión)." },
+      { "elemento": "Metodología", "texto": "Se diseñó con tres bibliotecas mediante entrevistas y pruebas de uso, y se evaluó durante ocho semanas.", "explicacion": "Dice cómo y con quién se trabajó, y durante cuánto tiempo, en una sola frase." },
+      { "elemento": "Resultados", "texto": "El tiempo de registro bajó de 4 a 1,5 minutos por préstamo y las bibliotecas identificaron 120 libros extraviados.", "explicacion": "Usa datos reales y verificables del trabajo; no adjetivos como «excelente» o «muy eficiente»." },
+      { "elemento": "Conclusión", "texto": "Una herramienta sin conexión puede mejorar la gestión de bibliotecas con pocos recursos.", "explicacion": "Generaliza con prudencia a partir de los resultados, sin prometer más de lo demostrado." },
+      { "elemento": "Palabras clave", "texto": "Palabras clave: bibliotecas comunitarias, aplicación móvil, préstamos, diseño centrado en el usuario.", "explicacion": "Términos que alguien usaría para buscar un trabajo como este." }
+    ]
+  },
+  "erroresFrecuentes": [
+    { "enLugarDe": "«Se obtuvieron resultados muy satisfactorios.»", "prueba": "«El tiempo de registro bajó de 4 a 1,5 minutos.»", "porque": "Un dato concreto informa; un adjetivo solo valora." },
+    { "enLugarDe": "Escribir el resumen al principio del proyecto y no actualizarlo.", "prueba": "Escribirlo o revisarlo al final, cuando ya tienes resultados.", "porque": "El resumen debe reflejar lo que realmente encontraste." },
+    { "enLugarDe": "Incluir citas o referencias dentro del resumen.", "prueba": "Dejar las citas para el cuerpo del documento.", "porque": "La mayoría de las guías piden un resumen autónomo, sin citas (verifica la norma de tu institución)." },
+    { "enLugarDe": "Contar la historia del proyecto en orden cronológico.", "prueba": "Seguir el hilo problema → objetivo → método → resultados → conclusión.", "porque": "Al lector le interesa qué se hizo y qué se encontró, no la secuencia de sucesos." }
+  ],
+  "recomendaciones": [
+    "Escríbelo al final y léelo en voz alta: si se entiende sin el resto del documento, va bien.",
+    "Usa el pasado para lo que hiciste y el presente para las conclusiones vigentes.",
+    "Comprueba que cada dato del resumen aparezca también en los resultados.",
+    "Elige palabras clave que alguien de tu área usaría para buscar tu trabajo."
+  ],
+  "dependeDe": [
+    "La extensión máxima y si se cuenta en palabras o en caracteres la define tu institución o la revista.",
+    "Algunas instituciones piden un resumen estructurado con subtítulos (Objetivo, Método, Resultados…) y otras un solo párrafo.",
+    "El número de palabras clave y si deben tomarse de un tesauro (por ejemplo, de tu disciplina) varía.",
+    "Si se permiten siglas, cifras o citas depende de la guía de tu institución o del estilo de citación (APA, IEEE, Vancouver…)."
+  ],
+  "orientativo": [
+    { "dato": "Extensión habitual", "valor": "Entre 150 y 300 palabras, aunque cada institución fija su propio límite." },
+    { "dato": "Palabras clave", "valor": "Con frecuencia entre 3 y 6." }
+  ],
+  "laboratorio": "resumen",
+  "relacionados": ["abstract", "conclusiones", "datos-y-resultados", "objetivos"]
+}

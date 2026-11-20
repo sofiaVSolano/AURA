@@ -1,0 +1,350 @@
+.bloque {
+  display: grid;
+  gap: var(--espacio-3);
+}
+
+.reproductor {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radio-lg);
+  background: var(--indigo-975);
+  color: #fff;
+  box-shadow: var(--sombra-2);
+  isolation: isolate;
+}
+
+.completa {
+  border-radius: 0;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--indigo-975);
+}
+
+.video::cue {
+  font-family: var(--fuente-texto);
+  font-size: 1.05em;
+  line-height: 1.4;
+  background: rgb(14 11 34 / 0.82);
+  color: #fff;
+}
+
+/* Botón inicial */
+.inicio {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--morado-500) 88%, transparent);
+  color: #fff;
+  box-shadow:
+    0 0 0 10px rgb(255 255 255 / 0.12),
+    var(--sombra-3);
+  transition: transform var(--dur-rapida) var(--ease-salida);
+}
+
+.inicio svg {
+  translate: 3px 0;
+}
+
+.inicio:hover {
+  transform: scale(1.06);
+}
+
+.inicio:active {
+  transform: scale(0.96);
+}
+
+/* Carga: una respiración en el centro */
+.carga {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--morado-300);
+  animation: respirar 1300ms var(--ease-respiracion) infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes respirar {
+  from {
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+}
+
+.error,
+.fin {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  background: rgb(14 11 34 / 0.78);
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.reintentar,
+.finEnlace {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--objetivo-tactil);
+  padding-inline: var(--espacio-5);
+  border: 0;
+  border-radius: var(--radio-pildora);
+  background: var(--morado-300);
+  color: var(--indigo-950);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.fin p {
+  font-size: var(--texto-sm);
+  color: var(--indigo-300);
+}
+
+/* — Barra de controles — */
+.controles {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: var(--espacio-6) var(--espacio-2) var(--espacio-2);
+  background: linear-gradient(transparent, rgb(14 11 34 / 0.85));
+  transition:
+    opacity var(--dur-media) ease,
+    transform var(--dur-media) var(--ease-salida);
+}
+
+.reproductor[data-ocultar] .controles {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.reproductor[data-ocultar] {
+  cursor: none;
+}
+
+.reproductor:focus-within .controles {
+  opacity: 1;
+  transform: none;
+}
+
+.control {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  transition:
+    background-color var(--dur-rapida) ease,
+    transform var(--dur-instante) var(--ease-salida);
+}
+
+.control:hover {
+  background: rgb(255 255 255 / 0.14);
+}
+
+.control:active {
+  transform: scale(0.94);
+}
+
+.control[aria-pressed='true'] {
+  color: var(--morado-200);
+}
+
+.control:focus-visible,
+.inicio:focus-visible,
+.reintentar:focus-visible,
+.finEnlace:focus-visible {
+  outline: 3px solid var(--luz-100);
+  outline-offset: 2px;
+}
+
+.tiempo {
+  flex: none;
+  padding-inline: var(--espacio-2);
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rangos */
+.progreso,
+.rangoVolumen {
+  --relleno: 0%;
+  appearance: none;
+  height: var(--objetivo-tactil);
+  background: transparent;
+  cursor: pointer;
+}
+
+.progreso {
+  flex: 1;
+  min-width: 0;
+}
+
+.progreso::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--morado-300) var(--relleno), rgb(255 255 255 / 0.28) var(--relleno));
+}
+
+.progreso::-moz-range-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--morado-300) var(--relleno), rgb(255 255 255 / 0.28) var(--relleno));
+}
+
+.rangoVolumen::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.4);
+}
+
+.rangoVolumen::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: rgb(255 255 255 / 0.4);
+}
+
+.progreso::-webkit-slider-thumb,
+.rangoVolumen::-webkit-slider-thumb {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 4px rgb(191 163 241 / 0.4);
+}
+
+.rangoVolumen::-webkit-slider-thumb {
+  margin-top: -5px;
+}
+
+.progreso::-moz-range-thumb,
+.rangoVolumen::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.progreso:focus-visible,
+.rangoVolumen:focus-visible {
+  outline: 3px solid var(--luz-100);
+  outline-offset: -8px;
+  border-radius: 8px;
+}
+
+.volumen {
+  display: flex;
+  align-items: center;
+}
+
+.rangoVolumen {
+  width: 0;
+  opacity: 0;
+  transition:
+    width var(--dur-media) var(--ease-salida),
+    opacity var(--dur-rapida) ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .volumen:hover .rangoVolumen,
+  .volumen:focus-within .rangoVolumen {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+/* Transcripción */
+.transcripcion {
+  border-radius: var(--radio-md);
+  background: var(--color-superficie-2);
+}
+
+.transcripcion summary {
+  min-height: var(--objetivo-tactil);
+  padding: var(--espacio-3) var(--espacio-4);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.transcripcion[open] summary {
+  border-bottom: var(--borde-fino) solid var(--color-borde);
+}
+
+.texto {
+  padding: var(--espacio-4);
+  max-width: var(--medida-lectura);
+  white-space: pre-line;
+}
+
+@media (max-width: 30rem) {
+  .tiempo {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carga {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+/* Subtítulos propios: siempre legibles y por encima de los controles */
+.subtitulo {
+  position: absolute;
+  inset-inline: var(--espacio-4);
+  inset-block-end: 4.25rem;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+  white-space: pre-line;
+  transition: inset-block-end var(--dur-media) var(--ease-salida);
+}
+
+.reproductor[data-ocultar] .subtitulo {
+  inset-block-end: var(--espacio-4);
+}
+
+.subtitulo span {
+  max-width: 42ch;
+  padding: 0.2em 0.6em;
+  border-radius: var(--radio-sm);
+  background: rgb(14 11 34 / 0.82);
+  color: #fff;
+  font-size: clamp(0.95rem, 0.8rem + 1vw, 1.35rem);
+  line-height: 1.4;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}

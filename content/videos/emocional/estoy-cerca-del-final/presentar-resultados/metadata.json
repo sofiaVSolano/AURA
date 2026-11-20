@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-cerca-del-final.presentar-resultados",
+  "area": "emocional",
+  "categoria": "estoy-cerca-del-final",
+  "subtema": "presentar-resultados",
+  "titulo": "No sé cómo presentar resultados",
+  "descripcion": "Presentar resultados es contar una historia: qué buscabas, qué encontraste y qué significa.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

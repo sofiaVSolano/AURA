@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "academico.planteamiento.justificacion",
+  "area": "academico",
+  "categoria": "planteamiento",
+  "subtema": "justificacion",
+  "titulo": "Justificación",
+  "descripcion": "Justificar es responder: ¿qué cambia, y para quién, si tu proyecto existe?",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

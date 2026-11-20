@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "objetivos",
+  "titulo": "Objetivos",
+  "queEs": "Son los logros que tu proyecto se compromete a alcanzar. Hay un objetivo general, que responde a la pregunta de investigación, y varios específicos, que son los pasos para lograrlo.",
+  "paraQueSirve": "Orientan todo el trabajo y se convierten en el criterio con el que se evalúa: al final, las conclusiones deben dar cuenta de cada objetivo. Unos objetivos claros evitan que el proyecto crezca sin control.",
+  "queDebeIncluir": [
+    { "elemento": "Verbo en infinitivo", "descripcion": "Una acción que se pueda observar o verificar (analizar, diseñar, comparar, evaluar)." },
+    { "elemento": "Qué", "descripcion": "El objeto sobre el que actúas." },
+    { "elemento": "Para qué o en qué contexto", "descripcion": "La finalidad o el ámbito, cuando aporta precisión." },
+    { "elemento": "Coherencia", "descripcion": "Los específicos, juntos, deben permitir alcanzar el general." }
+  ],
+  "comoSeOrganiza": [
+    { "paso": "Parte de la pregunta", "descripcion": "El objetivo general es la pregunta de investigación convertida en propósito." },
+    { "paso": "Divide en pasos", "descripcion": "Cada objetivo específico es una etapa necesaria para llegar al general." },
+    { "paso": "Ordena con lógica", "descripcion": "Normalmente van del diagnóstico o la caracterización, al diseño o análisis, a la evaluación." },
+    { "paso": "Verifica", "descripcion": "Pregúntate cómo sabrás que lograste cada uno." }
+  ],
+  "ejemplo": {
+    "contexto": "Ejemplo ilustrativo (inventado). Selecciona cada fragmento para ver qué función cumple.",
+    "fragmentos": [
+      { "elemento": "Objetivo general", "texto": "Evaluar el efecto de una guía audiovisual en la entrega de tareas de estudiantes de noveno grado de dos colegios rurales.", "explicacion": "El verbo «evaluar» es verificable, y el objeto y el contexto están delimitados." },
+      { "elemento": "Específico 1", "texto": "Caracterizar las condiciones de acceso a dispositivos de los estudiantes.", "explicacion": "Diagnóstico: necesario para diseñar algo adecuado." },
+      { "elemento": "Específico 2", "texto": "Diseñar una guía audiovisual sobre el uso de la plataforma de tareas.", "explicacion": "Producción: responde a las necesidades halladas en el paso anterior." },
+      { "elemento": "Específico 3", "texto": "Comparar la entrega de tareas antes y después de usar la guía.", "explicacion": "Evaluación: es lo que permite alcanzar el objetivo general." }
+    ]
+  },
+  "erroresFrecuentes": [
+    { "enLugarDe": "«Conocer…», «Entender…», «Aprender sobre…»", "prueba": "«Identificar…», «Describir…», «Comparar…»", "porque": "Conocer o entender ocurren en tu mente y no se pueden verificar desde fuera." },
+    { "enLugarDe": "Objetivos específicos que son actividades («Hacer encuestas»).", "prueba": "Expresar el logro («Caracterizar las condiciones de acceso…»).", "porque": "La encuesta es un medio; el objetivo es lo que obtienes con ella." },
+    { "enLugarDe": "Un específico que va más allá del general.", "prueba": "Revisar que cada específico contribuya al general y no lo supere.", "porque": "Si un específico no aporta al general, sobra o el general está mal formulado." }
+  ],
+  "recomendaciones": [
+    "Un verbo por objetivo: dos verbos suelen esconder dos objetivos.",
+    "Si al leer un objetivo no puedes imaginar cómo comprobarlo, reformúlalo.",
+    "Revisa tus objetivos cada vez que cambie tu pregunta: deben moverse juntos."
+  ],
+  "dependeDe": [
+    "El número de objetivos específicos esperado varía según la institución y la modalidad (con frecuencia, entre 3 y 5).",
+    "Algunas disciplinas usan hipótesis además de objetivos; otras, preguntas orientadoras.",
+    "Ciertas instituciones piden taxonomías de verbos concretas (por ejemplo, la de Bloom): revisa su guía."
+  ],
+  "orientativo": [{ "dato": "Objetivos específicos", "valor": "Con frecuencia entre 3 y 5, según la institución." }],
+  "laboratorio": "objetivos",
+  "relacionados": ["pregunta", "problema", "metodologia", "conclusiones"]
+}

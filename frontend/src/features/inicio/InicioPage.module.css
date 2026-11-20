@@ -1,0 +1,250 @@
+/* — Escena principal: sangra hasta los bordes de la ventana — */
+.escena {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: min(92dvh, 56rem);
+  overflow: hidden;
+  background: radial-gradient(120% 90% at 50% 0%, var(--indigo-850), var(--indigo-975) 70%);
+  color: var(--color-texto);
+}
+
+.escenaContenido {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-4);
+  max-width: 48rem;
+  margin-inline: auto;
+  padding: var(--espacio-7) var(--margen-pagina) var(--espacio-9);
+  text-align: center;
+}
+
+/* El personaje entra flotando y luego sigue al puntero */
+.avatar {
+  animation: emerger 1200ms var(--ease-entrada) 200ms both;
+}
+
+.avatar svg {
+  width: min(44vw, 210px);
+  height: auto;
+}
+
+@keyframes emerger {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.92);
+    filter: blur(8px);
+  }
+}
+
+.saludo {
+  font-size: var(--texto-md);
+  color: var(--color-acento-texto);
+  font-weight: 600;
+}
+
+.frase {
+  font-size: var(--texto-3xl);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  max-width: 18ch;
+  animation: emerger 1000ms var(--ease-entrada) 450ms both;
+}
+
+.bajada {
+  max-width: 44ch;
+  font-size: var(--texto-lg);
+  color: var(--color-texto-suave);
+  animation: emerger 1000ms var(--ease-entrada) 650ms both;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-3);
+  margin-block-start: var(--espacio-2);
+  animation: emerger 1000ms var(--ease-entrada) 800ms both;
+}
+
+/* Invitación a bajar: una gota de luz que desciende */
+.bajar {
+  position: absolute;
+  inset-block-end: var(--espacio-5);
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  display: grid;
+  place-items: start center;
+  width: 28px;
+  height: 46px;
+  border: 2px solid color-mix(in srgb, var(--color-texto) 45%, transparent);
+  border-radius: var(--radio-pildora);
+}
+
+.bajar span {
+  width: 4px;
+  height: 8px;
+  margin-top: 7px;
+  border-radius: 2px;
+  background: var(--color-texto);
+  animation: descender 1800ms var(--ease-entrada) infinite;
+}
+
+@keyframes descender {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+/* — Dimensiones: dos puertas con su propio ámbito, composición asimétrica — */
+.dimensiones {
+  display: grid;
+  gap: var(--espacio-4);
+  padding-block: var(--espacio-8) var(--espacio-6);
+}
+
+.dimensionesTitulo {
+  font-size: var(--texto-2xl);
+  margin-block-end: var(--espacio-2);
+}
+
+@media (min-width: 48rem) {
+  .dimensiones {
+    grid-template-columns: 7fr 5fr;
+    align-items: stretch;
+  }
+
+  .dimensionesTitulo {
+    grid-column: 1 / -1;
+  }
+
+  .puertaAcademica {
+    margin-block-start: var(--espacio-7);
+  }
+}
+
+.puerta {
+  --elevar: 0px;
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--espacio-3);
+  min-height: 17rem;
+  padding: var(--espacio-6);
+  border-radius: var(--radio-lg);
+  background: var(--color-fondo);
+  color: var(--color-texto);
+  text-decoration: none;
+  box-shadow: var(--sombra-2);
+  overflow: hidden;
+  transform: perspective(900px) rotateX(calc(var(--py, 0) * -3deg)) rotateY(calc(var(--px, 0) * 4deg)) translateY(var(--elevar));
+  transition:
+    transform 500ms var(--ease-salida),
+    box-shadow var(--dur-media) var(--ease-salida);
+}
+
+/* Brillo que sigue al puntero */
+.puerta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    22rem circle at calc((var(--px, 0) + 1) * 50%) calc((var(--py, 0) + 1) * 50%),
+    color-mix(in srgb, var(--color-acento) 22%, transparent),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-media) ease;
+  pointer-events: none;
+}
+
+.puerta > svg {
+  color: var(--color-acento-texto);
+}
+
+.puertaEmocional {
+  background: radial-gradient(90% 120% at 85% 0%, var(--indigo-800), var(--indigo-950) 70%);
+}
+
+.puertaAcademica {
+  background: var(--papel-50);
+  border: var(--borde-fino) solid var(--papel-200);
+  box-shadow: var(--sombra-1);
+}
+
+.puertaTitulo {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-2xl);
+  font-weight: 560;
+  line-height: var(--interlineado-titulo);
+}
+
+.puertaTexto {
+  max-width: 40ch;
+  color: var(--color-texto-suave);
+}
+
+.puertaIr {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-block-start: auto;
+  padding-block-start: var(--espacio-4);
+  font-weight: 650;
+  color: var(--color-acento-texto);
+}
+
+.puertaIr svg {
+  transition: transform var(--dur-rapida) var(--ease-salida);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .puerta:hover {
+    --elevar: -4px;
+    box-shadow: var(--sombra-3);
+  }
+
+  .puerta:hover::before {
+    opacity: 1;
+  }
+
+  .puerta:hover .puertaIr svg {
+    transform: translateX(4px);
+  }
+}
+
+.puerta:active {
+  --elevar: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar,
+  .frase,
+  .bajada,
+  .acciones {
+    animation-name: aparecer;
+  }
+
+  .bajar span {
+    animation: none;
+  }
+
+  .puerta {
+    transform: none;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}

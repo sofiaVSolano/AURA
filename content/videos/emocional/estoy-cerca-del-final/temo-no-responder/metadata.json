@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-cerca-del-final.temo-no-responder",
+  "area": "emocional",
+  "categoria": "estoy-cerca-del-final",
+  "subtema": "temo-no-responder",
+  "titulo": "Temo no saber responder",
+  "descripcion": "No saber una respuesta no invalida tu trabajo; puedes reconocerlo con calma y explicar cómo lo abordarías.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

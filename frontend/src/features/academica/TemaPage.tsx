@@ -1,0 +1,246 @@
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router';
+import { EstadoVista, Etiqueta, Icono, ReproductorVideo, useTituloDocumento, VideoPendiente } from '../../design-system/index.ts';
+import { fuentesDe } from '../../content/videos/catalogo.ts';
+import { NoEncontrado } from '../../app/Errores.tsx';
+import { useEmocional } from '../emocional/estado/EmocionalContexto.tsx';
+import { AvancesTema } from './componentes/AvancesTema.tsx';
+import { EjemploDesglosado } from './componentes/EjemploDesglosado.tsx';
+import { ErroresFrecuentes } from './componentes/ErroresFrecuentes.tsx';
+import { laboratorioPorId, rutaLaboratorio, rutaTema, temaPorId } from './datos/catalogoAcademico.ts';
+import { useAcademica } from './estado/AcademicaContexto.tsx';
+import type { EstadoTema } from './dominio/estadoAcademico.ts';
+import estilos from './componentes/Guia.module.css';
+
+const SECCIONES = [
+  ['para-que', 'Para qué sirve'],
+  ['incluye', 'Qué debe incluir'],
+  ['organiza', 'Cómo se organiza'],
+  ['ejemplo', 'Ejemplo explicado'],
+  ['errores', 'Errores frecuentes'],
+  ['recomendaciones', 'Recomendaciones'],
+  ['depende', 'Depende de tu institución'],
+  ['practica', 'Actividad práctica'],
+] as const;
+
+const IDS_SECCIONES: readonly string[] = SECCIONES.map(([id]) => id);
+const SIN_SECCIONES: readonly string[] = [];
+
+const OPCIONES_ESTADO: Array<[EstadoTema | null, string]> = [
+  [null, 'Sin marcar'],
+  ['en-curso', 'Lo estoy trabajando'],
+  ['explorado', 'Ya lo exploré'],
+];
+
+/** Índice que sigue la lectura (scroll-spy) sin reaccionar a cada píxel. */
+function useSeccionActiva(ids: readonly string[]) {
+  const [activa, setActiva] = useState(ids[0]);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (es) => es.forEach((e) => e.isIntersecting && setActiva(e.target.id)),
+      { rootMargin: '-30% 0px -60% 0px' },
+    );
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, [ids]);
+  return activa;
+}
+
+export function TemaPage() {
+  const { etapa: etapaId, tema: temaId } = useParams();
+  const r = temaPorId(temaId);
+  const { carga, marcarTema } = useAcademica();
+  const { registrarAvance } = useEmocional();
+  useTituloDocumento(r ? `${r.tema.titulo} · AURA académica` : 'Página no encontrada');
+  const activa = useSeccionActiva(r?.guia ? IDS_SECCIONES : SIN_SECCIONES);
+  if (!r || r.etapa.id !== etapaId) return <NoEncontrado />;
+
+  const { guia: g, etapa, tema, video } = r;
+  const marca = carga.estado === 'listo' ? (carga.datos.temas[tema.id] ?? null) : null;
+  const lab = laboratorioPorId(g?.laboratorio ?? undefined);
+  const fuentes = video && r.videoDisponible ? fuentesDe(video) : null;
+
+  return (
+    <div className={estilos.pagina}>
+      <nav aria-label="Ruta de navegación" className={estilos.migas}>
+        <Link to="/academica" viewTransition>
+          AURA académica
+        </Link>
+        <span aria-hidden="true">/</span>
+        <span>{etapa.titulo}</span>
+      </nav>
+
+      <header className={estilos.cabecera}>
+        <Etiqueta tono="academico">{etapa.titulo}</Etiqueta>
+        <h1 className={estilos.titulo}>{tema.titulo}</h1>
+        <p className={estilos.lead}>{g?.queEs ?? tema.resumen}</p>
+        <fieldset className={estilos.marca}>
+          <legend className="visualmente-oculto">¿Cómo vas con este tema?</legend>
+          {OPCIONES_ESTADO.map(([valor, etiqueta]) => (
+            <label key={etiqueta} className={estilos.opcionMarca}>
+              <input
+                type="radio"
+                name="estado-tema"
+                checked={marca === valor}
+                onChange={() => marcarTema(tema.id, valor)}
+                disabled={carga.estado !== 'listo'}
+              />
+              {etiqueta}
+            </label>
+          ))}
+        </fieldset>
+      </header>
+
+      {!g ? (
+        <EstadoVista
+          tipo="vacio"
+          titulo="Esta guía está en preparación"
+          descripcion="Mientras tanto, puedes registrar tus avances sobre este tema más abajo o explorar las guías disponibles."
+        />
+      ) : (
+        <div className={estilos.cuerpo}>
+          <nav className={estilos.indice} aria-label="En esta guía">
+            <ol>
+              {SECCIONES.map(([id, nombre]) => (
+                <li key={id}>
+                  <a href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>
+                    {nombre}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className={estilos.secciones}>
+            <section id="para-que" className={estilos.seccion}>
+              <h2>Para qué sirve</h2>
+              <p className={estilos.parrafo}>{g.paraQueSirve}</p>
+            </section>
+
+            <section id="incluye" className={estilos.seccion}>
+              <h2>Qué debe incluir</h2>
+              <p className={estilos.nota}>Abre cada pieza para ver qué aporta.</p>
+              <div className={estilos.piezas}>
+                {g.queDebeIncluir.map((x) => (
+                  <details key={x.elemento} className={estilos.pieza}>
+                    <summary>{x.elemento}</summary>
+                    <p>{x.descripcion}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+
+            <section id="organiza" className={estilos.seccion}>
+              <h2>Cómo se organiza</h2>
+              <ol className={estilos.pasos}>
+                {g.comoSeOrganiza.map((p) => (
+                  <li key={p.paso}>
+                    <strong>{p.paso}</strong>
+                    <p>{p.descripcion}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+
+            <section id="ejemplo" className={estilos.seccion}>
+              <h2>Ejemplo explicado</h2>
+              <EjemploDesglosado ejemplo={g.ejemplo} />
+            </section>
+
+            <section id="errores" className={estilos.seccion}>
+              <h2>Errores frecuentes</h2>
+              <ErroresFrecuentes errores={g.erroresFrecuentes} />
+            </section>
+
+            <section id="recomendaciones" className={estilos.seccion}>
+              <h2>Recomendaciones</h2>
+              <ul className={estilos.recomendaciones}>
+                {g.recomendaciones.map((x) => (
+                  <li key={x}>
+                    <Icono nombre="check" tamano={18} />
+                    {x}
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section id="depende" className={`${estilos.seccion} ${estilos.depende}`}>
+              <h2>Depende de tu institución</h2>
+              <p className={estilos.nota}>
+                Estas normas no son universales: cambian según la institución, la disciplina o el estilo de citación.
+                Consulta siempre la guía oficial de tu programa.
+              </p>
+              <ul>
+                {g.dependeDe.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+              {g.orientativo.length > 0 && (
+                <dl className={estilos.orientativo}>
+                  {g.orientativo.map((o) => (
+                    <div key={o.dato}>
+                      <dt>{o.dato} (orientativo)</dt>
+                      <dd>{o.valor}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </section>
+
+            <section id="practica" className={estilos.seccion}>
+              <h2>Actividad práctica</h2>
+              {lab ? (
+                <Link to={rutaLaboratorio(lab.id)} viewTransition className={estilos.tarjetaLab}>
+                  <span className={estilos.rotulo}>Laboratorio</span>
+                  <strong>{lab.titulo}</strong>
+                  <span>{lab.descripcion}</span>
+                  <span className={estilos.labIr}>
+                    {lab.actividades.length} actividades <Icono nombre="flecha" tamano={18} />
+                  </span>
+                </Link>
+              ) : (
+                <p className={estilos.nota}>El laboratorio de este tema está en preparación.</p>
+              )}
+            </section>
+          </div>
+        </div>
+      )}
+
+      {video && (
+        <section className={estilos.seccionVideo} aria-labelledby="video-tema">
+          <h2 id="video-tema">En un minuto</h2>
+          <p className={estilos.nota}>{video.descripcion}</p>
+          {fuentes ? (
+            <ReproductorVideo titulo={video.titulo} fuentes={fuentes} duracion={video.duracionSegundos ?? undefined} onProgreso={(f) => registrarAvance(video.id, f)} />
+          ) : (
+            <VideoPendiente />
+          )}
+        </section>
+      )}
+
+      <AvancesTema temaId={tema.id} titulo={tema.titulo} />
+
+      {g && g.relacionados.length > 0 && (
+        <section aria-labelledby="relacionados" className={estilos.relacionados}>
+          <h2 id="relacionados">Contenidos relacionados</h2>
+          <ul>
+            {g.relacionados.map((id) => {
+              const t = temaPorId(id);
+              return t ? (
+                <li key={id}>
+                  <Link to={rutaTema(t)} viewTransition>
+                    {t.tema.titulo}
+                    <span>{t.etapa.titulo}</span>
+                  </Link>
+                </li>
+              ) : null;
+            })}
+          </ul>
+        </section>
+      )}
+    </div>
+  );
+}

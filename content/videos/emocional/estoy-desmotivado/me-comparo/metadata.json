@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.estoy-desmotivado.me-comparo",
+  "area": "emocional",
+  "categoria": "estoy-desmotivado",
+  "subtema": "me-comparo",
+  "titulo": "Me comparo con otros",
+  "descripcion": "Cada proyecto tiene su propio ritmo y contexto; compararte muestra solo una parte de la historia.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.me-siento-perdido.no-se-empezar",
+  "area": "emocional",
+  "categoria": "me-siento-perdido",
+  "subtema": "no-se-empezar",
+  "titulo": "No sé por dónde empezar",
+  "descripcion": "No necesitas tenerlo todo claro para empezar: un primer paso pequeño ya es un comienzo.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}

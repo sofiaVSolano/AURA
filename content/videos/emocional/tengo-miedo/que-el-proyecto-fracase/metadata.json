@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "id": "emocional.tengo-miedo.que-el-proyecto-fracase",
+  "area": "emocional",
+  "categoria": "tengo-miedo",
+  "subtema": "que-el-proyecto-fracase",
+  "titulo": "Que el proyecto fracase",
+  "descripcion": "Un proyecto puede cambiar de rumbo sin que eso signifique fracasar: los ajustes también son avances.",
+  "estado": "idea",
+  "duracionObjetivoSegundos": 45,
+  "duracionSegundos": null,
+  "archivos": {
+    "video": null,
+    "videoAlterno": null,
+    "poster": null,
+    "subtitulos": {},
+    "transcripcion": null
+  },
+  "perfiles": [
+    "*"
+  ],
+  "etiquetas": [],
+  "creditos": [],
+  "actualizado": "2026-11-20"
+}
