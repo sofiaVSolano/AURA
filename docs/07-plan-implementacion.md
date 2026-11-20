@@ -27,6 +27,10 @@ D1 el código vive en `C:\dev\aura` · D2 Vite + React + TS · CSS propio con to
 
 **F4 completada:** AURA académica, con ruta configurable, 4 guías completas, 4 laboratorios y simulador (docs/13). El repositorio se separó en `frontend/` y `backend/` (este último aún sin implementar; ver backend/README.md); `content/` y `docs/` son compartidos.
 
+**F5 completada:** auditoría de integración, seguridad, rendimiento y accesibilidad, con pruebas de navegador versionadas (docs/14).
+
+**Backend implementado** (cambia la decisión D3 a petición del equipo): cuentas con correo y contraseña, sincronización de todos los datos con consentimiento y validación del progreso en el servidor (docs/15). El despliegue en el servidor del profesor está documentado, pero no se ha ejecutado.
+
 ## Decisiones pendientes (histórico)
 
 | ID | Decisión | Recomendación |

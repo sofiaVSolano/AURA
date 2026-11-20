@@ -1,6 +1,7 @@
 import { useLayoutEffect } from 'react';
 import { Link, Outlet, ScrollRestoration, useLocation, useMatches } from 'react-router';
 import { Personaje } from '../features/mi-aura/avatar/Personaje.tsx';
+import { apiHabilitada, sesion } from '../lib/api.ts';
 import { useMiAura } from '../features/mi-aura/estado/MiAuraContexto.tsx';
 import { Navegacion, useTituloDocumento, type ItemNavegacion } from '../design-system/index.ts';
 import { esHandleRuta, type HandleRuta } from './rutas.ts';
@@ -71,6 +72,11 @@ export function Diseno() {
             <Link to="/recursos" viewTransition className={estilos.recursos}>
               Recursos
             </Link>
+            {apiHabilitada && (
+              <Link to="/cuenta" viewTransition className={estilos.recursos}>
+                {sesion.activa ? 'Mi cuenta' : 'Entrar'}
+              </Link>
+            )}
             <AvatarCabecera />
           </div>
         </div>

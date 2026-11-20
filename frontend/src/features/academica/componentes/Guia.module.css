@@ -85,6 +85,11 @@
   outline-offset: 2px;
 }
 
+/* Mientras se descarga la guía se reserva su espacio */
+.reservaGuia {
+  min-height: 100vh;
+}
+
 /* — Cuerpo con índice lateral — */
 .cuerpo {
   display: grid;
@@ -433,7 +438,6 @@
 
 .prueba .porque {
   font-size: var(--texto-sm);
-  opacity: 0.9;
 }
 
 .revelar {

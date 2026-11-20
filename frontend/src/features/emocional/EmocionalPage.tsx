@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { EstadoVista, useParalaje } from '../../design-system/index.ts';
 import { Personaje } from '../mi-aura/avatar/Personaje.tsx';
 import { useMiAura } from '../mi-aura/estado/MiAuraContexto.tsx';
+import { PREFERENCIAS_INICIALES } from '../mi-aura/dominio/modelo.ts';
 import { Orbe } from './componentes/Orbe.tsx';
 import { FilaSubtema } from './componentes/FilaSubtema.tsx';
 import { catalogoEmocional, todosLosSubtemas } from './datos/catalogoEmocional.ts';
@@ -23,9 +24,15 @@ export function EmocionalPage() {
     <>
       <section ref={escena} className={`${estilos.entrada} sangrado textura-grano`} aria-labelledby="pregunta">
         <div className={estilos.cabecera}>
-          {aura && evolucion && (
-            <Personaje preferencias={aura} etapa={evolucion.indice} tamano={88} quieto className={estilos.compania} />
-          )}
+          {/* El acompañante ocupa siempre su lugar (tu AURA, o la esfera de origen si aún no nace):
+              así nada se desplaza cuando terminan de cargar los datos. */}
+          <Personaje
+            preferencias={aura ?? PREFERENCIAS_INICIALES}
+            etapa={aura && evolucion ? evolucion.indice : 0}
+            tamano={88}
+            quieto
+            className={estilos.compania}
+          />
           <h1 id="pregunta" className={estilos.pregunta}>
             {catalogoEmocional.pregunta}
           </h1>

@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Link, useParams } from 'react-router';
-import { Boton, BotonEnlace, Icono, ReproductorVideo, useTituloDocumento, VideoPendiente } from '../../design-system/index.ts';
+import { Boton, BotonEnlace, Icono, useTituloDocumento, VideoPendiente } from '../../design-system/index.ts';
+import { ReproductorDiferido as ReproductorVideo } from '../../design-system/components/ReproductorVideo/ReproductorDiferido.tsx';
 import { fuentesDe } from '../../content/videos/catalogo.ts';
 import { NoEncontrado } from '../../app/Errores.tsx';
 import { Aprendizajes } from './componentes/Aprendizajes.tsx';

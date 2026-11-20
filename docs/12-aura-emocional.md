@@ -8,7 +8,7 @@
 | `/emocional/:categoria` | El orbe viaja desde la entrada (View Transitions). Muestra las situaciones en filas editoriales con portada (en blanco hasta que exista), idea principal, duración, estado, «Guardado» y progreso visto, además de las categorías relacionadas |
 | `/emocional/:categoria/:subtema` | Reproductor (o marco en blanco si el video está en preparación), guardar para después, siguiente, «¿Qué te llevas de aquí?» (aprendizajes privados) y más de la categoría |
 
-Las tres rutas se cargan de forma diferida: el JS inicial pasó de 124 KB a 79 KB comprimidos.
+Las tres rutas se cargan de forma diferida. (Corrección en F5: el JS inicial real es de 120–145 KB comprimidos, no 79 KB; ver docs/14 § 6.)
 
 ## Contenido
 

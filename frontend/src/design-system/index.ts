@@ -9,7 +9,7 @@ export { Icono, type NombreIcono } from './components/Icono/Icono.tsx';
 export { Modal } from './components/Modal/Modal.tsx';
 export { Navegacion, type ItemNavegacion } from './components/Navegacion/Navegacion.tsx';
 export { BarraProgreso, PasosProgreso, type EstadoPaso } from './components/Progreso/Progreso.tsx';
-export { formatoTiempo, ReproductorVideo, type FuentesVideo } from './components/ReproductorVideo/ReproductorVideo.tsx';
+// ReproductorVideo se importa directamente desde su archivo (carga diferida por página).
 export { Tarjeta, TarjetaEnlace } from './components/Tarjeta/Tarjeta.tsx';
 export { VideoPendiente } from './components/VideoPendiente/VideoPendiente.tsx';
 export { useEnVista } from './hooks/useEnVista.ts';

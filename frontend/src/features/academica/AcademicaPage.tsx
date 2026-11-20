@@ -51,7 +51,7 @@ export function AcademicaPage() {
                         <Link
                           to={rutaTema({ etapa, tema: t })}
                           viewTransition
-                          className={cx(estilos.tema, marca && estilos[marca], !r?.guia && estilos.pendiente)}
+                          className={cx(estilos.tema, marca && estilos[marca], !r?.tieneGuia && estilos.pendiente)}
                           title={t.resumen}
                         >
                           {marca === 'explorado' && <Icono nombre="check" tamano={14} />}
@@ -59,7 +59,7 @@ export function AcademicaPage() {
                           {t.titulo}
                           <span className="visualmente-oculto">
                             {marca === 'explorado' ? ' (explorado)' : marca === 'en-curso' ? ' (lo estás trabajando)' : ''}
-                            {!r?.guia ? ' (guía en preparación)' : ''}
+                            {!r?.tieneGuia ? ' (guía en preparación)' : ''}
                           </span>
                         </Link>
                       </li>

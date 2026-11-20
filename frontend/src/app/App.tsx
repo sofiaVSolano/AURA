@@ -54,6 +54,11 @@ const rutas: RouteObject[] = [
     lazy: async () => ({ Component: (await import('../features/mi-aura/onboarding/OnboardingPage.tsx')).OnboardingPage }),
   },
   {
+    path: 'cuenta',
+    handle: h({ ambito: 'inicio', titulo: 'Tu cuenta' }),
+    lazy: async () => ({ Component: (await import('../features/cuenta/CuentaPage.tsx')).CuentaPage }),
+  },
+  {
     path: 'recursos',
     handle: h({ ambito: 'inicio', titulo: 'Recursos de acompañamiento' }),
     lazy: async () => ({ Component: (await import('../features/recursos/RecursosPage.tsx')).RecursosPage }),

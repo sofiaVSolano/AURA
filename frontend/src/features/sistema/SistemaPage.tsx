@@ -13,8 +13,8 @@ import {
   GrupoOpciones,
   Modal,
   PasosProgreso,
-  ReproductorVideo,
 } from '../../design-system/index.ts';
+import { ReproductorVideo } from '../../design-system/components/ReproductorVideo/ReproductorVideo.tsx';
 import { Actividad } from '../academica/componentes/Actividades.tsx';
 import { laboratorioPorId } from '../academica/datos/catalogoAcademico.ts';
 import { Personaje } from '../mi-aura/avatar/Personaje.tsx';
