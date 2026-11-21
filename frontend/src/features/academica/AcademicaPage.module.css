@@ -1072,3 +1072,143 @@
     opacity: 0;
   }
 }
+
+/* ———— Laboratorios por etapa y la llave de la tesis ———— */
+.tesis {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-4);
+  margin-bottom: var(--espacio-6);
+  padding: var(--espacio-5);
+  overflow: hidden;
+  border-radius: 24px;
+  background: linear-gradient(120deg, var(--morado-700), var(--violeta-600));
+  color: #fff;
+  text-decoration: none;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tesis:hover {
+  transform: translateY(-3px);
+}
+
+.tesisCandado {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.18);
+  font-size: 1.6rem;
+}
+
+.tesis[data-desbloqueada] .tesisCandado {
+  background: #ffd76a;
+  color: #4a2a00;
+  animation: brillo 1.8s ease-in-out infinite;
+}
+
+@keyframes brillo {
+  50% {
+    box-shadow: 0 0 0 10px rgb(255 215 106 / 0.25);
+  }
+}
+
+.tesisTexto {
+  display: grid;
+  gap: 2px;
+}
+
+.tesisTexto strong {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-xl);
+  font-weight: 560;
+}
+
+.tesisTexto span {
+  color: var(--morado-100);
+  font-size: var(--texto-sm);
+}
+
+.tesisBarra {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  height: 5px;
+  background: linear-gradient(#ffd76a, #ffd76a) 0 0 / calc(var(--avance) * 100%) 100% no-repeat, rgb(255 255 255 / 0.15);
+}
+
+.etapasLab {
+  display: grid;
+  gap: var(--espacio-6);
+}
+
+.etapaLab {
+  display: grid;
+  gap: var(--espacio-3);
+}
+
+.etapaLabTitulo {
+  display: flex;
+  align-items: baseline;
+  gap: var(--espacio-3);
+  font-size: var(--texto-xl);
+  font-weight: 560;
+}
+
+.etapaLabTitulo span {
+  font-size: var(--texto-sm);
+  font-weight: 700;
+  color: var(--color-acento-texto);
+}
+
+.etapasLab .labs {
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  margin: 0;
+}
+
+.etapasLab .labEnlace {
+  min-height: 0;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4);
+  border-radius: 18px;
+}
+
+.etapasLab .labEnlace::after {
+  width: 4.5rem;
+  height: 4.5rem;
+  inset-block-start: -1.4rem;
+  inset-inline-end: -1.4rem;
+}
+
+.etapasLab .labTitulo {
+  font-size: var(--texto-lg);
+}
+
+.labEnlace[data-completo] {
+  box-shadow: 0 0 0 2px var(--color-exito);
+}
+
+.labPuntos {
+  display: flex;
+  gap: 5px;
+  margin-top: var(--espacio-1);
+}
+
+.labPuntos span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-borde);
+}
+
+.labPuntos span[data-ia] {
+  border-radius: 3px;
+  rotate: 45deg;
+}
+
+.labPuntos span[data-hecha] {
+  background: var(--color-exito);
+}

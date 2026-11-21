@@ -860,3 +860,11 @@
     opacity: 0;
   }
 }
+
+/* Tema sin guía: el aviso y, al lado, su laboratorio */
+.sinGuia {
+  display: grid;
+  gap: var(--espacio-5);
+  max-width: 44rem;
+  margin-inline: auto;
+}

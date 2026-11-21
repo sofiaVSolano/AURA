@@ -409,3 +409,13 @@
 .verClave:active {
   transform: scale(0.95);
 }
+
+/* Llegaste aquí desde una sección que pide cuenta */
+.aviso {
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--color-acento) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-acento) 40%, transparent);
+  font-weight: 600;
+  animation: subir 700ms var(--ease-entrada) 380ms both;
+}

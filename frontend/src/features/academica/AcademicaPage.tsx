@@ -240,10 +240,10 @@ function Camino({ portada }: { portada: ReactNode }) {
               <span className={estilos.metaPalabra}>Meta</span>
               Tu {perfilActivo.proyecto.nombreTrabajo ?? 'proyecto de grado'}, listo para sustentar.
             </p>
-            <a href="#laboratorios-seccion" className={estilos.metaBoton}>
-              Practicar en los laboratorios
+            <Link to="/academica/tesis" viewTransition className={estilos.metaBoton}>
+              Revisar mi tesis completa
               <Icono nombre="flecha" tamano={18} />
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -294,6 +294,8 @@ export function AcademicaPage() {
   const explorados = ruta.etapas.reduce((n, e) => n + e.temas.filter((t) => estado?.temas[t.id] === 'explorado').length, 0);
   const conteo = useConteo(explorados);
   const labs = listaLaboratorios();
+  const actividadesTotal = labs.reduce((n, l) => n + l.actividades.length, 0);
+  const actividadesHechas = labs.reduce((n, l) => n + l.actividades.filter((a) => estado?.actividades[`${l.id}/${a.id}`]).length, 0);
 
   const portada = (
     <>
@@ -338,36 +340,76 @@ export function AcademicaPage() {
 
       <section id="laboratorios-seccion" className={estilos.seccion} aria-labelledby="laboratorios">
         <div className={estilos.seccionCabeza}>
-          <p className={estilos.kicker}>Practica</p>
+          <p className={estilos.kicker}>Practica · un laboratorio por tema</p>
           <h2 id="laboratorios" className={estilos.seccionTitulo}>
             Laboratorios
           </h2>
-          <p className={estilos.subtexto}>Practica con ejemplos antes de escribir lo tuyo. Los comentarios te dicen cómo mejorar, no te ponen nota.</p>
+          <p className={estilos.subtexto}>
+            Practica con ejemplos y escribe cada pieza de tu tesis: tu AURA la evalúa con IA. Los comentarios te dicen cómo mejorar, no
+            te ponen nota.
+          </p>
         </div>
-        <ul className={estilos.labs}>
-          {labs.map((l, i) => {
-            const hechas = l.actividades.filter((a) => estado?.actividades[`${l.id}/${a.id}`]).length;
-            const simulador = l.actividades.some((a) => a.tipo === 'simulador');
-            return (
-              <li key={l.id} className={cx(estilos.lab, simulador && estilos.labDestacado)} style={{ '--i': i } as CSSProperties}>
-                <Link to={rutaLaboratorio(l.id)} viewTransition className={estilos.labEnlace} onPointerMove={inclinar} onPointerLeave={enderezar}>
-                  <span className={estilos.labNumero} aria-hidden="true">
-                    Lab {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <span className={estilos.labTitulo}>{l.titulo}</span>
-                  <span className={estilos.labDescripcion}>{l.descripcion}</span>
-                  <span className={estilos.labMeta}>
-                    {l.actividades.length} {l.actividades.length === 1 ? 'actividad' : 'actividades'}
-                    {hechas > 0 && ` · ${hechas} hecha${hechas === 1 ? '' : 's'}`}
-                    <span className={estilos.labIr}>
-                      <Icono nombre="flecha" tamano={18} />
-                    </span>
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+
+        {/* La recompensa: revisar la tesis completa */}
+        <Link to="/academica/tesis" viewTransition className={estilos.tesis} data-desbloqueada={actividadesHechas >= actividadesTotal || undefined}>
+          <span className={estilos.tesisCandado} aria-hidden="true">
+            {actividadesHechas >= actividadesTotal ? '★' : '🔒'}
+          </span>
+          <span className={estilos.tesisTexto}>
+            <strong>{actividadesHechas >= actividadesTotal ? 'Revisión de tu tesis desbloqueada' : 'Desbloquea la revisión de tu tesis'}</strong>
+            <span>
+              {actividadesHechas >= actividadesTotal
+                ? 'Sube tu documento y tu AURA lo leerá de principio a fin.'
+                : `Completa los laboratorios: ${actividadesHechas} de ${actividadesTotal} actividades.`}
+            </span>
+          </span>
+          <span className={estilos.tesisBarra} style={{ '--avance': actividadesHechas / Math.max(1, actividadesTotal) } as CSSProperties} aria-hidden="true" />
+          <Icono nombre="flecha" tamano={20} />
+        </Link>
+
+        <div className={estilos.etapasLab}>
+          {ruta.etapas.map((etapa, e) => (
+            <div key={etapa.id} className={estilos.etapaLab}>
+              <h3 className={estilos.etapaLabTitulo}>
+                <span aria-hidden="true">{String(e + 1).padStart(2, '0')}</span>
+                {etapa.titulo}
+              </h3>
+              <ul className={estilos.labs}>
+                {etapa.temas.map((t, k) => {
+                  const l = labs.find((x) => x.tema === t.id);
+                  if (!l) return null;
+                  const hechas = l.actividades.filter((a) => estado?.actividades[`${l.id}/${a.id}`]).length;
+                  const completo = hechas === l.actividades.length;
+                  return (
+                    <li key={l.id} className={estilos.lab} style={{ '--i': k } as CSSProperties}>
+                      <Link
+                        to={rutaLaboratorio(l.id)}
+                        viewTransition
+                        className={estilos.labEnlace}
+                        data-completo={completo || undefined}
+                        onPointerMove={inclinar}
+                        onPointerLeave={enderezar}
+                      >
+                        <span className={estilos.labNumero} aria-hidden="true">
+                          {e + 1}.{k + 1}
+                        </span>
+                        <span className={estilos.labTitulo}>{t.titulo}</span>
+                        <span className={estilos.labPuntos} aria-hidden="true">
+                          {l.actividades.map((a) => (
+                            <span key={a.id} data-hecha={estado?.actividades[`${l.id}/${a.id}`] ? 'si' : undefined} data-ia={a.tipo === 'redactar' || undefined} />
+                          ))}
+                        </span>
+                        <span className="visualmente-oculto">
+                          {hechas} de {l.actividades.length} actividades hechas
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       {avances.length > 0 && (

@@ -161,8 +161,8 @@ verificar('Medios: peticiones por rangos (206)', await ev(`fetch('/__fixtures__/
 await ir('/academica', 2200);
 await foto('30-academica-ruta', true);
 verificar('Académica: 5 etapas en la ruta', (await ev(`document.querySelectorAll('ol[aria-label] > li').length`)) === 5);
-verificar('Académica: 26 temas enlazados', (await ev(`new Set([...document.querySelectorAll('a[href^="/academica/"]')].map(a=>a.getAttribute('href')).filter(h=>!h.includes('laboratorios'))).size`)) === 26);
-verificar('Académica: 4 laboratorios', (await ev(`document.querySelectorAll('a[href^="/academica/laboratorios/"]').length`)) === 4);
+verificar('Académica: 26 temas enlazados', (await ev(`new Set([...document.querySelectorAll('a[href^="/academica/"]')].map(a=>a.getAttribute('href')).filter(h=>!h.includes('laboratorios') && !h.includes('tesis'))).size`)) === 26);
+verificar('Académica: un laboratorio por tema (26)', (await ev(`document.querySelectorAll('a[href^="/academica/laboratorios/"]').length`)) === 26);
 await ev(`document.querySelector('a[href="/academica/documento/resumen"]').click()`);
 await dormir(1600);
 verificar('Guía: título y plantilla completa (9 secciones)', await ev(`document.querySelector('h1')?.textContent === 'Resumen' && document.querySelectorAll('nav[aria-label="En esta guía"] a').length === 9`));
@@ -198,10 +198,12 @@ await dormir(400);
 verificar('Ordenar: comentarios formativos con pistas', await ev(`document.body.textContent.includes('aspectos bien encaminados') && document.querySelectorAll('[data-estado="revisar"]').length > 0`));
 await foto('32-lab-ordenar');
 await ir('/academica/laboratorios/objetivos', 1800);
-await ev(`document.querySelector('input[name="verbos-v1"][type=radio]:nth-of-type(1)'); [...document.querySelectorAll('input[type=radio]')].filter(i => i.closest('label').textContent.startsWith('Describir') || i.closest('label').textContent.startsWith('Diseñar')).forEach(i => i.click())`);
+// Las opciones salen en orden aleatorio: se eligen por su texto completo.
+await ev(`const buenas = ['Describir los hábitos de lectura de los usuarios de la biblioteca municipal', 'Diseñar un prototipo de riego', 'Identificar las barreras']; [...document.querySelectorAll('input[type=radio]')].filter(i => buenas.some(b => i.closest('label').textContent.startsWith(b))).forEach(i => i.click())`);
+await dormir(400);
 await clicTexto('Revisar', 'button');
-await dormir(300);
-verificar('Elegir: verbos verificables bien encaminados', await ev(`document.querySelector('[role=region]')?.textContent.includes('2 de 2')`));
+await dormir(600);
+verificar('Elegir: verbos verificables bien encaminados', await ev(`document.querySelector('[role=region]')?.textContent.includes('3 de 3')`));
 await clicTexto('Revisa la coherencia', 'button');
 await dormir(400);
 verificar('Navegación libre entre actividades', await ev(`document.querySelector('h2')?.textContent === 'Revisa la coherencia'`));
@@ -213,7 +215,7 @@ verificar('Simulador: estima el tiempo y sugiere mejoras', await ev(`document.qu
 await foto('33-simulador');
 await ir('/mi-aura', 1800);
 verificar('Mi AURA registra ejercicio, sustentación y avance', await ev(`(() => { const t = [...document.querySelectorAll('ul li span')].map(s => s.textContent); return ['Completar un ejercicio', 'Practicar tu sustentación', 'Registrar un avance'].every(x => t.includes(x)); })()`));
-await ir('/academica/nada/nada', 1200);
+await ir('/academica/nada/nada', 2200);
 verificar('Tema inexistente: no encontrado', await ev(`document.body.textContent.includes('Esta página no existe')`));
 
 // 5) Móvil real (390)

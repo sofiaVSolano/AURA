@@ -11,13 +11,39 @@
       "titulo": "Ordena los fragmentos",
       "consigna": "Estos fragmentos forman un resumen, pero están desordenados. Muévelos hasta que la lectura avance con lógica.",
       "items": [
-        { "id": "resultados", "texto": "La versión con recordatorios aumentó la asistencia a tutorías en un 35 % frente al semestre anterior.", "pista": "Los resultados necesitan que antes se sepa qué se hizo y cómo." },
-        { "id": "problema", "texto": "Menos de la mitad de los estudiantes de primer semestre asiste a las tutorías de matemáticas que ofrece la universidad.", "pista": "El problema suele ir primero: sitúa al lector antes de todo lo demás." },
-        { "id": "conclusion", "texto": "Los recordatorios personalizados son una estrategia de bajo costo para mejorar el uso de las tutorías.", "pista": "La conclusión interpreta los resultados, así que va después de ellos." },
-        { "id": "metodo", "texto": "Se envió durante ocho semanas un recordatorio semanal por mensaje a 210 estudiantes y se registró su asistencia.", "pista": "El método explica cómo se buscó el objetivo: va tras el objetivo y antes de los resultados." },
-        { "id": "objetivo", "texto": "Este trabajo evaluó si los recordatorios personalizados aumentan la asistencia a las tutorías.", "pista": "El objetivo responde al problema y anticipa el método." }
+        {
+          "id": "resultados",
+          "texto": "La versión con recordatorios aumentó la asistencia a tutorías en un 35 % frente al semestre anterior.",
+          "pista": "Los resultados necesitan que antes se sepa qué se hizo y cómo."
+        },
+        {
+          "id": "problema",
+          "texto": "Menos de la mitad de los estudiantes de primer semestre asiste a las tutorías de matemáticas que ofrece la universidad.",
+          "pista": "El problema suele ir primero: sitúa al lector antes de todo lo demás."
+        },
+        {
+          "id": "conclusion",
+          "texto": "Los recordatorios personalizados son una estrategia de bajo costo para mejorar el uso de las tutorías.",
+          "pista": "La conclusión interpreta los resultados, así que va después de ellos."
+        },
+        {
+          "id": "metodo",
+          "texto": "Se envió durante ocho semanas un recordatorio semanal por mensaje a 210 estudiantes y se registró su asistencia.",
+          "pista": "El método explica cómo se buscó el objetivo: va tras el objetivo y antes de los resultados."
+        },
+        {
+          "id": "objetivo",
+          "texto": "Este trabajo evaluó si los recordatorios personalizados aumentan la asistencia a las tutorías.",
+          "pista": "El objetivo responde al problema y anticipa el método."
+        }
       ],
-      "ordenEsperado": ["problema", "objetivo", "metodo", "resultados", "conclusion"],
+      "ordenEsperado": [
+        "problema",
+        "objetivo",
+        "metodo",
+        "resultados",
+        "conclusion"
+      ],
       "nota": "Es el orden más habitual. Algunos resúmenes estructurados usan subtítulos y otras instituciones aceptan variaciones."
     },
     {
@@ -26,11 +52,36 @@
       "titulo": "¿Qué le falta?",
       "consigna": "Lee el resumen y marca los elementos que NO aparecen: «Las huertas urbanas son cada vez más comunes en la ciudad. Este proyecto buscó conocer la percepción de los vecinos sobre las huertas comunitarias. Para ello se realizaron entrevistas a 25 vecinos de tres barrios. Las huertas pueden fortalecer los lazos comunitarios.»",
       "items": [
-        { "id": "contexto", "texto": "Contexto o problema", "marcar": false, "explicacion": "Está presente: la primera frase sitúa el tema, aunque podría precisar mejor cuál es el problema." },
-        { "id": "objetivo", "texto": "Objetivo", "marcar": false, "explicacion": "Está presente, aunque «conocer» es poco verificable; «identificar» o «describir» lo harían más preciso." },
-        { "id": "metodo", "texto": "Metodología", "marcar": false, "explicacion": "Está presente: dice cómo se trabajó (entrevistas) y con quiénes (25 vecinos de tres barrios)." },
-        { "id": "resultados", "texto": "Resultados", "marcar": true, "explicacion": "Falta: no dice qué se encontró en las entrevistas. Sin resultados, la conclusión queda sin respaldo." },
-        { "id": "palabras-clave", "texto": "Palabras clave", "marcar": true, "explicacion": "Faltan: la mayoría de las instituciones las piden para facilitar la búsqueda del trabajo." }
+        {
+          "id": "contexto",
+          "texto": "Contexto o problema",
+          "marcar": false,
+          "explicacion": "Está presente: la primera frase sitúa el tema, aunque podría precisar mejor cuál es el problema."
+        },
+        {
+          "id": "objetivo",
+          "texto": "Objetivo",
+          "marcar": false,
+          "explicacion": "Está presente, aunque «conocer» es poco verificable; «identificar» o «describir» lo harían más preciso."
+        },
+        {
+          "id": "metodo",
+          "texto": "Metodología",
+          "marcar": false,
+          "explicacion": "Está presente: dice cómo se trabajó (entrevistas) y con quiénes (25 vecinos de tres barrios)."
+        },
+        {
+          "id": "resultados",
+          "texto": "Resultados",
+          "marcar": true,
+          "explicacion": "Falta: no dice qué se encontró en las entrevistas. Sin resultados, la conclusión queda sin respaldo."
+        },
+        {
+          "id": "palabras-clave",
+          "texto": "Palabras clave",
+          "marcar": true,
+          "explicacion": "Faltan: la mayoría de las instituciones las piden para facilitar la búsqueda del trabajo."
+        }
       ]
     },
     {
@@ -39,12 +90,46 @@
       "titulo": "Detecta lo que conviene revisar",
       "consigna": "Marca las frases de este resumen que convendría mejorar.",
       "items": [
-        { "id": "f1", "texto": "«Muchos autores (García, 2019; Pérez, 2021) han estudiado la deserción universitaria.»", "marcar": true, "explicacion": "Las citas suelen evitarse en el resumen: muchas guías lo piden autónomo. Verifica la norma de tu institución." },
-        { "id": "f2", "texto": "«Este estudio analizó las causas de deserción en primer semestre en una universidad pública.»", "marcar": false, "explicacion": "Clara y delimitada: dice qué se analizó, en quién y dónde." },
-        { "id": "f3", "texto": "«Los resultados fueron muy interesantes y satisfactorios.»", "marcar": true, "explicacion": "Valora en lugar de informar. Mejor presenta el hallazgo concreto, por ejemplo con un dato." },
-        { "id": "f4", "texto": "«Se aplicó una encuesta a 300 estudiantes y se analizaron los datos con estadística descriptiva.»", "marcar": false, "explicacion": "Describe el método de forma breve y suficiente." },
-        { "id": "f5", "texto": "«En el futuro se espera desarrollar una aplicación para resolver el problema.»", "marcar": true, "explicacion": "Habla de algo que no se hizo. El resumen debe reflejar el trabajo realizado; el trabajo futuro va en las conclusiones." }
+        {
+          "id": "f1",
+          "texto": "«Muchos autores (García, 2019; Pérez, 2021) han estudiado la deserción universitaria.»",
+          "marcar": true,
+          "explicacion": "Las citas suelen evitarse en el resumen: muchas guías lo piden autónomo. Verifica la norma de tu institución."
+        },
+        {
+          "id": "f2",
+          "texto": "«Este estudio analizó las causas de deserción en primer semestre en una universidad pública.»",
+          "marcar": false,
+          "explicacion": "Clara y delimitada: dice qué se analizó, en quién y dónde."
+        },
+        {
+          "id": "f3",
+          "texto": "«Los resultados fueron muy interesantes y satisfactorios.»",
+          "marcar": true,
+          "explicacion": "Valora en lugar de informar. Mejor presenta el hallazgo concreto, por ejemplo con un dato."
+        },
+        {
+          "id": "f4",
+          "texto": "«Se aplicó una encuesta a 300 estudiantes y se analizaron los datos con estadística descriptiva.»",
+          "marcar": false,
+          "explicacion": "Describe el método de forma breve y suficiente."
+        },
+        {
+          "id": "f5",
+          "texto": "«En el futuro se espera desarrollar una aplicación para resolver el problema.»",
+          "marcar": true,
+          "explicacion": "Habla de algo que no se hizo. El resumen debe reflejar el trabajo realizado; el trabajo futuro va en las conclusiones."
+        }
       ]
+    },
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu resumen",
+      "consigna": "Escribe tu resumen con tus propias palabras (recomendado: 150 a 250 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "resumen",
+      "palabrasMin": 150,
+      "palabrasMax": 250
     }
   ]
 }

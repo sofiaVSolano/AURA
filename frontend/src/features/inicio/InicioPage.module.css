@@ -774,6 +774,114 @@
 }
 
 /* El nombre a todo lo ancho, entero; sube al llegar al final */
+/* — Entrar o crear cuenta, sobre la firma — */
+.acceso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-5);
+  width: 100%;
+  max-width: 92rem;
+  margin-inline: auto;
+  padding-block: var(--espacio-7) var(--espacio-4);
+}
+
+.accesoTexto {
+  font-family: var(--fuente-display);
+  font-size: clamp(1.9rem, 1.1rem + 2.6vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.accesoTexto em {
+  display: block;
+  color: var(--color-acento-texto);
+}
+
+.accesoBotones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+
+.accesoPrincipal,
+.accesoSecundario {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: 56px;
+  padding: 0 var(--espacio-6);
+  border-radius: var(--radio-pildora);
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 200ms ease,
+    box-shadow 300ms ease;
+}
+
+.accesoPrincipal {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  font-size: var(--texto-lg);
+  box-shadow: 0 18px 40px -16px var(--color-acento);
+}
+
+/* Un destello que cruza el botón de vez en cuando */
+.accesoPrincipal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.45) 50%, transparent 70%);
+  translate: -120% 0;
+  animation: destello 3.6s ease-in-out 1s infinite;
+}
+
+@keyframes destello {
+  40%,
+  100% {
+    translate: 120% 0;
+  }
+}
+
+.accesoPrincipal span {
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.accesoPrincipal:hover {
+  transform: translateY(-3px);
+}
+
+.accesoPrincipal:hover span {
+  transform: translateX(5px);
+}
+
+.accesoSecundario {
+  color: var(--color-texto);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-texto) 30%, transparent);
+}
+
+.accesoSecundario:hover {
+  background: color-mix(in srgb, var(--color-texto) 8%, transparent);
+  transform: translateY(-3px);
+}
+
+.accesoPrincipal:active,
+.accesoSecundario:active {
+  transform: scale(0.96);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .accesoPrincipal::after {
+    animation: none;
+  }
+}
+
 .marca {
   width: 100%;
   max-width: 92rem;

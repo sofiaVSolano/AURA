@@ -121,6 +121,12 @@ export function validarLaboratorio(d: unknown, idArchivo: string): Result<Labora
           if (esRegistro(x) && typeof x.marcar !== 'boolean') e.push(`${ci}.marcar: booleano`);
         }, 2);
         break;
+      case 'redactar':
+        texto(e, a.elemento, `${c}.elemento`, 60);
+        if (typeof a.palabrasMin !== 'number' || typeof a.palabrasMax !== 'number' || a.palabrasMin < 5 || a.palabrasMax < a.palabrasMin || a.palabrasMax > 1500) {
+          e.push(`${c}.palabrasMin/palabrasMax: rango válido entre 5 y 1500`);
+        }
+        break;
       case 'simulador':
         if (typeof a.tiempoSugeridoSegundos !== 'number' || a.tiempoSugeridoSegundos < 15 || a.tiempoSugeridoSegundos > 300) {
           e.push(`${c}.tiempoSugeridoSegundos: entre 15 y 300`);

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "alcance",
+  "titulo": "Laboratorio de alcance",
+  "descripcion": "Escribe el alcance de tu proyecto y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "alcance",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe el alcance de tu proyecto",
+      "consigna": "Escribe el alcance de tu proyecto con tus propias palabras (recomendado: 150 a 400 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "el alcance de proyecto",
+      "palabrasMin": 150,
+      "palabrasMax": 400
+    }
+  ]
+}

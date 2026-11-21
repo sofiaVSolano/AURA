@@ -122,3 +122,15 @@ La interfaz explica cómo se obtiene cada uno.
   - Reacciona a los errores.
 - **Inicio** no muestra el anillo de luz.
 - Opciones del motor: `vestuario`, `birrete`, `aro`, `flor` y `tapar`.
+
+## Evaluación con IA (Académica)
+
+- **Un laboratorio por tema (26).** Cada uno incluye la actividad «Escribe tu…» (tipo `redactar`).
+  - La persona escribe ese elemento de su tesis y GPT-4o mini lo evalúa con los criterios de la guía del tema: qué cumple, qué está a medias, qué falta, las falencias (citando el texto), las fortalezas y el siguiente paso.
+  - Cada actividad tiene una extensión recomendada, por ejemplo resumen y abstract de 150 a 250 palabras, introducción de 500 a 1000 y conclusiones de 300 a 700.
+- **Revisión de la tesis completa** (`/academica/tesis`).
+  - Se desbloquea al completar todas las actividades de laboratorio. El servidor lo verifica con las experiencias registradas.
+  - Acepta PDF, Word (.docx) o texto, de hasta 8 MB.
+- **Intentos:** 2 evaluaciones por actividad y 2 revisiones de tesis por persona. Las cuenta el servidor (tabla `evaluaciones_ia`) y solo se descuentan si la evaluación salió bien.
+- **Privacidad:** exige sesión. La clave (`GPT_API_KEY`) vive solo en `backend/.env`. Ni el texto ni el archivo se guardan en el servidor; el borrador y la última evaluación quedan solo en el navegador.
+

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "anexos",
+  "titulo": "Laboratorio de anexos",
+  "descripcion": "Escribe la lista y descripción de tus anexos y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "anexos",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe la lista y descripción de tus anexos",
+      "consigna": "Escribe la lista y descripción de tus anexos con tus propias palabras (recomendado: 50 a 300 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "la lista y descripción de anexos",
+      "palabrasMin": 50,
+      "palabrasMax": 300
+    }
+  ]
+}

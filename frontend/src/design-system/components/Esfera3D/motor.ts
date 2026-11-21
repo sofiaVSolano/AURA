@@ -240,18 +240,30 @@ float brazo(vec3 p, float lado, float br) {
   vec3 hombro = mix(vec3(lado * 0.36, -0.2, 0.12), vec3(lado * 0.5, -0.12, 0.3), uTapar);
   return capsula(p, hombro, mano(lado) - vec3(0.0, 0.08, 0.0) * uTapar, mix(0.11, 0.075, uTapar) * br);
 }
-// Mano: en reposo, una bolita; al taparse, una manopla con tres deditos hacia arriba
+// Mano: en reposo, una bolita; al taparse, una manita con palma, cuatro deditos y pulgar.
+// De vez en cuando abre los deditos para espiar (y los vuelve a cerrar).
 float manoForma(vec3 p, float lado, float br) {
   vec3 q = p - mano(lado);
-  float palma = mix(length(q) - 0.15, elipsoide(q, vec3(0.17, 0.15, 0.085)), uTapar);
+  // La mano se inclina un poco hacia el centro de la cara
+  q.xy *= rot(lado * 0.18 * uTapar);
+  float reposo = length(q) - 0.15;
+  if (uTapar < 0.02) return reposo + (1.0 - br) * 0.3;
+  float palma = elipsoide(q - vec3(0.0, -0.02, 0.0), vec3(0.165, 0.14, 0.085));
+  // Espiar: los deditos se separan un instante cada pocos segundos
+  float espia = smoothstep(0.75, 0.85, sin(uT * 0.9 + lado * 0.4)) * 0.03;
   float dedos = 9.0;
-  for (int i = 0; i < 3; i++) {
-    float fx = (float(i) - 1.0) * 0.075;
-    dedos = min(dedos, capsula(q, vec3(fx, 0.05, 0.0), vec3(fx * 1.25, 0.2, 0.01), 0.04));
+  for (int i = 0; i < 4; i++) {
+    float k = float(i) - 1.5;
+    float sep = 0.068 + espia;
+    float largo = 0.17 - abs(k) * 0.03;
+    vec3 base = vec3(k * sep * 0.82, 0.08, 0.0);
+    vec3 punta = vec3(k * sep * 1.15, 0.08 + largo, 0.015);
+    dedos = min(dedos, capsula(q, base, punta, 0.036));
   }
-  float pulgar = capsula(q, vec3(-lado * 0.1, -0.02, 0.0), vec3(-lado * 0.2, 0.06, 0.0), 0.042);
-  float d = min(palma, mix(9.0, min(dedos, pulgar), step(0.05, uTapar)) + (1.0 - uTapar) * 0.2);
-  return d / max(br, 0.001) * br + (1.0 - br) * 0.3;
+  // Pulgar hacia el centro de la cara
+  float pulgar = capsula(q, vec3(-lado * 0.1, -0.04, 0.02), vec3(-lado * 0.2, 0.05, 0.03), 0.04);
+  float manita = smin(palma, min(dedos, pulgar), 0.03);
+  return mix(reposo, manita, smoothstep(0.0, 0.35, uTapar)) + (1.0 - br) * 0.3;
 }
 // Florecita en la mano derecha: tallo, cinco pétalos y centro
 vec3 centroFlor() { return mano(1.0) + vec3(0.08, 0.48, 0.08); }

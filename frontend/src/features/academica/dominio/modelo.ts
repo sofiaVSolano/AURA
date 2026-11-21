@@ -76,6 +76,18 @@ export type Actividad =
       items: Array<{ id: string; texto: string; marcar: boolean; explicacion: string }>;
     }
   | {
+      /** Escribir un elemento de tu tesis y recibir una evaluación con IA (intentos limitados). */
+      tipo: 'redactar';
+      id: string;
+      titulo: string;
+      consigna: string;
+      /** Qué se escribe (p. ej. «resumen»). */
+      elemento: string;
+      /** Extensión recomendada, en palabras. */
+      palabrasMin: number;
+      palabrasMax: number;
+    }
+  | {
       tipo: 'simulador';
       id: string;
       titulo: string;
@@ -90,7 +102,12 @@ export type Actividad =
     };
 
 export type TipoActividad = Actividad['tipo'];
-export const TIPOS_ACTIVIDAD: readonly TipoActividad[] = ['ordenar', 'clasificar', 'elegir', 'marcar', 'simulador'];
+export const TIPOS_ACTIVIDAD: readonly TipoActividad[] = ['ordenar', 'clasificar', 'elegir', 'marcar', 'redactar', 'simulador'];
+
+/** Evaluaciones con IA disponibles por cada actividad de redacción (y para la tesis completa). */
+export const INTENTOS_IA = 2;
+/** Límite de caracteres que se envían a evaluar en una redacción. */
+export const LARGO_MAXIMO_REDACCION = 10_000;
 
 export interface Laboratorio {
   version: 1;

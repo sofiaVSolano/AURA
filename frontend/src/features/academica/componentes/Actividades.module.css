@@ -409,3 +409,321 @@
     animation: none;
   }
 }
+
+/* ═════════════ Presentación renovada: más aire, centro y vida ═════════════ */
+.actividad {
+  gap: var(--espacio-6);
+}
+
+.cabeza {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-4);
+  text-align: center;
+}
+
+.titulo {
+  font-size: clamp(1.9rem, 1.3rem + 2vw, 3rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* La consigna, destacada como una nota de instrucciones */
+.consigna {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-3);
+  max-width: 58ch;
+  padding: var(--espacio-4) var(--espacio-5);
+  border-radius: 18px;
+  background: var(--color-resalte);
+  font-size: var(--texto-md);
+  line-height: 1.55;
+  text-align: start;
+}
+
+.consigna svg {
+  flex: none;
+  margin-top: 0.2em;
+  color: var(--ocre-600);
+}
+
+.acciones {
+  justify-content: center;
+}
+
+.centradas {
+  justify-content: center;
+}
+
+.faltan {
+  text-align: center;
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  color: var(--color-texto-suave);
+}
+
+/* — Preguntas de elegir: cada una en su tarjeta — */
+.pregunta {
+  gap: var(--espacio-4);
+  padding: var(--espacio-5);
+  border-radius: 24px;
+  border-width: 2px;
+  background: var(--color-fondo);
+  animation: llegar 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms);
+}
+
+@keyframes llegar {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+.enunciado {
+  display: grid;
+  gap: var(--espacio-1);
+  font-family: var(--fuente-display);
+  font-size: var(--texto-xl);
+  font-weight: 560;
+  line-height: 1.25;
+}
+
+.preguntaNumero {
+  font-family: var(--fuente-texto, inherit);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-acento-texto);
+}
+
+/* Fichas con letra (A, B, C, D) según su posición */
+.opciones {
+  counter-reset: letra;
+  gap: var(--espacio-3);
+}
+
+@media (min-width: 48rem) {
+  .opciones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.opcion {
+  position: relative;
+  counter-increment: letra;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  align-items: center;
+  min-height: 72px;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 2px solid var(--color-borde);
+  border-radius: 18px;
+  background: var(--color-superficie);
+  line-height: 1.45;
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease,
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 300ms ease;
+}
+
+.opcion::before {
+  content: counter(letra, upper-alpha);
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--color-acento-suave);
+  color: var(--color-acento-texto);
+  font-family: var(--fuente-display);
+  font-weight: 700;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* El radio queda accesible pero invisible: la letra hace de marca */
+.opcion input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.opcion:hover {
+  border-color: color-mix(in srgb, var(--color-acento) 50%, var(--color-borde));
+  transform: translateY(-3px);
+  box-shadow: 0 16px 28px -22px rgb(40 30 80 / 0.5);
+}
+
+.opcion:has(:focus-visible) {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.opcion:has(:checked) {
+  border-color: var(--color-acento);
+  background: var(--color-acento-suave);
+  box-shadow: 0 16px 30px -22px var(--color-acento);
+}
+
+.opcion:has(:checked)::before {
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  transform: scale(1.1);
+}
+
+/* Después de revisar */
+.opcion[data-resultado='bien'] {
+  border-color: var(--color-exito);
+  background: color-mix(in srgb, var(--color-exito) 10%, var(--color-superficie));
+}
+
+.opcion[data-resultado='bien']::before {
+  content: '✓';
+  background: var(--color-exito);
+  color: #fff;
+}
+
+.opcion[data-resultado='revisar'] {
+  border-color: var(--ocre-600);
+  background: color-mix(in srgb, var(--ocre-200) 45%, var(--color-superficie));
+  animation: sacudir 420ms ease;
+}
+
+.opcion[data-resultado='revisar']::before {
+  background: var(--ocre-600);
+  color: #fff;
+}
+
+.opcion[data-resultado='correcta'] {
+  border-style: dashed;
+  border-color: var(--color-exito);
+}
+
+@keyframes sacudir {
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* Casillas de «marcar»: fichas que se encienden */
+.casilla {
+  grid-template-columns: auto minmax(0, 1fr);
+  min-height: 64px;
+  counter-increment: none;
+}
+
+.casilla::before {
+  display: none;
+}
+
+.casilla input {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+  width: 1.3rem;
+  height: 1.3rem;
+  accent-color: var(--color-acento);
+}
+
+/* Ordenar y clasificar: más aire y tacto */
+.fila,
+.tarjeta {
+  padding: var(--espacio-4);
+  border-radius: 18px;
+  transition:
+    border-color 200ms ease,
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 300ms ease;
+}
+
+.fila:hover,
+.tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px -22px rgb(40 30 80 / 0.45);
+}
+
+.lista {
+  gap: var(--espacio-4);
+}
+
+.comentario {
+  border-radius: 0 12px 12px 0;
+  background: color-mix(in srgb, var(--borde-estado, var(--color-borde)) 10%, transparent);
+  color: var(--color-texto);
+}
+
+/* — Comentarios con anillo de logro — */
+.retro {
+  gap: var(--espacio-4);
+  padding: var(--espacio-5) var(--espacio-6);
+  border-radius: 24px;
+}
+
+.retroCabeza {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.retroAnillo {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, var(--color-acento-suave) 74%, transparent 76%),
+    conic-gradient(var(--color-exito) calc(var(--logro) * 360deg), color-mix(in srgb, var(--color-texto) 12%, transparent) 0);
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  font-weight: 700;
+  animation: anillo 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes anillo {
+  from {
+    transform: scale(0.6) rotate(-90deg);
+    opacity: 0;
+  }
+}
+
+.retroResumen {
+  font-size: var(--texto-md);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pregunta,
+  .retroAnillo {
+    animation-name: fundido;
+  }
+
+  .opcion[data-resultado='revisar'] {
+    animation: none;
+  }
+}
+
+@keyframes fundido {
+  from {
+    opacity: 0;
+  }
+}
+
+/* La leyenda va dentro de la tarjeta (no sobre el borde): flotarla la vuelve contenido normal */
+.pregunta > .enunciado {
+  float: inline-start;
+  width: 100%;
+}

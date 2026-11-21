@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect } from 'react';
-import { Link, Outlet, ScrollRestoration, useLocation, useMatches } from 'react-router';
+import { Link, Navigate, Outlet, ScrollRestoration, useLocation, useMatches } from 'react-router';
 import { Personaje } from '../features/mi-aura/avatar/Personaje.tsx';
 import { Acompanante } from '../features/mi-aura/componentes/Acompanante.tsx';
 import { apiHabilitada, sesion } from '../lib/api.ts';
@@ -23,6 +23,15 @@ function useHandleActual(): HandleRuta {
   }
   return { ambito: 'inicio' };
 }
+
+/** Páginas abiertas sin cuenta: la portada, la entrada a la cuenta y los recursos de ayuda. */
+const esPublica = (ruta: string) => ruta === '/' || ruta === '/cuenta' || ruta.startsWith('/recursos') || ruta.startsWith('/sistema');
+
+/**
+ * Para entrar a AURA hay que iniciar sesión. Si el servidor de cuentas no responde,
+ * la app sigue funcionando en este navegador (nadie queda bloqueado por una caída).
+ */
+export const exigeSesion = (ruta: string) => apiHabilitada && sesion.servidorDisponible && !sesion.activa && !esPublica(ruta);
 
 /** Presencia discreta de tu AURA en todas las páginas, una vez que ha nacido. */
 function AvatarCabecera() {
@@ -69,8 +78,9 @@ export function Diseno() {
   }, []);
 
   // Inicio es una escena a pantalla completa: la cabecera flota sobre ella.
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const inmersiva = pathname === '/' || pathname === '/cuenta';
+  const bloqueada = exigeSesion(pathname);
 
   return (
     <div className={estilos.app} data-inmersiva={inmersiva || undefined}>
@@ -98,7 +108,7 @@ export function Diseno() {
         </div>
       </header>
       <main id="contenido" tabIndex={-1} className={estilos.contenido}>
-        <Outlet />
+        {bloqueada ? <Navigate to={`/cuenta?volver=${encodeURIComponent(pathname + search)}`} replace /> : <Outlet />}
       </main>
       <footer className={estilos.pie}>
         <p>AURA acompaña; no reemplaza la atención profesional.</p>

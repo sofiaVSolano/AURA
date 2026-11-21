@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "abstract",
+  "titulo": "Laboratorio de abstract",
+  "descripcion": "Escribe tu abstract (en inglés) y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "abstract",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu abstract (en inglés)",
+      "consigna": "Escribe tu abstract (en inglés) con tus propias palabras (recomendado: 150 a 250 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "abstract (en inglés)",
+      "palabrasMin": 150,
+      "palabrasMax": 250
+    }
+  ]
+}

@@ -8,7 +8,7 @@ import { useEmocional } from '../emocional/estado/EmocionalContexto.tsx';
 import { AvancesTema } from './componentes/AvancesTema.tsx';
 import { EjemploDesglosado } from './componentes/EjemploDesglosado.tsx';
 import { ErroresFrecuentes } from './componentes/ErroresFrecuentes.tsx';
-import { cargarGuia, laboratorioPorId, rutaLaboratorio, rutaTema, temaPorId } from './datos/catalogoAcademico.ts';
+import { cargarGuia, laboratorioPorId, listaLaboratorios, rutaLaboratorio, rutaTema, temaPorId } from './datos/catalogoAcademico.ts';
 import type { Guia } from './dominio/modelo.ts';
 import { useAcademica } from './estado/AcademicaContexto.tsx';
 import type { EstadoTema } from './dominio/estadoAcademico.ts';
@@ -85,7 +85,8 @@ export function TemaPage() {
 
   const { etapa, tema, video } = r;
   const marca = carga.estado === 'listo' ? (carga.datos.temas[tema.id] ?? null) : null;
-  const lab = laboratorioPorId(g?.laboratorio ?? undefined);
+  // El laboratorio del tema: el que indica la guía o, si no hay guía, el del tema
+  const lab = laboratorioPorId(g?.laboratorio ?? undefined) ?? listaLaboratorios().find((l) => l.tema === tema.id);
   const fuentes = video && r.videoDisponible ? fuentesDe(video) : null;
 
   return (
@@ -128,11 +129,23 @@ export function TemaPage() {
       ) : cargaGuia.estado === 'error' ? (
         <EstadoVista tipo="error" titulo="No pudimos cargar esta guía" descripcion="Revisa tu conexión y vuelve a intentarlo." />
       ) : !g ? (
-        <EstadoVista
-          tipo="vacio"
-          titulo="Esta guía está en preparación"
-          descripcion="Mientras tanto, puedes registrar tus avances sobre este tema más abajo o explorar las guías disponibles."
-        />
+        <div className={estilos.sinGuia}>
+          <EstadoVista
+            tipo="vacio"
+            titulo="Esta guía está en preparación"
+            descripcion="Mientras tanto, practica en su laboratorio: escribe esta parte de tu tesis y tu AURA la evaluará con IA."
+          />
+          {lab && (
+            <Link to={rutaLaboratorio(lab.id)} viewTransition className={estilos.tarjetaLab}>
+              <span className={estilos.rotulo}>Laboratorio</span>
+              <strong>{lab.titulo}</strong>
+              <span>{lab.descripcion}</span>
+              <span className={estilos.labIr}>
+                Ir al laboratorio <Icono nombre="flecha" tamano={18} />
+              </span>
+            </Link>
+          )}
+        </div>
       ) : (
         <div className={estilos.cuerpo}>
           <nav className={estilos.indice} aria-label="En esta guía">

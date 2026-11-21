@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "justificacion",
+  "titulo": "Laboratorio de justificación",
+  "descripcion": "Escribe tu justificación y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "justificacion",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu justificación",
+      "consigna": "Escribe tu justificación con tus propias palabras (recomendado: 250 a 600 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "justificación",
+      "palabrasMin": 250,
+      "palabrasMax": 600
+    }
+  ]
+}

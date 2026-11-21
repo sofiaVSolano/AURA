@@ -24,7 +24,7 @@ export const sesion: { activa: boolean; correo: string | null; servidorDisponibl
 };
 let csrf: string | null = null;
 
-async function pedir<T>(metodo: string, ruta: string, cuerpo?: unknown): Promise<T> {
+async function pedir<T>(metodo: string, ruta: string, cuerpo?: unknown, espera = 10_000): Promise<T> {
   let r: Response;
   try {
     r = await fetch(BASE + ruta, {
@@ -36,7 +36,7 @@ async function pedir<T>(metodo: string, ruta: string, cuerpo?: unknown): Promise
         ...(csrf && metodo !== 'GET' && { 'X-CSRF-Token': csrf }),
       },
       body: cuerpo === undefined ? null : JSON.stringify(cuerpo),
-      signal: AbortSignal.timeout(10_000),
+      signal: AbortSignal.timeout(espera),
     });
   } catch {
     throw new ErrorApi(0, 'sin_conexion', 'No pudimos conectar con el servidor. Revisa tu conexión.');
@@ -88,4 +88,36 @@ export const api = {
     pedir<{ registrada: boolean; experiencias: unknown[]; etapa: string }>('POST', '/experiencias', { tipo, refId }),
   exportar: () => pedir<unknown>('GET', '/cuenta/exportar'),
   borrarCuenta: (contrasena: string) => pedir<void>('DELETE', '/cuenta', { contrasena }),
+  // — Evaluaciones con IA —
+  iaEstado: () => pedir<{ disponible: boolean; intentos: number }>('GET', '/ia/estado'),
+  iaUso: () => pedir<UsoIa>('GET', '/ia/uso'),
+  iaRedaccion: (lab: string, actividad: string, texto: string) =>
+    pedir<{ evaluacion: EvaluacionRedaccion; usados: number; intentos: number }>('POST', '/ia/redaccion', { lab, actividad, texto }, 60_000),
+  iaTesis: (nombre: string, tipo: string, datos: string) =>
+    pedir<{ evaluacion: EvaluacionTesis; usados: number; intentos: number }>('POST', '/ia/tesis', { nombre, tipo, datos }, 150_000),
 };
+
+export interface UsoIa {
+  intentos: number;
+  /** Evaluaciones usadas por clave («redaccion:lab/actividad», «tesis»). */
+  usos: Record<string, number>;
+  tesis: { completadas: number; total: number; desbloqueada: boolean; usados: number };
+}
+
+export interface EvaluacionRedaccion {
+  valoracion: string;
+  extension: { palabras: number; min: number; max: number; estado: 'corta' | 'adecuada' | 'larga' };
+  criterios: Array<{ elemento: string; estado: 'cumple' | 'parcial' | 'falta'; comentario: string }>;
+  falencias: Array<{ problema: string; fragmento: string; comoMejorar: string }>;
+  fortalezas: string[];
+  siguientePaso: string;
+}
+
+export interface EvaluacionTesis {
+  valoracion: string;
+  secciones: Array<{ nombre: string; estado: 'bien' | 'mejorable' | 'falta'; comentario: string }>;
+  falencias: Array<{ seccion: string; problema: string; comoMejorar: string }>;
+  fortalezas: string[];
+  extension: string;
+  siguientesPasos: string[];
+}

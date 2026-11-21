@@ -21,6 +21,8 @@ export interface Config {
   limiteRegistro: number;
   /** Raíz del contenido compartido (content/). */
   rutaContenido: string;
+  /** Clave del proveedor de IA (opcional). Sin ella, las evaluaciones con IA se desactivan. */
+  claveIa: string | undefined;
 }
 
 export function leerConfig(env: NodeJS.ProcessEnv = process.env): Config {
@@ -38,5 +40,6 @@ export function leerConfig(env: NodeJS.ProcessEnv = process.env): Config {
     diasSesion: entero(env.DIAS_SESION, 14),
     limiteRegistro: entero(env.LIMITE_REGISTRO, 5),
     rutaContenido: resolve(raiz, env.RUTA_CONTENIDO ?? '../content'),
+    claveIa: (env.GPT_API_KEY ?? env['GPT_API_KEY '])?.trim() || undefined,
   };
 }

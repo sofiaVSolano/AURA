@@ -14,6 +14,7 @@ import {
   type EstadoEsfera,
 } from '../../design-system/index.ts';
 import { cx } from '../../lib/cx.ts';
+import { apiHabilitada, sesion } from '../../lib/api.ts';
 import { ruta, rutaTema } from '../academica/datos/catalogoAcademico.ts';
 import { catalogoEmocional } from '../emocional/datos/catalogoEmocional.ts';
 import { Orbe } from '../emocional/componentes/Orbe.tsx';
@@ -499,6 +500,39 @@ function Cierre({ nacida, preferencias, etapa }: { nacida: boolean; preferencias
           </Link>
         ))}
       </nav>
+
+      {/* Entrar o crear cuenta: la última invitación, justo antes de la firma */}
+      {apiHabilitada && sesion.servidorDisponible && (
+        <div className={estilos.acceso}>
+          <p className={estilos.accesoTexto}>
+            {sesion.activa ? (
+              <>
+                Hola de nuevo. <em>Tu recorrido te espera.</em>
+              </>
+            ) : (
+              <>
+                Empieza hoy. <em>Tu AURA te está esperando.</em>
+              </>
+            )}
+          </p>
+          <div className={estilos.accesoBotones}>
+            {sesion.activa ? (
+              <Link to="/mi-aura" viewTransition className={estilos.accesoPrincipal}>
+                Ir a Mi AURA <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <>
+                <Link to="/cuenta?modo=registro" viewTransition className={estilos.accesoPrincipal}>
+                  Crear mi cuenta <span aria-hidden="true">→</span>
+                </Link>
+                <Link to="/cuenta" viewTransition className={estilos.accesoSecundario}>
+                  Ya tengo cuenta: entrar
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       <div className={estilos.marca}>
         <PalabraAjustada texto="AURA" />

@@ -9,6 +9,30 @@ import estilos from './CuentaPage.module.css';
 
 /** Recarga la app: cada módulo vuelve a cargar sus datos del lugar correcto (cuenta o navegador). */
 const recargarEn = (ruta: string) => window.location.assign(`${import.meta.env.BASE_URL}${ruta}`);
+
+/** A dónde volver tras entrar (solo rutas internas de AURA). */
+function leerVolver(): string | null {
+  const v = new URLSearchParams(window.location.search).get('volver');
+  return v && v.startsWith('/') && !v.startsWith('//') && !v.startsWith('/cuenta') ? v : null;
+}
+
+const nombreSeccion = (ruta: string) =>
+  ruta.startsWith('/emocional') ? 'AURA emocional' : ruta.startsWith('/academica') ? 'AURA académica' : ruta.startsWith('/mi-aura') || ruta.startsWith('/comenzar') ? 'Mi AURA' : 'AURA';
+
+/**
+ * Tras entrar o crear la cuenta: si tu AURA aún no ha nacido, se va a crearla
+ * (registro de tu AURA); si ya existe, a la página que querías abrir o a Mi AURA.
+ */
+async function destinoTrasEntrar(): Promise<string> {
+  const volver = leerVolver();
+  try {
+    const datos = (await api.datos()) as { 'mi-aura'?: { onboarding?: { completado?: boolean } } | null };
+    if (!datos['mi-aura']?.onboarding?.completado) return 'comenzar';
+  } catch {
+    /* si no se pudo leer, se sigue al destino pedido */
+  }
+  return (volver ?? '/mi-aura').slice(1);
+}
 const mensajeDe = (e: unknown) => (e instanceof ErrorApi ? e.message : 'Algo salió mal. Inténtalo de nuevo.');
 
 /** Lo que hace el formulario y a lo que reacciona tu AURA. */
@@ -21,7 +45,8 @@ type Reaccion =
 type Reaccionar = (r: Reaccion) => void;
 
 function Acceso({ reaccionar }: { reaccionar: Reaccionar }) {
-  const [modo, setModo] = useState<'ingreso' | 'registro'>('ingreso');
+  // ?modo=registro abre directo en «Crear cuenta» (p. ej. desde el final del Inicio)
+  const [modo, setModo] = useState<'ingreso' | 'registro'>(() => (new URLSearchParams(window.location.search).get('modo') === 'registro' ? 'registro' : 'ingreso'));
   const [correo, setCorreo] = useState('');
   const [clave, setClave] = useState('');
   const [verClave, setVerClave] = useState(false);
@@ -47,7 +72,7 @@ function Acceso({ reaccionar }: { reaccionar: Reaccionar }) {
       if (registro) await api.registro(correo.trim(), clave);
       else await api.ingreso(correo.trim(), clave);
       if (llevar) await llevarDatosLocalesALaCuenta();
-      recargarEn('mi-aura');
+      recargarEn(await destinoTrasEntrar());
     } catch (err) {
       setErrores({ general: mensajeDe(err) });
       setEnviando(false);
@@ -390,8 +415,13 @@ export function CuentaPage() {
           <span className={estilos.linea}>{activa ? 'Todo tu recorrido,' : 'Tu AURA te sigue'}</span>
           <span className={estilos.linea}>{activa ? 'en cualquier lugar.' : 'a donde vayas.'}</span>
         </h1>
+        {!activa && leerVolver() && (
+          <p className={estilos.aviso} role="status">
+            Para entrar a {nombreSeccion(leerVolver()!)} inicia sesión o crea tu cuenta. Es gratis y tardas un minuto.
+          </p>
+        )}
         <p className={estilos.bajada}>
-          Con una cuenta, tu AURA y tu recorrido te acompañan en cualquier dispositivo. Sin cuenta, todo sigue funcionando en este navegador.
+          Con tu cuenta, tu AURA y tu recorrido te acompañan en cualquier dispositivo y quedan guardados de forma segura.
         </p>
         {!apiHabilitada || !sesion.servidorDisponible ? (
           <EstadoVista

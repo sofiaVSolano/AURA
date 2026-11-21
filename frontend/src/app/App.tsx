@@ -34,6 +34,11 @@ const rutas: RouteObject[] = [
     lazy: async () => ({ Component: (await import('../features/academica/AcademicaPage.tsx')).AcademicaPage }),
   },
   {
+    path: 'academica/tesis',
+    handle: h({ ambito: 'academico', titulo: 'Revisión de tu tesis' }),
+    lazy: async () => ({ Component: (await import('../features/academica/TesisPage.tsx')).TesisPage }),
+  },
+  {
     path: 'academica/laboratorios/:lab',
     handle: h({ ambito: 'academico', titulo: null }),
     lazy: async () => ({ Component: (await import('../features/academica/LaboratorioPage.tsx')).LaboratorioPage }),

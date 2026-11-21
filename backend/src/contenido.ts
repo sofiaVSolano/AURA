@@ -11,13 +11,24 @@ export interface IndiceContenido {
   temas: Set<string>;
   actividades: Set<string>;
   preguntasSimulador: Set<string>;
+  /** Actividades de redacción con IA: «lab/actividad» → tema y extensión recomendada. */
+  redacciones: Map<string, { tema: string | null; elemento: string; min: number; max: number }>;
+  /** Títulos de los temas (para dar contexto a la IA). */
+  titulosTema: Map<string, { titulo: string; resumen: string }>;
 }
 
 const json = (ruta: string): unknown => JSON.parse(readFileSync(ruta, 'utf8'));
 const jsonEn = (dir: string) => (existsSync(dir) ? readdirSync(dir).filter((f) => f.endsWith('.json')) : []);
 
 export function cargarContenido(raiz: string): IndiceContenido {
-  const i: IndiceContenido = { videos: new Map(), temas: new Set(), actividades: new Set(), preguntasSimulador: new Set() };
+  const i: IndiceContenido = {
+    videos: new Map(),
+    temas: new Set(),
+    actividades: new Set(),
+    preguntasSimulador: new Set(),
+    redacciones: new Map(),
+    titulosTema: new Map(),
+  };
 
   const dirVideos = join(raiz, 'videos');
   for (const r of readdirSync(dirVideos, { recursive: true, encoding: 'utf8' })) {
@@ -29,7 +40,13 @@ export function cargarContenido(raiz: string): IndiceContenido {
   }
   for (const f of jsonEn(join(raiz, 'academica/rutas'))) {
     const r = validarRuta(json(join(raiz, 'academica/rutas', f)), f.replace(/\.json$/, ''));
-    if (r.ok) r.valor.etapas.forEach((e) => e.temas.forEach((t) => i.temas.add(t.id)));
+    if (r.ok)
+      r.valor.etapas.forEach((e) =>
+        e.temas.forEach((t) => {
+          i.temas.add(t.id);
+          i.titulosTema.set(t.id, { titulo: t.titulo, resumen: t.resumen });
+        }),
+      );
   }
   for (const f of jsonEn(join(raiz, 'academica/laboratorios'))) {
     const l = validarLaboratorio(json(join(raiz, 'academica/laboratorios', f)), f.replace(/\.json$/, ''));
@@ -37,6 +54,9 @@ export function cargarContenido(raiz: string): IndiceContenido {
     for (const a of l.valor.actividades) {
       i.actividades.add(`${l.valor.id}/${a.id}`);
       if (a.tipo === 'simulador') a.preguntas.forEach((p) => i.preguntasSimulador.add(p.id));
+      if (a.tipo === 'redactar') {
+        i.redacciones.set(`${l.valor.id}/${a.id}`, { tema: l.valor.tema, elemento: a.elemento, min: a.palabrasMin, max: a.palabrasMax });
+      }
     }
   }
   return i;

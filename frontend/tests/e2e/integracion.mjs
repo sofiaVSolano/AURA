@@ -17,11 +17,9 @@ const a = await abrirNavegador({ base: pila.url, puerto: 9335, perfil: 'perfil-i
 await a.viewport(1280, 900);
 await a.ir('/', 1800);
 verificar('Sin sesión, la cabecera ofrece «Entrar»', await a.ev(`!!document.querySelector('header a[href="/cuenta"]') && document.querySelector('header a[href="/cuenta"]').textContent === 'Entrar'`));
-// Algo hecho ANTES de tener cuenta (para comprobar que se lleva a la cuenta)
+// Sin sesión, las secciones de AURA piden entrar (y recuerdan a dónde ibas)
 await a.ir('/academica/laboratorios/resumen', 1600);
-await a.clicTexto('Revisar', 'button');
-await dormir(400);
-
+verificar('Sin sesión, una sección lleva a «Entrar» y recuerda el destino', await a.ev(`location.pathname === '/cuenta' && new URLSearchParams(location.search).get('volver') === '/academica/laboratorios/resumen'`));
 await a.ir('/cuenta', 1500);
 await a.clicTexto('Crear cuenta', 'button');
 await dormir(300);
@@ -33,8 +31,7 @@ verificar('Registro sin consentimiento: se explica por qué no continúa', await
 await a.ev(`[...document.querySelectorAll('label')].find(l => l.textContent.includes('Acepto que AURA')).click()`);
 await a.clicTexto('Crear mi cuenta', 'button');
 await dormir(3000);
-verificar('Tras registrarse llega a Mi AURA con sesión', await a.ev(`location.pathname === '/mi-aura' && document.querySelector('header a[href="/cuenta"]')?.textContent === 'Mi cuenta'`));
-verificar('Lo hecho antes de la cuenta se llevó a ella (ejercicio validado por el servidor)', await a.ev(`fetch('/api/datos').then(r => r.json()).then(d => d['mi-aura']?.experiencias.some(e => e.refId === 'lab:resumen/ordenar-fragmentos'))`));
+verificar('Tras registrarse llega a dar vida a su AURA, con sesión', await a.ev(`location.pathname === '/comenzar' && document.querySelector('header a[href="/cuenta"]')?.textContent === 'Mi cuenta'`));
 
 // Onboarding con cuenta
 await a.ir('/comenzar', 1500);

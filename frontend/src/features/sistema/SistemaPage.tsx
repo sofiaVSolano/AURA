@@ -185,7 +185,7 @@ export function SistemaPage() {
           </div>
           <div data-ambito="academico" className={estilos.ambito}>
             {/* Actividad real de laboratorio (sin registrar progreso) */}
-            <Actividad actividad={laboratorioPorId('objetivos')!.actividades[0]!} onRevisada={() => {}} onPractica={() => {}} />
+            <Actividad labId="sistema" actividad={laboratorioPorId('objetivos')!.actividades[0]!} onRevisada={() => {}} onPractica={() => {}} />
           </div>
         </div>
       </section>

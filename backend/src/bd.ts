@@ -37,6 +37,14 @@ const MIGRACIONES: string[] = [
      fecha TEXT NOT NULL,
      UNIQUE (usuario_id, tipo, ref_id)
    );`,
+  // Evaluaciones con IA: se cuenta cuántas usó cada persona (el texto nunca se guarda).
+  `CREATE TABLE evaluaciones_ia (
+     id TEXT PRIMARY KEY,
+     usuario_id TEXT NOT NULL REFERENCES usuarios(id) ON DELETE CASCADE,
+     clave TEXT NOT NULL,
+     fecha TEXT NOT NULL
+   );
+   CREATE INDEX evaluaciones_ia_usuario ON evaluaciones_ia(usuario_id, clave);`,
 ];
 
 export function abrirBd(ruta: string): DatabaseSync {

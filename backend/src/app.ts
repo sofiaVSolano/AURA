@@ -22,6 +22,8 @@ import { abrirBd } from './bd.ts';
 import type { Config } from './config.ts';
 import { cargarContenido, referenciaValida } from './contenido.ts';
 import { cookie, ErrorHttp, leerCookies, leerJson, responder } from './http.ts';
+import { evaluarRedaccion, evaluarTesis } from './ia.ts';
+import { INTENTOS_IA } from '../../frontend/src/features/academica/dominio/modelo.ts';
 import { aplicarCors, crearLimitador, ipCliente, verificarOrigen } from './seguridad.ts';
 
 /** Versión del consentimiento: fuente única compartida con el formulario del frontend. */
@@ -54,6 +56,26 @@ export function crearApp(config: Config) {
   const limiteIngreso = crearLimitador(8, 15 * 60_000);
   const limiteRegistro = crearLimitador(config.limiteRegistro, 60 * 60_000);
   const limiteExperiencias = crearLimitador(120, 60 * 60_000);
+  const limiteIa = crearLimitador(30, 60 * 60_000);
+  const usadas = (usuarioId: string, clave: string) =>
+    (db.prepare('SELECT COUNT(*) AS n FROM evaluaciones_ia WHERE usuario_id = ? AND clave = ?').get(usuarioId, clave) as { n: number }).n;
+  const anotarUso = (usuarioId: string, clave: string) =>
+    db.prepare('INSERT INTO evaluaciones_ia (id, usuario_id, clave, fecha) VALUES (?, ?, ?, ?)').run(nuevoId(), usuarioId, clave, new Date().toISOString());
+  /** Laboratorios: cuántas actividades completó la persona (validado con sus experiencias). */
+  const avanceLabs = (usuarioId: string) => {
+    const hechas = new Set(
+      (db.prepare("SELECT ref_id FROM experiencias WHERE usuario_id = ? AND tipo = 'ejercicio-completado'").all(usuarioId) as Array<{ ref_id: string }>).map((r) =>
+        r.ref_id.replace(/^lab:/, ''),
+      ),
+    );
+    const total = contenido.actividades.size;
+    const completadas = [...contenido.actividades].filter((a) => hechas.has(a)).length;
+    return { completadas, total, desbloqueada: completadas >= total };
+  };
+  const exigirIa = () => {
+    if (!config.claveIa) throw new ErrorHttp(503, 'ia_no_disponible', 'La evaluación con IA no está disponible ahora.');
+    return config.claveIa;
+  };
   const limpieza = setInterval(() => limpiarSesionesVencidas(db), 60 * 60_000);
   limpieza.unref();
 
@@ -207,6 +229,55 @@ export function crearApp(config: Config) {
     const experiencias = experienciasDe(s.usuarioId);
     const ev = calcularEvolucion(experiencias);
     responder(res, r.changes === 0 ? 200 : 201, { registrada: r.changes > 0, experiencias, etapa: ev.etapa.id });
+  });
+
+  // — Evaluaciones con IA (requieren cuenta; el texto y los archivos no se guardan) —
+  ruta('GET', '/api/ia/estado', async ({ res }) => responder(res, 200, { disponible: Boolean(config.claveIa), intentos: INTENTOS_IA }));
+
+  ruta('GET', '/api/ia/uso', async ({ req, res }) => {
+    const s = exigirSesion(req, false);
+    const filas = db.prepare('SELECT clave, COUNT(*) AS n FROM evaluaciones_ia WHERE usuario_id = ? GROUP BY clave').all(s.usuarioId) as Array<{ clave: string; n: number }>;
+    const usos = Object.fromEntries(filas.map((f) => [f.clave, f.n]));
+    responder(res, 200, { intentos: INTENTOS_IA, usos, tesis: { ...avanceLabs(s.usuarioId), usados: usos.tesis ?? 0 } });
+  });
+
+  ruta('POST', '/api/ia/redaccion', async ({ req, res }) => {
+    const s = exigirSesion(req);
+    const clave = exigirIa();
+    limiteIa.consumir(s.usuarioId);
+    const d = (await leerJson(req, 64 * 1024)) as Record<string, unknown>;
+    const id = `${typeof d.lab === 'string' ? d.lab : ''}/${typeof d.actividad === 'string' ? d.actividad : ''}`;
+    const r = contenido.redacciones.get(id);
+    if (!r) throw new ErrorHttp(404, 'actividad_desconocida', 'Esa actividad de redacción no existe.');
+    const usos = usadas(s.usuarioId, `redaccion:${id}`);
+    if (usos >= INTENTOS_IA) throw new ErrorHttp(429, 'sin_intentos', `Ya usaste tus ${INTENTOS_IA} evaluaciones de esta actividad.`);
+    const tema = r.tema ? contenido.titulosTema.get(r.tema) : undefined;
+    const evaluacion = await evaluarRedaccion(
+      clave,
+      config.rutaContenido,
+      { tema: r.tema, tituloTema: tema?.titulo ?? r.elemento, resumenTema: tema?.resumen ?? '', elemento: r.elemento, min: r.min, max: r.max },
+      typeof d.texto === 'string' ? d.texto : '',
+    );
+    // El intento solo se descuenta cuando la evaluación salió bien
+    anotarUso(s.usuarioId, `redaccion:${id}`);
+    responder(res, 200, { evaluacion, usados: usos + 1, intentos: INTENTOS_IA });
+  });
+
+  ruta('POST', '/api/ia/tesis', async ({ req, res }) => {
+    const s = exigirSesion(req);
+    const clave = exigirIa();
+    limiteIa.consumir(s.usuarioId);
+    const avance = avanceLabs(s.usuarioId);
+    if (!avance.desbloqueada) {
+      throw new ErrorHttp(403, 'tesis_bloqueada', `Completa los laboratorios para desbloquear la revisión de tu tesis (${avance.completadas} de ${avance.total}).`);
+    }
+    const usos = usadas(s.usuarioId, 'tesis');
+    if (usos >= INTENTOS_IA) throw new ErrorHttp(429, 'sin_intentos', `Ya usaste tus ${INTENTOS_IA} revisiones de tesis.`);
+    const d = (await leerJson(req, 12 * 1024 * 1024)) as Record<string, unknown>;
+    if (typeof d.datos !== 'string' || typeof d.nombre !== 'string') throw new ErrorHttp(422, 'archivo_invalido', 'No recibí el archivo.');
+    const evaluacion = await evaluarTesis(clave, { nombre: d.nombre, tipo: typeof d.tipo === 'string' ? d.tipo : '', datos: d.datos });
+    anotarUso(s.usuarioId, 'tesis');
+    responder(res, 200, { evaluacion, usados: usos + 1, intentos: INTENTOS_IA });
   });
 
   // — Derechos sobre los datos —
