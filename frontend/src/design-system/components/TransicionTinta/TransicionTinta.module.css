@@ -1,0 +1,45 @@
+.tramo {
+  position: relative;
+  height: var(--alto);
+}
+
+.fijo {
+  position: sticky;
+  inset-block-start: 0;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.previo,
+.revelado {
+  position: absolute;
+  inset: 0;
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+/* La mancha de tinta crece con el scroll: de un punto a cubrir toda la pantalla */
+.revelado {
+  --tinta: 0;
+  mask-image: var(--mancha-tinta);
+  mask-repeat: no-repeat;
+  mask-position: 50% 50%;
+  mask-size: calc(pow(var(--tinta), 1.6) * 520vmax + 1px) auto;
+}
+
+.revelado[data-cubierto='si'] {
+  mask-image: none;
+}
+
+/* Movimiento reducido: sin mancha que crece; el nuevo mundo aparece con un fundido
+   ligado al scroll (nunca un corte brusco). */
+@media (prefers-reduced-motion: reduce) {
+  .revelado {
+    mask-image: none;
+    opacity: var(--tinta);
+  }
+
+  .revelado[data-cubierto='si'] {
+    opacity: 1;
+  }
+}

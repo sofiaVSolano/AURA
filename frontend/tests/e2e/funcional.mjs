@@ -28,10 +28,14 @@ await ir('/', 2600);
 await foto('01-inicio');
 verificar('Inicio muestra la frase', await ev(`document.querySelector('h1')?.textContent.includes('No tienes que recorrer este camino a ciegas')`));
 verificar('Inicio invita a dar vida al AURA', await ev(`!!document.querySelector('a[href="/comenzar"]')`));
-await ev(`document.querySelectorAll('[data-indice]')[2].scrollIntoView({block:'center'})`);
-await dormir(1600);
+verificar('Portada: el titular no se cruza con la esfera (columna izquierda)', await ev(`document.querySelector('h1').getBoundingClientRect().right < innerWidth * 0.56`));
+// Lleva el camino a la mitad de su recorrido: debe verse la etapa 3 (Reconocimiento), entera
+await ev(`(() => { const c = document.getElementById('titulo-camino').closest('section'); scrollTo(0, c.offsetTop + (c.offsetHeight - innerHeight) * (2.2 / 4.4)); })()`);
+await dormir(2200);
 await foto('02-camino-etapa3');
-verificar('El camino activa la etapa al hacer scroll', (await ev(`document.querySelector('svg[data-etapa]:not([width="190"])')?.dataset.etapa ?? [...document.querySelectorAll('svg[data-etapa]')].map(s=>s.dataset.etapa).join(',')`)) !== undefined);
+verificar('El camino muestra la etapa que corresponde al scroll', await ev(`[...document.querySelectorAll('[data-k]')].find(n => Number(n.style.opacity) > 0.9)?.textContent === 'Reconocimiento'`));
+verificar('Ningún nombre de etapa se corta (cabe en su columna)', await ev(`(() => { const c = document.querySelector('[data-k]').parentElement; return [...c.children].every(n => n.scrollWidth <= c.clientWidth + 1); })()`));
+verificar('Las palabras gigantes (Académica, AURA) caben enteras', await ev(`[...document.querySelectorAll('main svg text')].every(t => { const s = t.ownerSVGElement.getBoundingClientRect(); return s.width > 0 && s.width <= innerWidth; })`));
 
 // 2) Onboarding
 await ir('/comenzar');
@@ -86,7 +90,7 @@ for (let r = 0; r < 4; r++) for (const t of tipos) {
 await dormir(600);
 if (await ev(`!!document.querySelector('dialog[open]')`)) await clicTexto('Seguir juntos');
 await dormir(400);
-verificar('Llega a Mi AURA (etapa 5)', await ev(`document.querySelector('svg[data-etapa]').dataset.etapa === '4'`));
+verificar('Llega a Mi AURA (etapa 5)', await ev(`document.querySelector('[data-etapa]').dataset.etapa === '4'`));
 await ev(`document.querySelector('input[type=checkbox]:not(:disabled)')?.click(); document.querySelectorAll('input[type=checkbox]:not(:disabled)')[1]?.click();`);
 await ev(`window.scrollTo(0,0)`);
 await dormir(1400);
@@ -131,7 +135,8 @@ verificar('Reproductor: no descarga el video antes de pulsar (preload=none)', aw
 // Clic real del puntero (gesto de usuario) vía CDP, como haría una persona
 const centro = await ev(`(() => { const r = document.querySelector('button[aria-label^="Reproducir «Video"]').getBoundingClientRect(); return [r.x + r.width / 2, r.y + r.height / 2]; })()`);
 for (const type of ['mousePressed', 'mouseReleased']) await cdp('Input.dispatchMouseEvent', { type, x: centro[0], y: centro[1], button: 'left', clickCount: 1 });
-await dormir(2200);
+// El arranque depende de la carga de la máquina: se espera hasta 6 s a que avance
+for (let i = 0; i < 30 && (await ev(`document.querySelector('video').currentTime`)) <= 1.2; i++) await dormir(200);
 verificar('Reproductor: reproduce al pulsar (sin autoplay)', (await ev(`document.querySelector('video').currentTime`)) > 0.5);
 verificar('Reproductor: subtítulos activos por defecto', await ev(`document.querySelector('button[aria-label="Subtítulos"]').getAttribute('aria-pressed') === 'true' && document.querySelector('figure p[aria-hidden]')?.textContent.includes('Subtítulo de prueba')`));
 await ev(`document.querySelector('button[aria-label="Subtítulos"]').click()`);

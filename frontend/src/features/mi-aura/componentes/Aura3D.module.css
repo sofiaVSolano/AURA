@@ -1,0 +1,34 @@
+.aura {
+  position: relative;
+  display: block;
+  width: min(84vw, 26rem);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.aura:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 4px;
+}
+
+.cuerpo {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-origin: 50% 85%;
+}
+
+/* Sombra en el suelo: da peso y ubica al personaje en la escena */
+.suelo {
+  position: absolute;
+  inset-inline: 28%;
+  inset-block-end: 3%;
+  height: 7%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.35), transparent);
+  z-index: -1;
+}

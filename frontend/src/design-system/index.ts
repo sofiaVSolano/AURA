@@ -15,3 +15,7 @@ export { VideoPendiente } from './components/VideoPendiente/VideoPendiente.tsx';
 export { useEnVista } from './hooks/useEnVista.ts';
 export { useParalaje } from './hooks/usePuntero.ts';
 export { useTituloDocumento } from './hooks/useTituloDocumento.ts';
+export { Esfera3D, type EstadoEsfera } from './components/Esfera3D/Esfera3D.tsx';
+export { TransicionTinta } from './components/TransicionTinta/TransicionTinta.tsx';
+export { movimientoReducido, suave, tramo, useMedidas, useProgresoScroll, type LecturaScroll } from './hooks/useProgresoScroll.ts';
+export { PalabraAjustada } from './components/PalabraAjustada/PalabraAjustada.tsx';

@@ -1,10 +1,15 @@
 .marco {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   display: grid;
   place-items: end start;
   aspect-ratio: 16 / 9;
   padding: var(--espacio-5);
   border-radius: var(--radio-lg);
-  background: color-mix(in srgb, hsl(var(--matiz) 40% 50%) 8%, var(--color-superficie));
+  background:
+    radial-gradient(60% 70% at 70% 40%, hsl(var(--matiz) 70% 50% / 0.22), transparent 70%),
+    color-mix(in srgb, hsl(var(--matiz) 40% 50%) 8%, var(--color-superficie));
   box-shadow: inset 0 0 0 1px var(--color-borde);
 }
 
@@ -19,4 +24,74 @@
 .texto strong {
   color: var(--color-texto);
   font-size: var(--texto-md);
+}
+
+.escena {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+}
+
+.burbuja,
+.onda {
+  grid-area: 1 / 1;
+  width: clamp(80px, 18%, 160px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.burbuja {
+  background:
+    radial-gradient(circle at 34% 30%, hsl(var(--matiz) 95% 88%) 0%, transparent 42%),
+    linear-gradient(150deg, hsl(var(--matiz) 78% 68%), hsl(calc(var(--matiz) - 16) 62% 42%));
+  box-shadow: 0 20px 60px -10px hsl(var(--matiz) 80% 50% / 0.7);
+  animation: respirar 4.5s var(--ease-respiracion) infinite alternate;
+}
+
+.onda {
+  border: 1.5px solid hsl(var(--matiz) 85% 75% / 0.6);
+  animation: expandir 4.5s var(--ease-salida) infinite;
+}
+
+.onda:nth-child(2) {
+  animation-delay: 1.5s;
+}
+
+.onda:nth-child(3) {
+  animation-delay: 3s;
+}
+
+@keyframes respirar {
+  from {
+    transform: scale(0.92) translateY(4px);
+    border-radius: 54% 46% 50% 50% / 48% 54% 46% 52%;
+  }
+  to {
+    transform: scale(1.04) translateY(-6px);
+    border-radius: 46% 54% 48% 52% / 54% 46% 54% 46%;
+  }
+}
+
+@keyframes expandir {
+  from {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .burbuja,
+  .onda {
+    animation: none;
+  }
+
+  .onda {
+    display: none;
+  }
 }

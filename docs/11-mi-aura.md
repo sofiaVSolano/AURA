@@ -97,3 +97,28 @@ La interfaz explica cómo se obtiene cada uno.
   - la normalización de datos manipulados;
   - la validación del nombre.
 - **E2E de humo** con Edge headless y DevTools Protocol, sin dependencias (14 comprobaciones, 0 errores de consola): onboarding completo, persistencia tras recargar, que repetir no suma, celebración, llegada a la etapa 5, galería, móvil real a 390 px sin desbordamiento, avatar en la cabecera y borrado. El script vive fuera del repositorio; se propone incorporarlo como prueba versionada en F6 (requiere decidir la herramienta).
+
+## Personaje 3D (portada)
+
+- `design-system/components/Esfera3D/motor.ts` dibuja a tu AURA con WebGL, sin dependencias. El personaje **se va formando con la etapa**, de forma continua:
+  - *Origen*: esfera de luz difuminada.
+  - *Descubrimiento*: aparece la silueta (cabeza y cuerpo).
+  - *Reconocimiento*: bracitos y ojos.
+  - *Transformación*: su forma propia (gota, nube, brote o canto rodado), patitas, boca, mejillas y la expresión elegida.
+  - *Mi AURA*: completo, con un anillo de luz.
+- La cara se pinta sobre la cabeza, como en un juguete de vinilo. Parpadea, respira y mira hacia el puntero.
+- En la portada avanza con el scroll. Al final de la página se forma hasta la etapa real del usuario. Sin AURA propia se muestra un personaje de ejemplo.
+- Laboratorio (solo en desarrollo): `/sistema/personaje`, con formas, expresiones, colores y un control de etapa.
+- Sin WebGL se muestra un degradado estático. Con movimiento reducido, el tiempo se congela.
+- **Vestuario de graduación**: el motor puede dibujar lápiz, toga, diploma y birrete (`vestuario`), pero está desactivado por decisión de diseño.
+- **Acompañante** (`componentes/Acompanante.tsx`): tu AURA en 3D flota en una esquina de Emocional, Académica y Recursos.
+  - Te mira, comenta la sección la primera vez que entras en la sesión y celebra cada experiencia nueva y cada etapa.
+  - En móvil no abre el globo sola: salta y deja un aviso.
+  - Se puede esconder durante la sesión.
+- **Mi AURA** muestra el personaje 3D, con su vestuario logrado y el pendiente. La personalización, la galería y la celebración siguen con el personaje SVG, que también muestra las decoraciones.
+- **Cuenta**: sin vestuario y con una florecita en la mano.
+  - Sigue el cursor con la mirada y asiente con cada tecla del correo; celebra la arroba y el correo completo.
+  - Cierra los ojos mientras escribes la contraseña y se los tapa con las manos si la muestras.
+  - Reacciona a los errores.
+- **Inicio** no muestra el anillo de luz.
+- Opciones del motor: `vestuario`, `birrete`, `aro`, `flor` y `tapar`.

@@ -1,0 +1,172 @@
+.item {
+  list-style: none;
+  animation: nacer 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i, 0) * 80ms + 200ms);
+}
+
+/* Desfase alterno: un panal orgánico, ordenado pero vivo */
+@media (min-width: 40rem) {
+  .item:nth-child(even) {
+    translate: 0 var(--espacio-7);
+  }
+}
+
+@keyframes nacer {
+  from {
+    opacity: 0;
+    scale: 0.4;
+  }
+}
+
+.enlace {
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2);
+  border-radius: var(--radio-lg);
+  color: inherit;
+  text-align: center;
+  text-decoration: none;
+}
+
+.flotador {
+  position: relative;
+  display: grid;
+  width: min(100%, 13rem);
+  aspect-ratio: 1;
+  margin-block-end: var(--espacio-2);
+  animation: flotar calc(5s + var(--i) * 0.7s) var(--ease-respiracion) infinite alternate;
+  animation-delay: calc(var(--i) * -1.1s);
+}
+
+@keyframes flotar {
+  from {
+    transform: translateY(-6px);
+  }
+  to {
+    transform: translateY(8px);
+  }
+}
+
+.burbuja {
+  --tono: calc(var(--matiz) + var(--i) * 16 - 24);
+  position: relative;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 32% 28%, hsl(var(--tono) 95% 90% / 0.9) 0%, transparent 38%),
+    radial-gradient(circle at 70% 75%, hsl(calc(var(--tono) + 30) 70% 45%) 0%, transparent 70%),
+    linear-gradient(155deg, hsl(var(--tono) 75% 68%), hsl(calc(var(--tono) - 20) 60% 38%));
+  box-shadow:
+    inset 0 -14px 30px hsl(var(--tono) 60% 25% / 0.45),
+    0 24px 50px -18px hsl(var(--tono) 70% 40% / 0.7);
+  transition:
+    transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 600ms var(--ease-salida),
+    border-radius 900ms var(--ease-salida);
+}
+
+.brillo {
+  position: absolute;
+  inset: 12% 48% 60% 16%;
+  border-radius: 50%;
+  background: hsl(0 0% 100% / 0.45);
+  filter: blur(6px);
+}
+
+.numero {
+  position: absolute;
+  inset-block-start: 18%;
+  font-family: var(--fuente-display);
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: hsl(0 0% 100% / 0.85);
+}
+
+.play {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: hsl(0 0% 100% / 0.2);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  box-shadow: 0 0 0 1px hsl(0 0% 100% / 0.35) inset;
+  transition:
+    transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background-color 300ms ease;
+}
+
+.play[data-disponible] {
+  background: #fff;
+  color: hsl(var(--matiz) 55% 32%);
+}
+
+/* Anillo de lo visto */
+.anillo {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  rotate: -90deg;
+  pointer-events: none;
+}
+
+.anillo circle {
+  fill: none;
+  stroke: hsl(var(--matiz) 85% 72%);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+
+.titulo {
+  max-width: 22ch;
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  font-weight: 560;
+  line-height: 1.2;
+}
+
+.meta {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Al acercarse, la burbuja se deforma como gelatina y el botón crece */
+@media (hover: hover) and (pointer: fine) {
+  .enlace:hover .burbuja {
+    transform: scale(1.06);
+    border-radius: 46% 54% 50% 50% / 54% 46% 54% 46%;
+    box-shadow:
+      inset 0 -14px 30px hsl(var(--tono) 60% 25% / 0.45),
+      0 0 0 10px hsl(var(--tono) 80% 70% / 0.12),
+      0 34px 70px -18px hsl(var(--tono) 70% 45% / 0.9);
+  }
+
+  .enlace:hover .play {
+    transform: scale(1.18);
+  }
+}
+
+.enlace:focus-visible .burbuja {
+  transform: scale(1.06);
+}
+
+.enlace:active .burbuja {
+  transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: none;
+  }
+
+  .flotador {
+    animation: none;
+  }
+}

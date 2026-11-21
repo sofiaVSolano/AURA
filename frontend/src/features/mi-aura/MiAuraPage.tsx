@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Boton, BotonEnlace, EstadoVista, Etiqueta, Modal } from '../../design-system/index.ts';
 import { Personaje } from './avatar/Personaje.tsx';
+import { Aura3D } from './componentes/Aura3D.tsx';
 import { ComoCrece } from './componentes/ComoCrece.tsx';
 import { Galeria } from './componentes/Galeria.tsx';
 import { Personalizacion } from './componentes/Personalizacion.tsx';
@@ -67,15 +68,7 @@ export function MiAuraPage() {
     <div className={estilos.pagina}>
       <section className={`${estilos.escena} textura-grano sangrado`} aria-labelledby="nombre-aura">
         <div className={estilos.escenaAvatar}>
-          <Personaje
-            preferencias={p}
-            etapa={evolucion.indice}
-            decoraciones={visibles}
-            tamano={300}
-            interactivo
-            compartido
-            reposo={evolucion.reposo}
-          />
+          <Aura3D preferencias={p} etapa={evolucion.indice} etiqueta={`Saludar a ${p.nombre}`} compartido />
         </div>
         <div className={estilos.escenaTexto}>
           <Etiqueta tono="aura">

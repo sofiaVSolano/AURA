@@ -11,6 +11,7 @@ export function Orbe({ matiz, tamano = 120, transicion, className }: { matiz: nu
     <span
       className={cx(estilos.orbe, className)}
       aria-hidden="true"
+      data-orbe=""
       style={{ '--matiz': matiz, width: tamano, height: tamano, viewTransitionName: transicion } as CSSProperties}
     >
       <span className={estilos.brillo} />

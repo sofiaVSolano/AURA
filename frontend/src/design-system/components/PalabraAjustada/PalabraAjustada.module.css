@@ -1,0 +1,14 @@
+.palabra {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.texto {
+  font-family: var(--fuente-display);
+  font-size: 100px;
+  font-weight: 620;
+  letter-spacing: -0.055em;
+  fill: currentColor;
+}

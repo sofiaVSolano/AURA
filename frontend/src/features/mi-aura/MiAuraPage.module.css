@@ -40,6 +40,8 @@
   height: auto;
 }
 
+
+
 .escenaTexto {
   display: grid;
   gap: var(--espacio-3);

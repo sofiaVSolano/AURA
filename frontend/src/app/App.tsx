@@ -55,7 +55,7 @@ const rutas: RouteObject[] = [
   },
   {
     path: 'cuenta',
-    handle: h({ ambito: 'inicio', titulo: 'Tu cuenta' }),
+    handle: h({ ambito: 'mi-aura', titulo: 'Tu cuenta' }),
     lazy: async () => ({ Component: (await import('../features/cuenta/CuentaPage.tsx')).CuentaPage }),
   },
   {
@@ -71,6 +71,11 @@ if (import.meta.env.DEV) {
     path: 'sistema',
     handle: h({ ambito: 'inicio', titulo: 'Sistema de diseño' }),
     lazy: async () => ({ Component: (await import('../features/sistema/SistemaPage.tsx')).SistemaPage }),
+  });
+  rutas.push({
+    path: 'sistema/personaje',
+    handle: h({ ambito: 'mi-aura', titulo: 'Laboratorio del personaje 3D' }),
+    lazy: async () => ({ Component: (await import('../features/sistema/PersonajeLab.tsx')).PersonajeLab }),
   });
 }
 

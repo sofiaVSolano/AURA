@@ -1,6 +1,7 @@
-import { useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Link, Outlet, ScrollRestoration, useLocation, useMatches } from 'react-router';
 import { Personaje } from '../features/mi-aura/avatar/Personaje.tsx';
+import { Acompanante } from '../features/mi-aura/componentes/Acompanante.tsx';
 import { apiHabilitada, sesion } from '../lib/api.ts';
 import { useMiAura } from '../features/mi-aura/estado/MiAuraContexto.tsx';
 import { Navegacion, useTituloDocumento, type ItemNavegacion } from '../design-system/index.ts';
@@ -56,12 +57,27 @@ export function Diseno() {
     document.documentElement.dataset.ambito = ambito;
   }, [ambito]);
 
+  // La tinta de la transición entre páginas nace donde se hizo clic.
+  useEffect(() => {
+    const raiz = document.documentElement;
+    const marcar = (e: PointerEvent) => {
+      raiz.style.setProperty('--vt-x', `${((e.clientX / innerWidth) * 100).toFixed(1)}%`);
+      raiz.style.setProperty('--vt-y', `${((e.clientY / innerHeight) * 100).toFixed(1)}%`);
+    };
+    addEventListener('pointerdown', marcar, { passive: true });
+    return () => removeEventListener('pointerdown', marcar);
+  }, []);
+
+  // Inicio es una escena a pantalla completa: la cabecera flota sobre ella.
+  const { pathname } = useLocation();
+  const inmersiva = pathname === '/' || pathname === '/cuenta';
+
   return (
-    <div className={estilos.app}>
+    <div className={estilos.app} data-inmersiva={inmersiva || undefined}>
       <a href="#contenido" className="salto-contenido">
         Saltar al contenido
       </a>
-      <header className={estilos.cabecera}>
+      <header className={estilos.cabecera} data-ambito={inmersiva ? 'mi-aura' : undefined}>
         <div className={estilos.barra}>
           <Link to="/" viewTransition className={estilos.marca} aria-label="AURA, ir al inicio">
             <span className={estilos.marcaSimbolo} aria-hidden="true" />
@@ -90,6 +106,7 @@ export function Diseno() {
           Recursos de acompañamiento
         </Link>
       </footer>
+      <Acompanante />
       <ScrollRestoration />
     </div>
   );
