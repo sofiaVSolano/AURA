@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Link } from 'react-router';
-import { Etiqueta, formatoTiempo, Icono } from '../../../design-system/index.ts';
+import { Etiqueta, Icono } from '../../../design-system/index.ts';
+import { formatoTiempo } from '../../../lib/tiempo.ts';
 import { rutaSubtema } from '../datos/catalogoEmocional.ts';
 import type { SubtemaConVideo } from '../dominio/categorias.ts';
 import type { Avance } from '../dominio/estadoEmocional.ts';

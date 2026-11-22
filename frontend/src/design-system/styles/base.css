@@ -100,6 +100,11 @@ data,
   font-variant-numeric: tabular-nums;
 }
 
+/* El atributo hidden siempre oculta, aunque una clase defina display (p. ej. grid) */
+[hidden] {
+  display: none !important;
+}
+
 .visualmente-oculto {
   position: absolute !important;
   width: 1px;

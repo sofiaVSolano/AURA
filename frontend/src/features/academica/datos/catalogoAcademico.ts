@@ -9,7 +9,8 @@ import type { EtapaRuta, Guia, Laboratorio, Ruta, TemaEnRuta } from '../dominio/
 import { validarGuia, validarLaboratorio, validarRuta } from '../dominio/validar.ts';
 
 const rutas = import.meta.glob<unknown>('../../../../../content/academica/rutas/*.json', { eager: true, import: 'default' });
-const temas = import.meta.glob<unknown>('../../../../../content/academica/temas/*.json', { eager: true, import: 'default' });
+// Las guías se cargan bajo demanda (una por página): el peso no crece con el número de guías.
+const temas = import.meta.glob<unknown>('../../../../../content/academica/temas/*.json', { import: 'default' });
 const labs = import.meta.glob<unknown>('../../../../../content/academica/laboratorios/*.json', { eager: true, import: 'default' });
 
 const idDe = (ruta: string) => /\/([a-z0-9-]+)\.json$/.exec(ruta)?.[1] ?? ruta;
@@ -26,7 +27,25 @@ function cargar<T>(modulos: Record<string, unknown>, validar: (d: unknown, id: s
 }
 
 const todasLasRutas = cargar<Ruta>(rutas, validarRuta);
-const guias = cargar<Guia>(temas, validarGuia);
+const cargadoresGuia = new Map(Object.entries(temas).map(([ruta, cargar]) => [idDe(ruta), cargar]));
+const guiasCargadas = new Map<string, Promise<Guia | undefined>>();
+
+/** Descarga y valida la guía de un tema (una sola vez). undefined si no existe o no es válida. */
+export function cargarGuia(temaId: string): Promise<Guia | undefined> {
+  let p = guiasCargadas.get(temaId);
+  if (!p) {
+    const cargar = cargadoresGuia.get(temaId);
+    p = cargar
+      ? cargar().then((datos) => {
+          const r = validarGuia(datos, temaId);
+          if (!r.ok && import.meta.env.DEV) console.warn('[AURA] Guía no válida:', r.errores);
+          return r.ok ? r.valor : undefined;
+        })
+      : Promise.resolve(undefined);
+    guiasCargadas.set(temaId, p);
+  }
+  return p;
+}
 const laboratorios = cargar<Laboratorio>(labs, validarLaboratorio);
 
 if (import.meta.env.DEV && errores.length) console.warn(`[AURA] Contenido académico con problemas:\n- ${errores.join('\n- ')}`);
@@ -44,8 +63,8 @@ export const ruta: Ruta = (() => {
 export interface TemaResuelto {
   etapa: EtapaRuta;
   tema: TemaEnRuta;
-  /** Guía completa, si ya existe. */
-  guia: Guia | undefined;
+  /** ¿Existe ya la guía completa? (se descarga con cargarGuia). */
+  tieneGuia: boolean;
   video: EntradaVideo | undefined;
   videoDisponible: boolean;
 }
@@ -57,7 +76,7 @@ for (const etapa of ruta.etapas) {
     indice.set(tema.id, {
       etapa,
       tema,
-      guia: guias.get(tema.id),
+      tieneGuia: cargadoresGuia.has(tema.id),
       video,
       videoDisponible: video ? estaPublicado(video, config.contentProfile) : false,
     });

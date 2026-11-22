@@ -3,12 +3,15 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-6);
+  max-width: 66rem;
+  margin-inline: auto;
   padding-block: var(--espacio-5) var(--espacio-6);
 }
 
 .migas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--espacio-2);
   font-size: var(--texto-sm);
   color: var(--color-texto-suave);
@@ -16,9 +19,12 @@
 
 .cabecera {
   display: grid;
-  justify-items: start;
+  justify-items: center;
   gap: var(--espacio-3);
-  max-width: 50rem;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-block: var(--espacio-5) var(--espacio-3);
+  text-align: center;
   animation: entrar var(--dur-vista) var(--ease-entrada) both;
 }
 
@@ -30,7 +36,10 @@
 }
 
 .titulo {
-  font-size: var(--texto-3xl);
+  font-size: clamp(2.6rem, 1.4rem + 4vw, 5rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
 }
 
 .lead {
@@ -85,6 +94,11 @@
   outline-offset: 2px;
 }
 
+/* Mientras se descarga la guía se reserva su espacio */
+.reservaGuia {
+  min-height: 100vh;
+}
+
 /* — Cuerpo con índice lateral — */
 .cuerpo {
   display: grid;
@@ -94,8 +108,9 @@
 
 @media (min-width: 64rem) {
   .cuerpo {
-    grid-template-columns: 14rem minmax(0, 1fr);
-    gap: var(--espacio-8);
+    grid-template-columns: 13rem minmax(0, 48rem);
+    justify-content: center;
+    gap: var(--espacio-7);
   }
 }
 
@@ -310,7 +325,9 @@
 /* Cada función con su tono, derivado del morado */
 .fragmento,
 .panelExplicacion,
-.desglose li {
+.desglose li,
+.anotada,
+.margen {
   --h: calc(268 + var(--tono) * 38);
 }
 
@@ -433,7 +450,6 @@
 
 .prueba .porque {
   font-size: var(--texto-sm);
-  opacity: 0.9;
 }
 
 .revelar {
@@ -657,4 +673,198 @@
   .listaAvances li {
     animation: none;
   }
+}
+
+/* — Ejemplo como manuscrito anotado: piezas a la izquierda, nota al margen — */
+.manuscrito {
+  display: grid;
+  gap: var(--espacio-5);
+}
+
+@media (min-width: 52rem) {
+  .manuscrito {
+    grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 1fr);
+    align-items: start;
+  }
+}
+
+.anotadas {
+  display: grid;
+  gap: var(--espacio-5);
+}
+
+.grupo {
+  display: grid;
+  gap: var(--espacio-2);
+}
+
+/* Las piezas de un mismo tipo se agrupan con una llave a la izquierda */
+.grupo:has(.grupoTitulo) {
+  padding-inline-start: var(--espacio-4);
+  border-inline-start: 2px dashed var(--color-borde-control);
+}
+
+.grupoTitulo {
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-texto-suave);
+}
+
+.anotada {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: var(--espacio-3);
+  align-items: start;
+  padding: var(--espacio-3) var(--espacio-4);
+  border-radius: 16px;
+  background: hsl(var(--h) 70% 60% / 0.07);
+  box-shadow: inset 3px 0 0 hsl(var(--h) 60% 50% / 0.5);
+  cursor: pointer;
+  animation: anotadaEntra 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--k) * 80ms);
+  transition:
+    background-color 250ms ease,
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 250ms ease;
+}
+
+.anotada:hover {
+  background: hsl(var(--h) 70% 60% / 0.14);
+  transform: translateX(4px);
+}
+
+.anotada:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+.anotadaActiva {
+  background: hsl(var(--h) 70% 60% / 0.18);
+  box-shadow:
+    inset 5px 0 0 hsl(var(--h) 60% 45%),
+    0 14px 30px -20px hsl(var(--h) 60% 40% / 0.6);
+  transform: translateX(6px);
+}
+
+@keyframes anotadaEntra {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.anotadaMarca {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: hsl(var(--h) 60% 50%);
+  color: #fff;
+  font-family: var(--fuente-display);
+  font-weight: 700;
+}
+
+.anotadaCuerpo {
+  display: grid;
+  gap: var(--espacio-1);
+}
+
+.anotadaTexto {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  line-height: 1.45;
+  color: var(--color-texto);
+}
+
+/* Nota al margen */
+.margen {
+  position: sticky;
+  inset-block-start: 90px;
+}
+
+.margenNota {
+  display: grid;
+  gap: var(--espacio-2);
+  padding: var(--espacio-5);
+  border-radius: 6px 22px 22px 22px;
+  background: hsl(var(--h) 70% 60% / 0.13);
+  box-shadow: inset 0 0 0 1px hsl(var(--h) 60% 50% / 0.25);
+  animation: notaEntra 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes notaEntra {
+  from {
+    opacity: 0;
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+.margenNota p {
+  font-size: var(--texto-md);
+  line-height: 1.5;
+}
+
+.margenCuenta {
+  font-size: var(--texto-xs);
+  color: var(--color-texto-suave);
+}
+
+.margenNota .elemento {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-xl);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.margenPasos {
+  display: flex;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.margenPasos button {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--color-superficie);
+  box-shadow: inset 0 0 0 1px var(--color-borde-control);
+  color: var(--color-texto);
+  font-size: var(--texto-lg);
+  cursor: pointer;
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.margenPasos button:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.margenPasos button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anotada,
+  .margenNota {
+    animation-name: fundidoAnotada;
+  }
+}
+
+@keyframes fundidoAnotada {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Tema sin guía: el aviso y, al lado, su laboratorio */
+.sinGuia {
+  display: grid;
+  gap: var(--espacio-5);
+  max-width: 44rem;
+  margin-inline: auto;
 }

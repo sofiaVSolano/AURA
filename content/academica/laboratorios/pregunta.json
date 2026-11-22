@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "pregunta",
+  "titulo": "Laboratorio de pregunta de investigación",
+  "descripcion": "Escribe tu pregunta de investigación y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "pregunta",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu pregunta de investigación",
+      "consigna": "Escribe tu pregunta de investigación con tus propias palabras (recomendado: 15 a 60 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "pregunta de investigación",
+      "palabrasMin": 15,
+      "palabrasMax": 60
+    }
+  ]
+}

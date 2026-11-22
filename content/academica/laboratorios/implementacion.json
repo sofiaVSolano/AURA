@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "implementacion",
+  "titulo": "Laboratorio de implementación o trabajo de campo",
+  "descripcion": "Escribe cómo implementaste o hiciste el trabajo de campo y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "implementacion",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe cómo implementaste o hiciste el trabajo de campo",
+      "consigna": "Escribe cómo implementaste o hiciste el trabajo de campo con tus propias palabras (recomendado: 300 a 800 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "cómo implementaste o hiciste el trabajo de campo",
+      "palabrasMin": 300,
+      "palabrasMax": 800
+    }
+  ]
+}

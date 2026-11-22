@@ -1,29 +1,148 @@
+/* — Diario: un panel con la luz de la emoción, ideas para empezar y notas — */
 .aprendizajes {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: grid;
-  gap: var(--espacio-4);
-  padding: var(--espacio-5);
-  border-radius: var(--radio-lg);
-  background: var(--color-superficie);
+  gap: var(--espacio-5);
+  padding: var(--espacio-6) var(--espacio-5);
+  border-radius: 32px;
+  background: linear-gradient(160deg, color-mix(in srgb, hsl(var(--matiz, 272) 60% 40%) 22%, var(--color-superficie)), var(--color-superficie) 60%);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, hsl(var(--matiz, 272) 80% 70%) 22%, transparent) inset,
+    0 40px 80px -50px hsl(var(--matiz, 272) 70% 50% / 0.8);
+}
+
+@media (min-width: 52rem) {
+  .aprendizajes {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+    gap: var(--espacio-6);
+    padding: var(--espacio-7);
+  }
+
+  .lista {
+    grid-column: 1 / -1;
+  }
+}
+
+.luz {
+  position: absolute;
+  inset-block-start: -40%;
+  inset-inline-end: -20%;
+  z-index: -1;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, hsl(var(--matiz, 272) 80% 60% / 0.35), transparent);
+  filter: blur(20px);
+  animation: luz 9s var(--ease-respiracion) infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes luz {
+  to {
+    transform: translate(-12%, 18%) scale(1.15);
+  }
 }
 
 .encabezado {
-  display: flex;
-  align-items: center;
+  display: grid;
   gap: var(--espacio-3);
 }
 
-.encabezado h2 {
-  font-size: var(--texto-xl);
+.kicker {
+  font-size: var(--texto-xs);
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-acento-texto);
+}
+
+.titulo {
+  font-size: clamp(2.2rem, 1.4rem + 2.6vw, 3.6rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.titulo em {
+  color: hsl(var(--matiz, 272) 85% 78%);
 }
 
 .nota {
-  font-size: var(--texto-sm);
+  max-width: 38ch;
   color: var(--color-texto-suave);
 }
 
+.inicios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-2);
+}
+
+.inicio {
+  min-height: 38px;
+  padding: 0 var(--espacio-4);
+  border: 1px solid color-mix(in srgb, hsl(var(--matiz, 272) 80% 75%) 40%, transparent);
+  border-radius: var(--radio-pildora);
+  background: color-mix(in srgb, hsl(var(--matiz, 272) 70% 60%) 10%, transparent);
+  color: var(--color-texto);
+  font: inherit;
+  font-family: var(--fuente-display);
+  font-style: italic;
+  font-size: var(--texto-sm);
+  cursor: pointer;
+  animation: brotar 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i) * 70ms + 200ms);
+  transition:
+    background-color 200ms ease,
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.inicio:hover {
+  background: color-mix(in srgb, hsl(var(--matiz, 272) 70% 60%) 28%, transparent);
+  transform: translateY(-3px) rotate(-1deg);
+}
+
+.inicio:active {
+  transform: scale(0.95);
+}
+
+@keyframes brotar {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.85);
+  }
+}
+
+/* Hoja de papel para escribir */
 .formulario {
   display: grid;
   gap: var(--espacio-3);
+}
+
+.hoja {
+  padding: var(--espacio-4) var(--espacio-4) var(--espacio-3);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--color-fondo) 70%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-texto) 8%, transparent) inset;
+  transition: box-shadow 300ms ease;
+}
+
+.hoja:focus-within {
+  box-shadow:
+    0 0 0 1px hsl(var(--matiz, 272) 80% 70% / 0.6) inset,
+    0 0 0 6px hsl(var(--matiz, 272) 80% 60% / 0.12);
+}
+
+.hoja textarea {
+  background: repeating-linear-gradient(transparent 0 calc(1.85rem - 1px), color-mix(in srgb, var(--color-texto) 9%, transparent) calc(1.85rem - 1px) 1.85rem) local;
+  background-position-y: 0.55rem;
+  line-height: 1.85rem;
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
 }
 
 .acciones {
@@ -37,32 +156,67 @@
   font-size: var(--texto-sm);
   font-weight: 600;
   color: var(--color-acento-texto);
+  animation: brotar 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
+/* Notas guardadas: papelitos ligeramente girados */
 .lista {
   display: grid;
-  gap: var(--espacio-2);
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--espacio-4);
   padding: 0;
   list-style: none;
 }
 
 .item {
   display: grid;
-  gap: var(--espacio-2);
-  padding: var(--espacio-3) var(--espacio-4);
-  border-radius: var(--radio-md);
-  background: var(--color-superficie-2);
-  animation: aparecer var(--dur-vista) var(--ease-entrada) both;
+  align-content: space-between;
+  gap: var(--espacio-3);
+  min-height: 9rem;
+  padding: var(--espacio-4);
+  border-radius: 6px 22px 22px 22px;
+  background: linear-gradient(170deg, hsl(var(--matiz, 272) 60% 88%), hsl(var(--matiz, 272) 50% 80%));
+  color: #1c1530;
+  box-shadow: 0 20px 40px -24px rgb(0 0 0 / 0.7);
+  rotate: var(--giro);
+  animation: aparecer 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i) * 60ms);
+  transition:
+    rotate 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.item:hover {
+  rotate: 0deg;
+  transform: translateY(-4px);
+}
+
+/* La nota recién guardada llega volando */
+.item[data-nuevo] {
+  animation: llegar 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
 .item p {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-md);
+  line-height: 1.4;
   white-space: pre-line;
 }
 
 @keyframes aparecer {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(14px) scale(0.92);
+  }
+}
+
+@keyframes llegar {
+  0% {
+    opacity: 0;
+    transform: translateY(-80px) scale(0.6) rotate(-12deg);
+  }
+  60% {
+    opacity: 1;
   }
 }
 
@@ -72,7 +226,7 @@
   justify-content: space-between;
   gap: var(--espacio-3);
   font-size: var(--texto-xs);
-  color: var(--color-texto-suave);
+  color: rgb(28 21 48 / 0.7);
 }
 
 .borrar {
@@ -84,12 +238,22 @@
   border: 0;
   border-radius: var(--radio-pildora);
   background: transparent;
-  color: var(--color-texto-suave);
+  color: rgb(28 21 48 / 0.75);
   font-size: var(--texto-xs);
   font-weight: 600;
 }
 
 .borrar:hover {
-  background: var(--color-error-fondo);
-  color: var(--color-error);
+  background: rgb(28 21 48 / 0.1);
+  color: #8a1f2c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .luz,
+  .inicio,
+  .item,
+  .item[data-nuevo],
+  .mensaje {
+    animation: none;
+  }
 }

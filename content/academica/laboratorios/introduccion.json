@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "introduccion",
+  "titulo": "Laboratorio de introducción",
+  "descripcion": "Escribe tu introducción y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "introduccion",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu introducción",
+      "consigna": "Escribe tu introducción con tus propias palabras (recomendado: 500 a 1000 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "introducción",
+      "palabrasMin": 500,
+      "palabrasMax": 1000
+    }
+  ]
+}

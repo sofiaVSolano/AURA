@@ -13,8 +13,8 @@ import {
   GrupoOpciones,
   Modal,
   PasosProgreso,
-  ReproductorVideo,
 } from '../../design-system/index.ts';
+import { ReproductorVideo } from '../../design-system/components/ReproductorVideo/ReproductorVideo.tsx';
 import { Actividad } from '../academica/componentes/Actividades.tsx';
 import { laboratorioPorId } from '../academica/datos/catalogoAcademico.ts';
 import { Personaje } from '../mi-aura/avatar/Personaje.tsx';
@@ -185,7 +185,7 @@ export function SistemaPage() {
           </div>
           <div data-ambito="academico" className={estilos.ambito}>
             {/* Actividad real de laboratorio (sin registrar progreso) */}
-            <Actividad actividad={laboratorioPorId('objetivos')!.actividades[0]!} onRevisada={() => {}} onPractica={() => {}} />
+            <Actividad labId="sistema" actividad={laboratorioPorId('objetivos')!.actividades[0]!} onRevisada={() => {}} onPractica={() => {}} />
           </div>
         </div>
       </section>

@@ -5,21 +5,34 @@
   "categoria": "estoy-agotado",
   "subtema": "la-tesis-me-consume",
   "titulo": "La tesis me consume",
-  "descripcion": "Tu proyecto es importante, pero no es todo lo que eres.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Tu tesis es importante, pero no es todo lo que eres. Once consejos para ponerle bordes y volver a habitar tu vida.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 210,
+  "duracionSegundos": 208,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "tesis",
+    "identidad",
+    "límites",
+    "descanso",
+    "bienestar"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: Slow Piano — Millennials Melody Originals",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-22"
 }

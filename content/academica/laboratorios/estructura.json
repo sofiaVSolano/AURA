@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "estructura",
+  "titulo": "Laboratorio de estructura de la presentación",
+  "descripcion": "Escribe la estructura de tu sustentación y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "estructura",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe la estructura de tu sustentación",
+      "consigna": "Escribe la estructura de tu sustentación con tus propias palabras (recomendado: 100 a 300 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "la estructura de sustentación",
+      "palabrasMin": 100,
+      "palabrasMax": 300
+    }
+  ]
+}

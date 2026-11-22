@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "planificacion",
+  "titulo": "Laboratorio de planificación",
+  "descripcion": "Escribe tu plan de trabajo y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "planificacion",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu plan de trabajo",
+      "consigna": "Escribe tu plan de trabajo con tus propias palabras (recomendado: 150 a 500 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "plan de trabajo",
+      "palabrasMin": 150,
+      "palabrasMax": 500
+    }
+  ]
+}

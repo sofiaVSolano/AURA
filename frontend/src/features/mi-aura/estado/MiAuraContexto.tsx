@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
+import { api, sesion } from '../../../lib/api.ts';
 import { crearRepositorio, type RepositorioAura } from '../datos/repositorio.ts';
 import { calcularEvolucion, type Evolucion } from '../dominio/evolucion.ts';
 import {
@@ -119,18 +120,30 @@ export function MiAuraProvider({ children }: { children: ReactNode }) {
           },
         }));
       },
-      registrarExperiencia: (tipo, refId, dimension) =>
-        mutar((d) => {
+      registrarExperiencia: (tipo, refId, dimension) => {
+        const nueva = {
+          id: nuevoId(),
+          tipo,
+          dimension: TIPOS_EXPERIENCIA[tipo].dimension ?? dimension ?? 'emocional',
+          refId,
+          fecha: new Date().toISOString(),
+        };
+        const registrada = mutar((d) => {
           if (d.experiencias.some((e) => e.tipo === tipo && e.refId === refId)) return d;
-          const nueva = {
-            id: nuevoId(),
-            tipo,
-            dimension: TIPOS_EXPERIENCIA[tipo].dimension ?? dimension ?? 'emocional',
-            refId,
-            fecha: new Date().toISOString(),
-          };
           return esExperienciaValida(nueva) ? { ...d, experiencias: [...d.experiencias, nueva] } : d;
-        }),
+        });
+        // Con cuenta, el servidor decide si la experiencia cuenta y devuelve la lista oficial.
+        if (registrada && sesion.activa) {
+          api.experiencia(tipo, refId).then(
+            (r) => {
+              const v = validarEstadoAura({ ...ESTADO_INICIAL, experiencias: r.experiencias });
+              if (v.ok) mutar((d) => ({ ...d, experiencias: v.valor.estado.experiencias }));
+            },
+            () => mutar((d) => ({ ...d, experiencias: d.experiencias.filter((e) => e.id !== nueva.id) })),
+          );
+        }
+        return registrada;
+      },
       marcarEtapaVista: (etapa) => {
         mutar((d) => (d.ultimaEtapaVista === etapa ? d : { ...d, ultimaEtapaVista: etapa }));
       },

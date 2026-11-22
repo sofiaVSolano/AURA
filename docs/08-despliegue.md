@@ -32,6 +32,22 @@ Reglas:
 
 Cuando haya enrutado en la app (F1) hará falta una de estas dos opciones: configurar el servidor para que devuelva `index.html` en las rutas desconocidas (*fallback* SPA), o usar enrutado por hash. Se decidirá según el servidor.
 
+## Cabeceras de seguridad (obligatorias en el servidor)
+
+Están definidas y verificadas en `frontend/vite.config.ts` (`CABECERAS_SEGURIDAD`): `npm run test:auditoria` comprueba que la app funciona con ellas. Deben replicarse en el servidor web:
+
+```
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+Cross-Origin-Opener-Policy: same-origin
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=31536000; includeSubDomains   (solo con HTTPS)
+```
+
+Si los medios se alojan en otro origen (`VITE_MEDIA_BASE_URL`), añádelo a `media-src` (y a `connect-src` para la transcripción). El servidor también debe aceptar **peticiones por rangos** en los videos y aplicar el **fallback SPA** (devolver `index.html` en rutas como `/emocional/tengo-miedo`).
+
 ## Requisitos técnicos
 
 - **Para compilar** (en local o en el servidor): Node.js ≥ 22.12 (en desarrollo se usa la 24.18) y npm. La instalación se hace con `npm ci`, que respeta el lockfile.

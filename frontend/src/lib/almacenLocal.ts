@@ -1,5 +1,6 @@
-// Almacén local por módulo (IndexedDB, base "aura"). Interfaz asíncrona: cuando
-// exista backend se reemplaza la implementación sin tocar la interfaz de usuario.
+// Almacén por módulo. Interfaz asíncrona única: sin sesión, IndexedDB (base "aura");
+// con sesión, la cuenta en el servidor. La interfaz de usuario no distingue entre ambos.
+import { api, sesion } from './api.ts';
 
 export interface Almacen<T> {
   /** true si los datos sobreviven al cerrar el navegador. */
@@ -54,7 +55,45 @@ export function almacenMemoria<T>(inicial: unknown = null): Almacen<T> {
   };
 }
 
+// — Almacén remoto (con sesión): mismos métodos, datos en la cuenta —
+let datosRemotos: Promise<Record<string, unknown>> | null = null;
+
+function almacenRemoto<T>(nombre: NombreAlmacen): Almacen<T> {
+  let temporizador: ReturnType<typeof setTimeout> | undefined;
+  let pendiente: T | null = null;
+  let esperando: Array<{ ok: () => void; mal: (e: unknown) => void }> = [];
+  return {
+    persistente: true,
+    cargar: async () => {
+      datosRemotos ??= api.datos();
+      return (await datosRemotos)[nombre] ?? null;
+    },
+    // Agrupa cambios seguidos (p. ej. elegir varios colores) en una sola escritura.
+    guardar: (valor) =>
+      new Promise<void>((ok, mal) => {
+        pendiente = valor;
+        esperando.push({ ok, mal });
+        clearTimeout(temporizador);
+        temporizador = setTimeout(() => {
+          const lote = esperando;
+          esperando = [];
+          api.guardar(nombre, pendiente).then(
+            () => lote.forEach((p) => p.ok()),
+            (e) => lote.forEach((p) => p.mal(e)),
+          );
+        }, 500);
+      }),
+    borrar: () => api.borrarModulo(nombre),
+  };
+}
+
+/** Con sesión, en la cuenta; sin sesión, en este navegador. */
 export async function crearAlmacen<T>(nombre: NombreAlmacen): Promise<Almacen<T>> {
+  return sesion.activa ? almacenRemoto<T>(nombre) : crearAlmacenLocal<T>(nombre);
+}
+
+/** Siempre el del navegador (se usa para llevar los datos locales a la cuenta). */
+export async function crearAlmacenLocal<T>(nombre: NombreAlmacen): Promise<Almacen<T>> {
   try {
     if (typeof indexedDB === 'undefined') return almacenMemoria<T>();
     const db = await abrir();

@@ -30,6 +30,10 @@ export const EXPRESIONES = [
 ] as const;
 export type IdExpresion = (typeof EXPRESIONES)[number]['id'];
 
+/** Índices que entiende el personaje 3D (mismo orden que FORMAS y EXPRESIONES). */
+export const indiceForma = (id: IdForma) => Math.max(0, FORMAS.findIndex((f) => f.id === id));
+export const indiceExpresion = (id: IdExpresion) => Math.max(0, EXPRESIONES.findIndex((e) => e.id === id));
+
 // — Experiencias significativas (nunca clics ni tiempo conectado) —
 export type Dimension = 'emocional' | 'academica';
 
@@ -126,6 +130,15 @@ export const ETAPAS = [
     ambasDimensiones: true,
   },
 ] as const;
+/** Lo que dice tu AURA al llegar a cada etapa (mismo orden que ETAPAS). */
+export const FRASES_ETAPA = [
+  'Todavía soy una luz: cada experiencia me da forma.',
+  '¡Mira! Ya tengo una silueta propia.',
+  'Ahora puedo verte: tengo ojos y bracitos.',
+  'Ya soy yo, con mi forma y mi expresión.',
+  'Llegamos juntos hasta aquí. Soy tu AURA completa.',
+] as const;
+
 export type Etapa = (typeof ETAPAS)[number];
 export type IdEtapa = Etapa['id'];
 

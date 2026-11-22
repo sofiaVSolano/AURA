@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { Boton, Icono } from '../../../design-system/index.ts';
 import { cx } from '../../../lib/cx.ts';
 import {
@@ -11,6 +11,7 @@ import {
   PALABRAS_POR_SEGUNDO,
 } from '../dominio/evaluar.ts';
 import type { Actividad as TActividad, Retroalimentacion as TRetro } from '../dominio/modelo.ts';
+import { Redactar } from './Redactar.tsx';
 import estilos from './Actividades.module.css';
 
 type De<T extends TActividad['tipo']> = Extract<TActividad, { tipo: T }>;
@@ -24,13 +25,27 @@ export function Retroalimentacion({ retro, etiquetas }: { retro: TRetro; etiquet
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => ref.current?.focus(), [retro]);
   return (
-    <div ref={ref} tabIndex={-1} className={estilos.retro} role="region" aria-label="Comentarios sobre tu respuesta">
-      <p className={estilos.retroResumen}>
-        <strong>
-          {retro.logrados} de {retro.total}
-        </strong>{' '}
-        aspectos bien encaminados. {retro.sugerencia}
-      </p>
+    <div
+      ref={ref}
+      tabIndex={-1}
+      className={estilos.retro}
+      role="region"
+      aria-label="Comentarios sobre tu respuesta"
+      style={{ '--logro': retro.total ? retro.logrados / retro.total : 0 } as CSSProperties}
+    >
+      <div className={estilos.retroCabeza}>
+        <span className={estilos.retroAnillo} aria-hidden="true">
+          <span>
+            {retro.logrados}/{retro.total}
+          </span>
+        </span>
+        <p className={estilos.retroResumen}>
+          <strong>
+            {retro.logrados} de {retro.total}
+          </strong>{' '}
+          aspectos bien encaminados. {retro.sugerencia}
+        </p>
+      </div>
       <ul className={estilos.retroLista}>
         {retro.items.map((i) => (
           <li key={i.id} data-estado={i.estado}>
@@ -58,8 +73,13 @@ function Marco({ actividad, children, retro, onRevisar, onReiniciar, puedeRevisa
 }) {
   return (
     <div className={estilos.actividad}>
-      <h2 className={estilos.titulo}>{actividad.titulo}</h2>
-      <p className={estilos.consigna}>{actividad.consigna}</p>
+      <header className={estilos.cabeza}>
+        <h2 className={estilos.titulo}>{actividad.titulo}</h2>
+        <p className={estilos.consigna}>
+          <Icono nombre="info" tamano={18} />
+          <span>{actividad.consigna}</span>
+        </p>
+      </header>
       {children}
       {extra}
       <div className={estilos.acciones}>
@@ -212,10 +232,21 @@ function Clasificar({ actividad: a, onRevisada }: { actividad: De<'clasificar'> 
   );
 }
 
-// — Elegir (incluye comparaciones de dos versiones) —
+// — Elegir: varias opciones plausibles, en orden aleatorio (la buena no siempre está en el mismo lugar) —
+function barajar<T>(lista: readonly T[]): T[] {
+  const n = [...lista];
+  for (let i = n.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [n[i], n[j]] = [n[j]!, n[i]!];
+  }
+  return n;
+}
+
 function Elegir({ actividad: a, onRevisada }: { actividad: De<'elegir'> } & Comun) {
   const [resp, setResp] = useState<Record<string, string | null>>({});
   const [retro, setRetro] = useState<TRetro | null>(null);
+  const [orden, setOrden] = useState(() => Object.fromEntries(a.preguntas.map((p) => [p.id, barajar(p.opciones)])));
+  const respondidas = a.preguntas.filter((p) => resp[p.id]).length;
   return (
     <Marco
       actividad={a}
@@ -227,29 +258,48 @@ function Elegir({ actividad: a, onRevisada }: { actividad: De<'elegir'> } & Comu
       onReiniciar={() => {
         setResp({});
         setRetro(null);
+        setOrden(Object.fromEntries(a.preguntas.map((p) => [p.id, barajar(p.opciones)])));
       }}
-      puedeRevisar={a.preguntas.every((p) => resp[p.id])}
+      puedeRevisar={respondidas === a.preguntas.length}
+      extra={
+        !retro && (
+          <p className={estilos.faltan} aria-live="polite">
+            {respondidas === a.preguntas.length
+              ? 'Listo: revisa tus respuestas.'
+              : `Respondiste ${respondidas} de ${a.preguntas.length}.`}
+          </p>
+        )
+      }
     >
-      {a.preguntas.map((p) => {
+      {a.preguntas.map((p, n) => {
         const r = retro?.items.find((x) => x.id === p.id);
         return (
-          <fieldset key={p.id} className={estilos.pregunta} data-estado={r?.estado}>
-            <legend className={estilos.enunciado}>{p.enunciado}</legend>
+          <fieldset key={p.id} className={estilos.pregunta} data-estado={r?.estado} style={{ '--i': n } as CSSProperties}>
+            <legend className={estilos.enunciado}>
+              <span className={estilos.preguntaNumero}>
+                Pregunta {n + 1} de {a.preguntas.length}
+              </span>
+              {p.enunciado}
+            </legend>
             <div className={estilos.opciones}>
-              {p.opciones.map((o) => (
-                <label key={o.id} className={estilos.opcion}>
-                  <input
-                    type="radio"
-                    name={`${a.id}-${p.id}`}
-                    checked={resp[p.id] === o.id}
-                    onChange={() => {
-                      setResp((x) => ({ ...x, [p.id]: o.id }));
-                      setRetro(null);
-                    }}
-                  />
-                  <span>{o.texto}</span>
-                </label>
-              ))}
+              {(orden[p.id] ?? p.opciones).map((o) => {
+                const elegida = resp[p.id] === o.id;
+                const resultado = !retro ? undefined : elegida ? (o.adecuada ? 'bien' : 'revisar') : o.adecuada && r?.estado === 'revisar' ? 'correcta' : undefined;
+                return (
+                  <label key={o.id} className={estilos.opcion} data-resultado={resultado}>
+                    <input
+                      type="radio"
+                      name={`${a.id}-${p.id}`}
+                      checked={elegida}
+                      onChange={() => {
+                        setResp((x) => ({ ...x, [p.id]: o.id }));
+                        setRetro(null);
+                      }}
+                    />
+                    <span>{o.texto}</span>
+                  </label>
+                );
+              })}
             </div>
             {r && <p className={estilos.comentario}>{r.mensaje}</p>}
           </fieldset>
@@ -332,9 +382,14 @@ function Simulador({ actividad: a, onRevisada, onPractica }: { actividad: De<'si
 
   return (
     <div className={estilos.actividad}>
-      <h2 className={estilos.titulo}>{a.titulo}</h2>
-      <p className={estilos.consigna}>{a.consigna}</p>
-      <div className={estilos.pildoras} role="group" aria-label="Elige una pregunta">
+      <header className={estilos.cabeza}>
+        <h2 className={estilos.titulo}>{a.titulo}</h2>
+        <p className={estilos.consigna}>
+          <Icono nombre="info" tamano={18} />
+          <span>{a.consigna}</span>
+        </p>
+      </header>
+      <div className={cx(estilos.pildoras, estilos.centradas)} role="group" aria-label="Elige una pregunta">
         {a.preguntas.map((q, i) => (
           <button key={q.id} type="button" className={cx(estilos.pildora, i === indice && estilos.pildoraActiva)} aria-pressed={i === indice} onClick={() => cambiar(i)}>
             {q.categoria}
@@ -405,7 +460,17 @@ function Simulador({ actividad: a, onRevisada, onPractica }: { actividad: De<'si
   );
 }
 
-export function Actividad({ actividad, onRevisada, onPractica }: { actividad: TActividad; onRevisada: () => void; onPractica: (preguntaId: string) => void }) {
+export function Actividad({
+  actividad,
+  labId,
+  onRevisada,
+  onPractica,
+}: {
+  actividad: TActividad;
+  labId: string;
+  onRevisada: () => void;
+  onPractica: (preguntaId: string) => void;
+}) {
   switch (actividad.tipo) {
     case 'ordenar':
       return <Ordenar actividad={actividad} onRevisada={onRevisada} />;
@@ -415,6 +480,8 @@ export function Actividad({ actividad, onRevisada, onPractica }: { actividad: TA
       return <Elegir actividad={actividad} onRevisada={onRevisada} />;
     case 'marcar':
       return <Marcar actividad={actividad} onRevisada={onRevisada} />;
+    case 'redactar':
+      return <Redactar actividad={actividad} labId={labId} onRevisada={onRevisada} />;
     case 'simulador':
       return <Simulador actividad={actividad} onRevisada={onRevisada} onPractica={onPractica} />;
   }

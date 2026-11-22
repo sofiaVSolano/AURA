@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Link, useParams } from 'react-router';
-import { Boton, BotonEnlace, Icono, ReproductorVideo, useTituloDocumento, VideoPendiente } from '../../design-system/index.ts';
+import { Boton, BotonEnlace, Icono, useTituloDocumento, VideoPendiente } from '../../design-system/index.ts';
+import { ReproductorDiferido as ReproductorVideo } from '../../design-system/components/ReproductorVideo/ReproductorDiferido.tsx';
 import { fuentesDe } from '../../content/videos/catalogo.ts';
 import { NoEncontrado } from '../../app/Errores.tsx';
 import { Aprendizajes } from './componentes/Aprendizajes.tsx';
@@ -24,22 +25,29 @@ export function VideoPage() {
 
   return (
     <div className={estilos.pagina} style={{ '--matiz': s.categoria.matiz } as CSSProperties}>
-      <nav aria-label="Ruta de navegación" className={estilos.migas}>
-        <Link to="/emocional" viewTransition>
-          AURA emocional
-        </Link>
-        <span aria-hidden="true">/</span>
-        <Link to={`/emocional/${s.categoria.id}`} viewTransition className={estilos.miga}>
-          <Orbe matiz={s.categoria.matiz} tamano={18} transicion={`orbe-${s.categoria.id}`} />
-          {s.categoria.nombre}
-        </Link>
-      </nav>
-
-      <header className={estilos.cabecera}>
+      {/* Encabezado del color de la emoción: continúa la burbuja que se abrió */}
+      <header className={`${estilos.hero} sangrado textura-grano`}>
+        <span className={estilos.burbujas} aria-hidden="true">
+          {Array.from({ length: 7 }, (_, i) => (
+            <span key={i} style={{ '--i': i } as CSSProperties} />
+          ))}
+        </span>
+        <nav aria-label="Ruta de navegación" className={estilos.migas}>
+          <Link to="/emocional" viewTransition>
+            AURA emocional
+          </Link>
+          <span aria-hidden="true">/</span>
+          <Link to={`/emocional/${s.categoria.id}`} viewTransition className={estilos.miga}>
+            <Orbe matiz={s.categoria.matiz} tamano={18} />
+            {s.categoria.nombre}
+          </Link>
+        </nav>
         <h1 className={estilos.titulo}>{s.titulo}</h1>
         <p className={estilos.idea}>{video.descripcion}</p>
       </header>
 
+      <div className={estilos.pantalla}>
+        <span className={estilos.resplandor} aria-hidden="true" />
       {fuentes ? (
         <ReproductorVideo
           titulo={video.titulo}
@@ -52,6 +60,7 @@ export function VideoPage() {
         // En blanco hasta que exista: no se muestra nada que no esté producido.
         <VideoPendiente matiz={s.categoria.matiz} />
       )}
+      </div>
 
       <div className={estilos.acciones}>
         <Boton variante="secundario" iconoInicio="marcador" aria-pressed={guardado} onClick={() => alternarGuardado(video.id)} disabled={carga.estado !== 'listo'}>
@@ -69,9 +78,10 @@ export function VideoPage() {
       <section aria-labelledby="relacionados" className={estilos.relacionados}>
         <h2 id="relacionados">Más sobre «{s.categoria.nombre}»</h2>
         <ul>
-          {otros.map((o) => (
-            <li key={o.id}>
+          {otros.map((o, i) => (
+            <li key={o.id} style={{ '--i': i } as CSSProperties}>
               <Link to={rutaSubtema(o)} viewTransition className={estilos.relacionado}>
+                <span className={estilos.mini} aria-hidden="true" />
                 <span>{o.titulo}</span>
                 <span className={estilos.estado}>{o.disponible ? 'Disponible' : 'En preparación'}</span>
                 <Icono nombre="flecha" tamano={18} />

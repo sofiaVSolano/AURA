@@ -17,7 +17,7 @@
 
 ## Entregables (al publicar)
 
-- [ ] `video.mp4` (H.264/AAC, 1080p, ≤ 60 s) · opcional `video.webm` (AV1/VP9)
+- [ ] `video.mp4` (H.264/AAC, 1080p, ≤ 6 min) · opcional `video.webm` (AV1/VP9)
 - [ ] `poster.webp`
 - [ ] `subtitulos.es.vtt` sincronizados y revisados
 - [ ] `transcripcion.es.md`

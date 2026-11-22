@@ -1,4 +1,4 @@
-import { createReadStream, statSync } from 'node:fs';
+import { createReadStream, readFileSync, statSync } from 'node:fs';
 import { extname, resolve, sep } from 'node:path';
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -76,6 +76,43 @@ function mediosEnDesarrollo(base: string): Plugin {
   };
 }
 
+/**
+ * Precarga las dos fuentes latinas que se usan en la primera pintura (títulos y texto).
+ * Así el cambio desde la fuente de respaldo ocurre antes y se reduce el salto de diseño (CLS).
+ */
+function precargarFuentes(base: string): Plugin {
+  const PATRONES = [/fraunces-latin-wght-normal-[\w-]+\.woff2$/, /atkinson-hyperlegible-next-latin-wght-normal-[\w-]+\.woff2$/];
+  return {
+    name: 'aura-precargar-fuentes',
+    apply: 'build',
+    transformIndexHtml(html, ctx) {
+      const archivos = Object.keys(ctx.bundle ?? {}).filter((f) => PATRONES.some((p) => p.test(f)));
+      return {
+        html,
+        tags: archivos.map((f) => ({
+          tag: 'link',
+          attrs: { rel: 'preload', href: `${base}${f}`, as: 'font', type: 'font/woff2', crossorigin: '' },
+          injectTo: 'head' as const,
+        })),
+      };
+    },
+  };
+}
+
+/**
+ * Cabeceras de seguridad: fuente única en servidor/cabeceras.json, compartida con el
+ * servidor de producción (servidor/servidor.mjs). `vite preview` también las aplica.
+ */
+const cabeceras = JSON.parse(readFileSync(new URL('./servidor/cabeceras.json', import.meta.url), 'utf8')) as {
+  csp: string[];
+  otras: Record<string, string>;
+};
+
+export const CABECERAS_SEGURIDAD: Record<string, string> = {
+  'Content-Security-Policy': cabeceras.csp.join('; '),
+  ...cabeceras.otras,
+};
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', ['VITE_', 'AURA_']);
   const base = env.VITE_BASE_PATH || '/';
@@ -87,10 +124,16 @@ export default defineConfig(({ mode }) => {
 
   return {
     base: baseFinal,
-    plugins: [react(), mediosEnDesarrollo(baseFinal)],
+    plugins: [react(), mediosEnDesarrollo(baseFinal), precargarFuentes(baseFinal)],
     // content/ vive en la raíz del repositorio (compartido con el futuro backend)
-    server: { host: expose, strictPort: false, fs: { allow: ['..'] } },
-    preview: { host: expose },
+    server: {
+      host: expose,
+      strictPort: false,
+      fs: { allow: ['..'] },
+      // En desarrollo, el API (backend/) se alcanza por el mismo origen, igual que en producción.
+      proxy: { [`${baseFinal}api`]: { target: env.AURA_API_URL || 'http://127.0.0.1:4054', rewrite: (r) => r.slice(baseFinal.length - 1) } },
+    },
+    preview: { host: expose, headers: CABECERAS_SEGURIDAD },
     build: {
       outDir: 'dist',
       sourcemap: mode !== 'production',

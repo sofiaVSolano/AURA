@@ -23,3 +23,5 @@ Fecha del reconocimiento: 2026-11-20. Aún no se ha escrito código ni se ha eli
 | 11 | [Mi AURA](11-mi-aura.md) | Bienvenida, onboarding, avatar evolutivo, personalización, galería, datos |
 | 12 | [AURA emocional](12-aura-emocional.md) | Categorías, subtemas, biblioteca de videos, reproductor, medios |
 | 13 | [AURA académica](13-aura-academica.md) | Ruta configurable, guías, laboratorios, simulador, cómo agregar temas |
+| 14 | [Auditoría F5](14-auditoria.md) | Pruebas, cadena de suministro, seguridad, rendimiento, accesibilidad, riesgos |
+| 15 | [Backend y despliegue](15-backend-y-despliegue.md) | API, cuentas, seguridad, ejecución local y pasos de despliegue (4046/4054) |

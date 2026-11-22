@@ -34,6 +34,11 @@ const rutas: RouteObject[] = [
     lazy: async () => ({ Component: (await import('../features/academica/AcademicaPage.tsx')).AcademicaPage }),
   },
   {
+    path: 'academica/tesis',
+    handle: h({ ambito: 'academico', titulo: 'Revisión de tu tesis' }),
+    lazy: async () => ({ Component: (await import('../features/academica/TesisPage.tsx')).TesisPage }),
+  },
+  {
     path: 'academica/laboratorios/:lab',
     handle: h({ ambito: 'academico', titulo: null }),
     lazy: async () => ({ Component: (await import('../features/academica/LaboratorioPage.tsx')).LaboratorioPage }),
@@ -54,6 +59,11 @@ const rutas: RouteObject[] = [
     lazy: async () => ({ Component: (await import('../features/mi-aura/onboarding/OnboardingPage.tsx')).OnboardingPage }),
   },
   {
+    path: 'cuenta',
+    handle: h({ ambito: 'mi-aura', titulo: 'Tu cuenta' }),
+    lazy: async () => ({ Component: (await import('../features/cuenta/CuentaPage.tsx')).CuentaPage }),
+  },
+  {
     path: 'recursos',
     handle: h({ ambito: 'inicio', titulo: 'Recursos de acompañamiento' }),
     lazy: async () => ({ Component: (await import('../features/recursos/RecursosPage.tsx')).RecursosPage }),
@@ -66,6 +76,11 @@ if (import.meta.env.DEV) {
     path: 'sistema',
     handle: h({ ambito: 'inicio', titulo: 'Sistema de diseño' }),
     lazy: async () => ({ Component: (await import('../features/sistema/SistemaPage.tsx')).SistemaPage }),
+  });
+  rutas.push({
+    path: 'sistema/personaje',
+    handle: h({ ambito: 'mi-aura', titulo: 'Laboratorio del personaje 3D' }),
+    lazy: async () => ({ Component: (await import('../features/sistema/PersonajeLab.tsx')).PersonajeLab }),
   });
 }
 

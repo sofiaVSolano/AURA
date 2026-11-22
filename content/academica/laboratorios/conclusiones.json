@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "conclusiones",
+  "titulo": "Laboratorio de conclusiones",
+  "descripcion": "Escribe tus conclusiones y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "conclusiones",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tus conclusiones",
+      "consigna": "Escribe tus conclusiones con tus propias palabras (recomendado: 300 a 700 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "conclusiones",
+      "palabrasMin": 300,
+      "palabrasMax": 700
+    }
+  ]
+}

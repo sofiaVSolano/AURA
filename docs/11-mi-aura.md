@@ -97,3 +97,40 @@ La interfaz explica cómo se obtiene cada uno.
   - la normalización de datos manipulados;
   - la validación del nombre.
 - **E2E de humo** con Edge headless y DevTools Protocol, sin dependencias (14 comprobaciones, 0 errores de consola): onboarding completo, persistencia tras recargar, que repetir no suma, celebración, llegada a la etapa 5, galería, móvil real a 390 px sin desbordamiento, avatar en la cabecera y borrado. El script vive fuera del repositorio; se propone incorporarlo como prueba versionada en F6 (requiere decidir la herramienta).
+
+## Personaje 3D (portada)
+
+- `design-system/components/Esfera3D/motor.ts` dibuja a tu AURA con WebGL, sin dependencias. El personaje **se va formando con la etapa**, de forma continua:
+  - *Origen*: esfera de luz difuminada.
+  - *Descubrimiento*: aparece la silueta (cabeza y cuerpo).
+  - *Reconocimiento*: bracitos y ojos.
+  - *Transformación*: su forma propia (gota, nube, brote o canto rodado), patitas, boca, mejillas y la expresión elegida.
+  - *Mi AURA*: completo, con un anillo de luz.
+- La cara se pinta sobre la cabeza, como en un juguete de vinilo. Parpadea, respira y mira hacia el puntero.
+- En la portada avanza con el scroll. Al final de la página se forma hasta la etapa real del usuario. Sin AURA propia se muestra un personaje de ejemplo.
+- Laboratorio (solo en desarrollo): `/sistema/personaje`, con formas, expresiones, colores y un control de etapa.
+- Sin WebGL se muestra un degradado estático. Con movimiento reducido, el tiempo se congela.
+- **Vestuario de graduación**: el motor puede dibujar lápiz, toga, diploma y birrete (`vestuario`), pero está desactivado por decisión de diseño.
+- **Acompañante** (`componentes/Acompanante.tsx`): tu AURA en 3D flota en una esquina de Emocional, Académica y Recursos.
+  - Te mira, comenta la sección la primera vez que entras en la sesión y celebra cada experiencia nueva y cada etapa.
+  - En móvil no abre el globo sola: salta y deja un aviso.
+  - Se puede esconder durante la sesión.
+- **Mi AURA** muestra el personaje 3D, con su vestuario logrado y el pendiente. La personalización, la galería y la celebración siguen con el personaje SVG, que también muestra las decoraciones.
+- **Cuenta**: sin vestuario y con una florecita en la mano.
+  - Sigue el cursor con la mirada y asiente con cada tecla del correo; celebra la arroba y el correo completo.
+  - Cierra los ojos mientras escribes la contraseña y se los tapa con las manos si la muestras.
+  - Reacciona a los errores.
+- **Inicio** no muestra el anillo de luz.
+- Opciones del motor: `vestuario`, `birrete`, `aro`, `flor` y `tapar`.
+
+## Evaluación con IA (Académica)
+
+- **Un laboratorio por tema (26).** Cada uno incluye la actividad «Escribe tu…» (tipo `redactar`).
+  - La persona escribe ese elemento de su tesis y GPT-4o mini lo evalúa con los criterios de la guía del tema: qué cumple, qué está a medias, qué falta, las falencias (citando el texto), las fortalezas y el siguiente paso.
+  - Cada actividad tiene una extensión recomendada, por ejemplo resumen y abstract de 150 a 250 palabras, introducción de 500 a 1000 y conclusiones de 300 a 700.
+- **Revisión de la tesis completa** (`/academica/tesis`).
+  - Se desbloquea al completar todas las actividades de laboratorio. El servidor lo verifica con las experiencias registradas.
+  - Acepta PDF, Word (.docx) o texto, de hasta 8 MB.
+- **Intentos:** 2 evaluaciones por actividad y 2 revisiones de tesis por persona. Las cuenta el servidor (tabla `evaluaciones_ia`) y solo se descuentan si la evaluación salió bien.
+- **Privacidad:** exige sesión. La clave (`GPT_API_KEY`) vive solo en `backend/.env`. Ni el texto ni el archivo se guardan en el servidor; el borrador y la última evaluación quedan solo en el navegador.
+

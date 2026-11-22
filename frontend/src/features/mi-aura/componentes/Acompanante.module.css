@@ -1,0 +1,237 @@
+/* Tu AURA flotando en la esquina: nunca tapa la navegación inferior del móvil */
+.acompanante {
+  --tam: 104px;
+  position: fixed;
+  inset-inline-end: var(--espacio-3);
+  inset-block-end: calc(64px + env(safe-area-inset-bottom) + var(--espacio-2));
+  z-index: calc(var(--capa-nav) - 1);
+  display: grid;
+  justify-items: end;
+  gap: var(--espacio-2);
+  pointer-events: none;
+}
+
+@media (min-width: 48rem) {
+  .acompanante {
+    --tam: 148px;
+    inset-inline-end: var(--espacio-5);
+    inset-block-end: var(--espacio-4);
+  }
+}
+
+.personaje {
+  position: relative;
+  width: var(--tam);
+  height: var(--tam);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+  animation:
+    llegar 900ms var(--ease-entrada) both,
+    flotar 5.5s var(--ease-respiracion) 900ms infinite alternate;
+}
+
+.personaje:focus-visible {
+  outline: 3px solid var(--color-foco, var(--color-acento));
+  outline-offset: 2px;
+}
+
+.salto {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-origin: 50% 85%;
+}
+
+.lienzo {
+  width: 100%;
+  height: 100%;
+  /* El halo del 3D se desvanece en círculo: sin bordes de lienzo sobre fondos claros */
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+
+.sombra {
+  position: absolute;
+  inset-inline: 26%;
+  inset-block-end: 2%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgb(0 0 0 / 0.28), transparent);
+  z-index: -1;
+}
+
+@keyframes llegar {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.6);
+  }
+}
+
+@keyframes flotar {
+  to {
+    translate: 0 -8px;
+  }
+}
+
+/* Tiene algo que decirte (móvil) */
+.aviso {
+  position: absolute;
+  inset-block-start: 12%;
+  inset-inline-end: 12%;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--coral-500, #ff7a6b);
+  box-shadow: 0 0 0 3px var(--color-fondo);
+  animation: latido 1.6s ease-in-out infinite;
+}
+
+@keyframes latido {
+  50% {
+    scale: 1.25;
+  }
+}
+
+/* — Globo de diálogo — */
+.globo {
+  width: min(18rem, calc(100vw - 2 * var(--espacio-3)));
+  padding: var(--espacio-4);
+  border-radius: 20px 20px 6px 20px;
+  background: var(--indigo-950, #15122b);
+  color: #f4f0ff;
+  box-shadow:
+    0 18px 50px -12px rgb(20 10 50 / 0.55),
+    0 0 0 1px rgb(255 255 255 / 0.08) inset;
+  font-size: var(--texto-sm);
+  line-height: 1.45;
+  pointer-events: auto;
+  transform-origin: 90% 100%;
+  opacity: 0;
+  scale: 0.6;
+  translate: 0 12px;
+  visibility: hidden;
+  transition:
+    opacity 220ms ease,
+    scale 420ms var(--ease-salida),
+    translate 420ms var(--ease-salida),
+    visibility 0s linear 420ms;
+}
+
+.globo[data-abierto] {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  visibility: visible;
+  transition:
+    opacity 220ms ease,
+    scale 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    translate 520ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    visibility 0s;
+}
+
+.texto {
+  font-family: var(--fuente-display);
+  font-size: var(--texto-md, 1rem);
+  font-weight: 500;
+}
+
+.meta {
+  margin-top: var(--espacio-2);
+  color: color-mix(in srgb, #f4f0ff 72%, transparent);
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-3);
+}
+
+.enlace {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding-inline: var(--espacio-4);
+  border-radius: var(--radio-pildora);
+  background: #f4f0ff;
+  color: #1a1433;
+  font-weight: 650;
+  text-decoration: none;
+  transition: transform var(--dur-rapida) var(--ease-salida);
+}
+
+.enlace:hover {
+  transform: translateY(-1px);
+}
+
+.enlace:active {
+  transform: scale(0.96);
+}
+
+.esconder {
+  min-height: 36px;
+  padding-inline: var(--espacio-2);
+  border: 0;
+  background: none;
+  color: color-mix(in srgb, #f4f0ff 70%, transparent);
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* — Escondida: una pestaña pequeña para traerla de vuelta — */
+.pestana {
+  position: fixed;
+  inset-inline-end: var(--espacio-3);
+  inset-block-end: calc(64px + env(safe-area-inset-bottom) + var(--espacio-2));
+  z-index: calc(var(--capa-nav) - 1);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: 40px;
+  padding-inline: var(--espacio-3) var(--espacio-4);
+  border: 0;
+  border-radius: var(--radio-pildora);
+  background: var(--indigo-950, #15122b);
+  color: #f4f0ff;
+  font: inherit;
+  font-size: var(--texto-sm);
+  font-weight: 600;
+  box-shadow: 0 10px 30px -10px rgb(20 10 50 / 0.5);
+  cursor: pointer;
+}
+
+@media (min-width: 48rem) {
+  .pestana {
+    inset-inline-end: var(--espacio-5);
+    inset-block-end: var(--espacio-4);
+  }
+}
+
+.pestanaPunto {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, var(--morado-200), var(--morado-500) 55%, var(--violeta-600));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .personaje {
+    animation: none;
+  }
+
+  .globo,
+  .globo[data-abierto] {
+    scale: 1;
+    translate: 0 0;
+    transition:
+      opacity 200ms ease,
+      visibility 0s;
+  }
+}

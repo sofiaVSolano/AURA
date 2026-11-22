@@ -15,7 +15,11 @@
     "typecheck": "tsc -b",
     "test": "node --test \"tests/**/*.test.ts\"",
     "check": "npm run typecheck && npm test && npm run build",
-    "fixture:video": "node scripts/fixture-video.mjs"
+    "fixture:video": "node scripts/fixture-video.mjs",
+    "test:e2e": "node tests/e2e/funcional.mjs",
+    "test:auditoria": "npm run build && node tests/e2e/auditoria.mjs",
+    "servir": "node servidor/servidor.mjs",
+    "test:integracion": "npm run build && node tests/e2e/integracion.mjs"
   },
   "dependencies": {
     "@fontsource-variable/atkinson-hyperlegible-next": "5.3.0",
@@ -29,6 +33,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.3.0",
+    "axe-core": "4.14.0",
     "typescript": "7.0.2",
     "vite": "8.3.8"
   }

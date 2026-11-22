@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "referencias",
+  "titulo": "Laboratorio de referencias",
+  "descripcion": "Escribe algunas de tus referencias y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "referencias",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe algunas de tus referencias",
+      "consigna": "Escribe algunas de tus referencias con tus propias palabras (recomendado: 50 a 600 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "algunas de referencias",
+      "palabrasMin": 50,
+      "palabrasMax": 600
+    }
+  ]
+}

@@ -1,35 +1,85 @@
+/* — El cielo de las emociones — */
 .entrada {
   position: relative;
-  padding: var(--espacio-7) var(--margen-pagina) var(--espacio-8);
-  background:
-    radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--morado-700) 45%, transparent), transparent 70%),
-    var(--color-fondo);
+  overflow: hidden;
+  isolation: isolate;
+  padding: var(--espacio-7) var(--margen-pagina) var(--espacio-7);
+  background: var(--color-fondo);
 }
 
-.cabecera {
+/* Nebulosa: luces que cambian lentamente de lugar */
+.nebulosa {
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  background:
+    radial-gradient(26% 22% at 30% 30%, hsl(272 70% 45% / 0.35), transparent 70%),
+    radial-gradient(24% 20% at 72% 40%, hsl(200 70% 45% / 0.25), transparent 70%),
+    radial-gradient(28% 24% at 52% 78%, hsl(322 60% 45% / 0.22), transparent 70%);
+  filter: blur(20px);
+  translate: calc(var(--px, 0) * -18px) calc(var(--py, 0) * -14px);
+  transition: translate 1400ms var(--ease-salida);
+  animation: deriva 26s var(--ease-respiracion) infinite alternate;
+}
+
+@keyframes deriva {
+  to {
+    transform: rotate(14deg) scale(1.12);
+  }
+}
+
+.centro {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
-  gap: var(--espacio-3);
-  max-width: 40rem;
+  gap: var(--espacio-4);
+  max-width: 34rem;
   margin-inline: auto;
   text-align: center;
+  pointer-events: none;
 }
 
-.compania {
-  animation: entrar var(--dur-autor) var(--ease-entrada) both;
+.centro a {
+  pointer-events: auto;
 }
 
 .pregunta {
-  font-size: var(--texto-3xl);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 0.26em;
+  font-size: clamp(2.5rem, 1.4rem + 3.6vw, 4.6rem);
   font-weight: 500;
-  animation: entrar var(--dur-autor) var(--ease-entrada) 120ms both;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Cada palabra sube y se enfoca, una tras otra */
+.palabra {
+  display: inline-block;
+  animation: palabra 1000ms var(--ease-entrada) both;
+  animation-delay: calc(var(--i) * 90ms + 80ms);
+}
+
+.palabra:nth-child(even) {
+  font-style: italic;
+  color: var(--color-acento-texto);
+}
+
+@keyframes palabra {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) rotate(4deg);
+    filter: blur(10px);
+  }
 }
 
 .bajada {
-  max-width: 42ch;
+  max-width: 36ch;
   font-size: var(--texto-lg);
   color: var(--color-texto-suave);
-  animation: entrar var(--dur-autor) var(--ease-entrada) 240ms both;
+  animation: palabra 900ms var(--ease-entrada) 500ms both;
 }
 
 .bajada strong {
@@ -37,46 +87,59 @@
   font-weight: 600;
 }
 
-@keyframes entrar {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-    filter: blur(6px);
-  }
-}
-
-/* — Constelación de emociones: orgánica, no una cuadrícula rígida — */
+/* — Constelación: móvil, dos columnas desfasadas — */
 .constelacion {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: var(--espacio-5) var(--espacio-3);
-  max-width: 64rem;
-  margin: var(--espacio-7) auto 0;
+  gap: var(--espacio-4) var(--espacio-3);
+  margin: var(--espacio-6) 0 0;
   padding: 0;
   list-style: none;
 }
 
-@media (min-width: 48rem) {
-  .constelacion {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--espacio-6) var(--espacio-5);
-  }
-
-  /* Desfase vertical alterno: la fila respira como un cielo, no como una tabla */
-  .estrella:nth-child(4n + 2),
-  .estrella:nth-child(4n + 4) {
-    margin-top: var(--espacio-7);
-  }
-
-  .estrella:nth-child(5) {
-    grid-column-start: 1;
-    margin-inline-start: 50%;
-  }
+.estrella:nth-child(even) {
+  translate: 0 var(--espacio-6);
 }
 
 .estrella {
-  animation: entrar var(--dur-vista) var(--ease-entrada) both;
-  animation-delay: calc(var(--i) * 80ms + 360ms);
+  animation: nacer 900ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i) * 90ms + 450ms);
+}
+
+@keyframes nacer {
+  from {
+    opacity: 0;
+    scale: 0.3;
+  }
+}
+
+/* — Escritorio: las burbujas orbitan alrededor de la pregunta — */
+@media (min-width: 60rem) {
+  .entrada {
+    display: grid;
+    place-items: center;
+    min-height: max(48rem, 100dvh);
+    padding-block: var(--espacio-8);
+  }
+
+  .centro {
+    grid-area: 1 / 1;
+  }
+
+  .constelacion {
+    position: absolute;
+    inset: var(--espacio-7) var(--margen-pagina) var(--espacio-5);
+    display: block;
+    margin: 0;
+  }
+
+  .estrella,
+  .estrella:nth-child(even) {
+    position: absolute;
+    inset-inline-start: var(--x);
+    inset-block-start: var(--y);
+    translate: -50% -50%;
+  }
 }
 
 .emocion {
@@ -84,63 +147,158 @@
   display: grid;
   justify-items: center;
   gap: var(--espacio-2);
-  padding: var(--espacio-3);
+  padding: var(--espacio-2);
   border-radius: var(--radio-lg);
   color: var(--color-texto);
   text-align: center;
   text-decoration: none;
-  /* Paralaje: cada orbe se mueve a distinta profundidad */
-  translate: calc(var(--px, 0) * (6px + var(--i) * 2px)) calc(var(--py, 0) * (4px + var(--i) * 1.5px));
+  /* Paralaje (cada burbuja a su profundidad) + imán hacia el puntero */
+  translate: calc(var(--px, 0) * (8px + var(--i) * 3px) + var(--mx, 0px)) calc(var(--py, 0) * (6px + var(--i) * 2px) + var(--my, 0px));
   transition:
-    translate 900ms var(--ease-salida),
-    transform var(--dur-media) var(--ease-salida);
+    translate 700ms var(--ease-salida),
+    scale 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Flotan, cada una a su ritmo */
+.flotador {
+  position: relative;
+  display: grid;
+  place-items: center;
+  animation: flotar var(--flota, 6s) var(--ease-respiracion) infinite alternate;
+  animation-delay: calc(var(--i) * -1.3s);
+}
+
+@keyframes flotar {
+  0% {
+    transform: translateY(-7px) rotate(-3deg);
+  }
+  100% {
+    transform: translateY(9px) rotate(3deg);
+  }
 }
 
 .orbe {
-  margin-block-end: var(--espacio-2);
+  transition:
+    transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 600ms var(--ease-salida);
+}
+
+@media (max-width: 59.99rem) {
+  .orbe {
+    width: min(var(--tam), 30vw) !important;
+    height: min(var(--tam), 30vw) !important;
+  }
+}
+
+/* Onda: un anillo que se expande al acercarse */
+.onda {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid hsl(var(--matiz) 90% 75% / 0.7);
+  opacity: 0;
+  scale: 0.85;
+  pointer-events: none;
 }
 
 .nombre {
   font-family: var(--fuente-display);
   font-size: var(--texto-lg);
   font-weight: 560;
-  line-height: 1.2;
+  line-height: 1.15;
+  transition: letter-spacing 500ms var(--ease-salida);
 }
 
+/* Descripción: una etiqueta que aparece bajo la burbuja (no empuja nada) */
 .descripcion {
-  max-width: 24ch;
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 50%;
+  z-index: 2;
+  width: max-content;
+  max-width: 22ch;
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio-md);
+  background: color-mix(in srgb, var(--color-superficie) 85%, transparent);
+  backdrop-filter: blur(8px);
   font-size: var(--texto-sm);
-  color: var(--color-texto-suave);
+  line-height: 1.35;
+  color: var(--color-texto);
   opacity: 0;
-  max-height: 0;
-  overflow: hidden;
+  translate: -50% -6px;
+  pointer-events: none;
   transition:
-    opacity var(--dur-media) ease,
-    max-height var(--dur-vista) var(--ease-salida);
+    opacity 260ms ease,
+    translate 400ms var(--ease-salida);
 }
 
-/* El orbe crece y aparece su descripción al acercarse o enfocar */
+.emocion:hover,
+.emocion:focus-visible {
+  z-index: 3;
+}
+
 .emocion:hover .orbe,
 .emocion:focus-visible .orbe {
-  transform: scale(1.1);
+  transform: scale(1.14);
   box-shadow:
     inset 0 -10px 24px hsl(var(--matiz) 60% 30% / 0.35),
-    0 24px 60px -10px hsl(var(--matiz) 80% 55% / 0.7);
+    0 0 0 8px hsl(var(--matiz) 80% 70% / 0.12),
+    0 30px 70px -10px hsl(var(--matiz) 80% 55% / 0.8);
+}
+
+.emocion:hover .onda,
+.emocion:focus-visible .onda {
+  animation: onda 1600ms var(--ease-salida) infinite;
+}
+
+@keyframes onda {
+  0% {
+    opacity: 0.8;
+    scale: 0.9;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.5;
+  }
+}
+
+.emocion:hover .nombre,
+.emocion:focus-visible .nombre {
+  letter-spacing: 0.03em;
 }
 
 .emocion:hover .descripcion,
 .emocion:focus-visible .descripcion {
   opacity: 1;
-  max-height: 8em;
+  translate: -50% 4px;
 }
 
 .emocion:active {
-  transform: scale(0.97);
+  scale: 0.92;
 }
 
 @media (hover: none) {
   .descripcion {
     display: none;
+  }
+}
+
+.pista {
+  display: none;
+}
+
+@media (min-width: 60rem) and (hover: hover) {
+  .pista {
+    position: absolute;
+    inset-block-end: var(--espacio-4);
+    inset-inline: 0;
+    display: block;
+    font-size: var(--texto-xs);
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-texto-suave);
+    animation: palabra 900ms var(--ease-entrada) 1400ms both;
   }
 }
 
@@ -167,15 +325,25 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .compania,
-  .pregunta,
+  .palabra,
   .bajada,
-  .estrella {
+  .estrella,
+  .pista {
     animation-name: aparecer;
   }
 
-  .emocion {
+  .nebulosa,
+  .flotador {
+    animation: none;
+  }
+
+  .emocion,
+  .nebulosa {
     translate: none;
+  }
+
+  .emocion:hover .onda {
+    animation: none;
   }
 }
 

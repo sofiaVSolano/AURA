@@ -34,3 +34,11 @@ content/videos/**/*.mov
 
 # Video de prueba del reproductor (se genera con npm run fixture:video)
 frontend/tests/fixtures/*.mp4
+
+# Salida de las pruebas de navegador
+frontend/tests/e2e/.salida/
+
+# Configuración del servidor de producción (contiene datos del servidor real)
+frontend/.env.servidor
+backend/.env
+backend/datos/

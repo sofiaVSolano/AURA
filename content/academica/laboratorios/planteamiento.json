@@ -11,43 +11,166 @@
       "titulo": "Reconoce cada pieza",
       "consigna": "Indica qué función cumple cada fragmento dentro del planteamiento.",
       "categorias": [
-        { "id": "contexto", "nombre": "Contexto" },
-        { "id": "situacion", "nombre": "Situación problemática" },
-        { "id": "causas", "nombre": "Causas" },
-        { "id": "consecuencias", "nombre": "Consecuencias" },
-        { "id": "delimitacion", "nombre": "Delimitación" }
+        {
+          "id": "contexto",
+          "nombre": "Contexto"
+        },
+        {
+          "id": "situacion",
+          "nombre": "Situación problemática"
+        },
+        {
+          "id": "causas",
+          "nombre": "Causas"
+        },
+        {
+          "id": "consecuencias",
+          "nombre": "Consecuencias"
+        },
+        {
+          "id": "delimitacion",
+          "nombre": "Delimitación"
+        }
       ],
       "items": [
-        { "id": "a", "texto": "En la plaza de mercado del barrio trabajan cerca de 80 vendedores de frutas y verduras.", "categoria": "contexto", "explicacion": "Es contexto: describe dónde y con quiénes ocurre la situación." },
-        { "id": "b", "texto": "Cada semana se desecha alrededor de una tonelada de alimentos aún aptos para el consumo.", "categoria": "situacion", "explicacion": "Es la situación problemática: lo que ocurre y no debería, con un dato de magnitud." },
-        { "id": "c", "texto": "Los vendedores no cuentan con espacios refrigerados ni con canales para donar los excedentes.", "categoria": "causas", "explicacion": "Son causas: explican por qué ocurre el desperdicio." },
-        { "id": "d", "texto": "Esto genera pérdidas económicas para los vendedores y residuos que saturan el sistema de recolección.", "categoria": "consecuencias", "explicacion": "Son consecuencias: muestran qué provoca la situación." },
-        { "id": "e", "texto": "Este trabajo se centra en los vendedores de frutas de la plaza durante el segundo semestre de 2026.", "categoria": "delimitacion", "explicacion": "Es delimitación: precisa qué parte del problema, dónde y cuándo." }
+        {
+          "id": "a",
+          "texto": "En la plaza de mercado del barrio trabajan cerca de 80 vendedores de frutas y verduras.",
+          "categoria": "contexto",
+          "explicacion": "Es contexto: describe dónde y con quiénes ocurre la situación."
+        },
+        {
+          "id": "b",
+          "texto": "Cada semana se desecha alrededor de una tonelada de alimentos aún aptos para el consumo.",
+          "categoria": "situacion",
+          "explicacion": "Es la situación problemática: lo que ocurre y no debería, con un dato de magnitud."
+        },
+        {
+          "id": "c",
+          "texto": "Los vendedores no cuentan con espacios refrigerados ni con canales para donar los excedentes.",
+          "categoria": "causas",
+          "explicacion": "Son causas: explican por qué ocurre el desperdicio."
+        },
+        {
+          "id": "d",
+          "texto": "Esto genera pérdidas económicas para los vendedores y residuos que saturan el sistema de recolección.",
+          "categoria": "consecuencias",
+          "explicacion": "Son consecuencias: muestran qué provoca la situación."
+        },
+        {
+          "id": "e",
+          "texto": "Este trabajo se centra en los vendedores de frutas de la plaza durante el segundo semestre de 2026.",
+          "categoria": "delimitacion",
+          "explicacion": "Es delimitación: precisa qué parte del problema, dónde y cuándo."
+        }
       ]
     },
     {
       "tipo": "elegir",
       "id": "investigable",
       "titulo": "¿Cuál es más investigable?",
-      "consigna": "En cada par, elige el planteamiento que permite investigar mejor.",
+      "consigna": "En cada caso, elige el planteamiento que permite investigar mejor. Lee con calma: los errores son sutiles.",
       "preguntas": [
         {
           "id": "p1",
           "enunciado": "¿Cuál plantea mejor un problema?",
           "opciones": [
-            { "id": "a", "texto": "No existe una aplicación para gestionar turnos en el hospital.", "adecuada": false, "explicacion": "Describe la ausencia de una solución, no el problema que viven las personas." },
-            { "id": "b", "texto": "Los pacientes esperan en promedio tres horas para ser atendidos y muchos abandonan la sala sin consulta.", "adecuada": true, "explicacion": "Describe una situación concreta y medible que afecta a personas." }
+            {
+              "id": "a",
+              "texto": "No existe una aplicación para gestionar turnos en el hospital.",
+              "adecuada": false,
+              "explicacion": "Describe la ausencia de una solución, no el problema que viven las personas."
+            },
+            {
+              "id": "b",
+              "texto": "Los pacientes del servicio de urgencias esperan en promedio tres horas y uno de cada cinco se va sin ser atendido.",
+              "adecuada": true,
+              "explicacion": "Describe una situación concreta y medible que afecta a personas."
+            },
+            {
+              "id": "c",
+              "texto": "Es necesario crear una aplicación de turnos porque la atención es mala.",
+              "adecuada": false,
+              "explicacion": "Arranca desde la solución y usa un juicio vago («mala») en lugar de describir la situación."
+            },
+            {
+              "id": "d",
+              "texto": "Los hospitales del mundo tienen problemas de atención.",
+              "adecuada": false,
+              "explicacion": "Es tan general que no se puede investigar: no está situado en un lugar ni en una población."
+            }
           ]
         },
         {
           "id": "p2",
           "enunciado": "¿Cuál está mejor delimitado?",
           "opciones": [
-            { "id": "a", "texto": "La contaminación del agua en el país.", "adecuada": false, "explicacion": "Es demasiado amplio para un proyecto de grado: no precisa lugar, periodo ni aspecto." },
-            { "id": "b", "texto": "La presencia de coliformes en el agua de tres quebradas del municipio durante la temporada de lluvias.", "adecuada": true, "explicacion": "Precisa qué se mide, dónde y cuándo; se puede investigar con recursos realistas." }
+            {
+              "id": "a",
+              "texto": "La contaminación del agua en el país.",
+              "adecuada": false,
+              "explicacion": "Demasiado amplio para un proyecto de grado: no precisa lugar, periodo ni aspecto."
+            },
+            {
+              "id": "b",
+              "texto": "La presencia de coliformes en el agua de tres quebradas del municipio durante la temporada de lluvias.",
+              "adecuada": true,
+              "explicacion": "Precisa qué se mide, dónde y cuándo; se puede investigar con recursos realistas."
+            },
+            {
+              "id": "c",
+              "texto": "La contaminación de las quebradas del municipio.",
+              "adecuada": false,
+              "explicacion": "Mejor que «el país», pero no dice qué contaminante ni en qué periodo."
+            },
+            {
+              "id": "d",
+              "texto": "La presencia de coliformes, metales pesados y plásticos en todas las fuentes de agua del departamento.",
+              "adecuada": false,
+              "explicacion": "Demasiados aspectos y lugares: excede lo que se puede medir con rigor en un proyecto."
+            }
+          ]
+        },
+        {
+          "id": "p3",
+          "enunciado": "¿Cuál es una pregunta investigable?",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "¿Es bueno usar redes sociales?",
+              "adecuada": false,
+              "explicacion": "«Bueno» es un juicio de valor y no hay población ni criterio para responderla."
+            },
+            {
+              "id": "b",
+              "texto": "¿Qué relación hay entre las horas diarias de uso de redes sociales y las horas de sueño en estudiantes de primer semestre?",
+              "adecuada": true,
+              "explicacion": "Relaciona dos aspectos medibles en una población definida."
+            },
+            {
+              "id": "c",
+              "texto": "¿Por qué los jóvenes de hoy no saben concentrarse?",
+              "adecuada": false,
+              "explicacion": "Presupone una conclusión («no saben») y generaliza a todos los jóvenes."
+            },
+            {
+              "id": "d",
+              "texto": "¿Cuántos estudiantes tienen redes sociales?",
+              "adecuada": false,
+              "explicacion": "Se responde con un solo dato: no abre un problema que justifique un proyecto de grado."
+            }
           ]
         }
       ]
+    },
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu planteamiento del problema",
+      "consigna": "Escribe tu planteamiento del problema con tus propias palabras (recomendado: 300 a 700 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "planteamiento del problema",
+      "palabrasMin": 300,
+      "palabrasMax": 700
     }
   ]
 }

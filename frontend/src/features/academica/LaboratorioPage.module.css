@@ -1,100 +1,371 @@
 .pagina {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--espacio-5);
-  max-width: 52rem;
-  padding-block: var(--espacio-5) var(--espacio-6);
+  justify-items: center;
+  gap: var(--espacio-7);
+  padding-block-end: var(--espacio-8);
+}
+
+/* ———— Portada: centrada sobre el mapa cuadriculado de la ruta ———— */
+.portada {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: var(--espacio-3);
+  justify-self: stretch;
+  margin-inline: calc(50% - 50vw);
+  padding: var(--espacio-6) var(--margen-pagina) var(--espacio-7);
+  text-align: center;
+  background:
+    radial-gradient(circle at 12% 70%, transparent 0 50px, color-mix(in srgb, var(--color-borde) 70%, transparent) 51px 52px, transparent 53px 80px, color-mix(in srgb, var(--color-borde) 60%, transparent) 81px 82px, transparent 83px),
+    radial-gradient(circle at 88% 30%, transparent 0 36px, color-mix(in srgb, var(--color-borde) 70%, transparent) 37px 38px, transparent 39px 64px, color-mix(in srgb, var(--color-borde) 60%, transparent) 65px 66px, transparent 67px),
+    linear-gradient(color-mix(in srgb, var(--color-borde) 50%, transparent) 1px, transparent 1px) 0 0 / 100% 44px,
+    linear-gradient(90deg, color-mix(in srgb, var(--color-borde) 50%, transparent) 1px, transparent 1px) 0 0 / 44px 100%,
+    var(--color-fondo);
+  border-bottom: 1px solid var(--color-borde);
 }
 
 .migas {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--espacio-2);
   font-size: var(--texto-sm);
   color: var(--color-texto-suave);
 }
 
-.cabecera {
-  display: grid;
-  justify-items: start;
-  gap: var(--espacio-3);
+.kicker {
+  margin-top: var(--espacio-3);
+  font-size: var(--texto-xs);
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-acento-texto);
+  animation: subir 700ms var(--ease-entrada) 60ms both;
 }
 
 .titulo {
-  font-size: var(--texto-3xl);
+  max-width: 18ch;
+  font-size: clamp(2.4rem, 1.2rem + 3.8vw, 5rem);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  animation: subir 900ms var(--ease-entrada) 140ms both;
 }
 
 .descripcion {
-  max-width: 54ch;
+  max-width: 52ch;
   font-size: var(--texto-lg);
   color: var(--color-texto-suave);
+  text-wrap: balance;
+  animation: subir 900ms var(--ease-entrada) 260ms both;
 }
 
+@keyframes subir {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(6px);
+  }
+}
+
+.portadaPie {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-3);
+  animation: subir 900ms var(--ease-entrada) 380ms both;
+}
+
+.avance,
 .guia {
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-2);
-  min-height: var(--objetivo-tactil);
+  min-height: 44px;
+  padding: 0 var(--espacio-4) 0 var(--espacio-2);
+  border-radius: var(--radio-pildora);
+  background: var(--color-superficie);
+  box-shadow: 0 0 0 1px var(--color-borde);
+  font-size: var(--texto-sm);
   font-weight: 650;
 }
 
-/* Actividades: se pueden recorrer en cualquier orden */
+.guia {
+  padding-inline-start: var(--espacio-4);
+  color: var(--color-acento-texto);
+  text-decoration: none;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.guia:hover {
+  transform: translateY(-2px);
+}
+
+.avanceAnillo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, var(--color-superficie) 66%, transparent 68%),
+    conic-gradient(var(--color-acento) calc(var(--avance) * 360deg), var(--color-borde) 0);
+  transition: background 600ms ease;
+}
+
+/* ———— Actividades: tarjetas conectadas por una línea ———— */
 .pasos {
-  display: flex;
-  gap: var(--espacio-2);
-  padding: 0 0 var(--espacio-2);
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: var(--espacio-4);
+  width: min(100%, 64rem);
+  margin: calc(-1 * var(--espacio-8)) 0 0;
+  padding: 0;
   list-style: none;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
+}
+
+/* La línea que las une */
+.pasos::before {
+  content: '';
+  position: absolute;
+  inset-inline: 10%;
+  inset-block-start: 50%;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, var(--color-borde-control) 0 8px, transparent 8px 14px);
+  z-index: -1;
+}
+
+@media (max-width: 40rem) {
+  .pasos {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--espacio-2);
+  }
+
+  .pasos::before {
+    display: none;
+  }
 }
 
 .pasos li {
-  flex: none;
-  scroll-snap-align: start;
+  animation: brotar 600ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: calc(var(--i) * 80ms + 300ms);
+}
+
+@keyframes brotar {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.94);
+  }
 }
 
 .paso {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: var(--espacio-2);
-  min-height: var(--objetivo-tactil);
-  padding: var(--espacio-2) var(--espacio-4) var(--espacio-2) var(--espacio-2);
-  border: var(--borde-fino) solid var(--color-borde);
-  border-radius: var(--radio-pildora);
+  gap: var(--espacio-3);
+  width: 100%;
+  height: 100%;
+  min-height: 76px;
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 0;
+  border-radius: 20px;
   background: var(--color-superficie);
-  color: var(--color-texto-suave);
-  font-size: var(--texto-sm);
-  font-weight: 600;
+  box-shadow:
+    0 0 0 1px var(--color-borde),
+    0 16px 30px -24px rgb(40 30 80 / 0.5);
+  color: var(--color-texto);
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
   transition:
-    background-color var(--dur-rapida) ease,
-    color var(--dur-rapida) ease,
-    border-color var(--dur-rapida) ease;
+    transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 300ms ease,
+    background-color 300ms ease;
 }
 
 .paso:hover {
-  border-color: var(--color-acento);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px var(--color-acento),
+    0 22px 36px -24px rgb(40 30 80 / 0.55);
+}
+
+.paso:active {
+  transform: scale(0.97);
 }
 
 .pasoActual {
-  border-color: var(--color-acento);
-  background: var(--color-acento-suave);
-  color: var(--color-acento-texto);
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  box-shadow: 0 22px 40px -22px var(--color-acento);
+  transform: translateY(-4px);
+}
+
+.pasoActual:hover {
+  box-shadow: 0 22px 40px -22px var(--color-acento);
 }
 
 .numero {
   display: grid;
   place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
+  flex: none;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 50%;
-  background: var(--color-fondo);
+  background: var(--color-acento-suave);
+  color: var(--color-acento-texto);
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
+.pasoActual .numero {
+  background: rgb(255 255 255 / 0.22);
+  color: inherit;
+}
+
+.pasoHecho:not(.pasoActual) .numero {
+  background: var(--color-exito-fondo);
+  color: var(--color-exito);
+}
+
+.pasoTexto {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.pasoTipo {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.pasoTitulo {
+  font-size: var(--texto-sm);
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+/* ———— La actividad: un panel amplio y centrado ———— */
 .zona {
-  padding: var(--espacio-5);
-  border-radius: var(--radio-lg);
-  background: var(--color-fondo);
-  border: var(--borde-fino) solid var(--color-borde);
-  box-shadow: var(--sombra-1);
+  position: relative;
+  width: min(100%, 56rem);
+  padding: var(--espacio-7) var(--espacio-5) var(--espacio-6);
+  border-radius: 32px;
+  background: var(--color-superficie);
+  box-shadow:
+    0 0 0 1px var(--color-borde),
+    0 50px 80px -60px rgb(40 30 80 / 0.55);
+  scroll-margin-top: 84px;
+  animation: zona 700ms var(--ease-entrada) both;
+}
+
+@media (min-width: 48rem) {
+  .zona {
+    padding: var(--espacio-8) var(--espacio-7) var(--espacio-7);
+  }
+}
+
+@keyframes zona {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+.zonaEtiqueta {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--espacio-3));
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  padding: var(--espacio-1) var(--espacio-4);
+  border-radius: var(--radio-pildora);
+  background: var(--color-texto);
+  color: var(--color-fondo);
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ———— Siguiente actividad ———— */
+.siguiente {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--espacio-1) var(--espacio-4);
+  width: min(100%, 36rem);
+  padding: var(--espacio-4) var(--espacio-4) var(--espacio-4) var(--espacio-5);
+  border: 0;
+  border-radius: 24px;
+  background: var(--color-acento-suave);
+  color: var(--color-texto);
+  text-align: start;
+  font: inherit;
+  cursor: pointer;
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.siguiente:hover {
+  transform: translateY(-3px);
+}
+
+.siguiente:active {
+  transform: scale(0.98);
+}
+
+.siguienteRotulo {
+  font-size: var(--texto-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-acento-texto);
+}
+
+.siguienteTitulo {
+  grid-column: 1;
+  font-family: var(--fuente-display);
+  font-size: var(--texto-xl);
+  font-weight: 560;
+}
+
+.siguienteFlecha {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--color-acento);
+  color: var(--color-sobre-acento);
+  transition: transform 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.siguiente:hover .siguienteFlecha {
+  transform: translateX(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kicker,
+  .titulo,
+  .descripcion,
+  .portadaPie,
+  .pasos li,
+  .zona {
+    animation-name: fundido;
+  }
+}
+
+@keyframes fundido {
+  from {
+    opacity: 0;
+  }
 }

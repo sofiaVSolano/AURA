@@ -9,22 +9,96 @@
       "tipo": "elegir",
       "id": "verbos",
       "titulo": "Verbos que se pueden verificar",
-      "consigna": "Elige la formulación cuyo verbo permite comprobar si el objetivo se logró.",
+      "consigna": "Elige la formulación que se puede comprobar mejor. Ojo: varias opciones parecen correctas; solo una cumple todo.",
       "preguntas": [
         {
           "id": "v1",
-          "enunciado": "Para un objetivo específico sobre usuarios de una biblioteca:",
+          "enunciado": "Objetivo específico sobre los usuarios de una biblioteca:",
           "opciones": [
-            { "id": "a", "texto": "Conocer los hábitos de lectura de los usuarios.", "adecuada": false, "explicacion": "«Conocer» ocurre en tu mente: no hay forma de comprobarlo desde fuera." },
-            { "id": "b", "texto": "Describir los hábitos de lectura de los usuarios.", "adecuada": true, "explicacion": "«Describir» produce algo observable: una descripción que otros pueden revisar." }
+            {
+              "id": "a",
+              "texto": "Conocer los hábitos de lectura de los usuarios.",
+              "adecuada": false,
+              "explicacion": "«Conocer» ocurre en tu mente: no hay forma de comprobarlo desde fuera."
+            },
+            {
+              "id": "b",
+              "texto": "Describir los hábitos de lectura de los usuarios de la biblioteca municipal durante el primer semestre.",
+              "adecuada": true,
+              "explicacion": "Verbo observable («describir»), con quiénes, dónde y cuándo: se sabe exactamente qué entregar."
+            },
+            {
+              "id": "c",
+              "texto": "Analizar y comprender los hábitos de lectura de los usuarios.",
+              "adecuada": false,
+              "explicacion": "Mezcla un verbo verificable con uno interno («comprender») y junta dos acciones en un solo objetivo."
+            },
+            {
+              "id": "d",
+              "texto": "Describir los hábitos de lectura.",
+              "adecuada": false,
+              "explicacion": "El verbo es bueno, pero sin población, lugar ni periodo nunca sabrías cuándo terminaste."
+            }
           ]
         },
         {
           "id": "v2",
-          "enunciado": "Para un objetivo sobre un prototipo:",
+          "enunciado": "Objetivo específico de un proyecto con un prototipo:",
           "opciones": [
-            { "id": "a", "texto": "Comprender cómo funciona el sistema de riego.", "adecuada": false, "explicacion": "«Comprender» es un proceso interno; ¿cómo sabría el jurado que lo lograste?" },
-            { "id": "b", "texto": "Diseñar un prototipo de sistema de riego automatizado.", "adecuada": true, "explicacion": "«Diseñar» produce un resultado concreto y verificable: el prototipo." }
+            {
+              "id": "a",
+              "texto": "Comprender cómo funciona un sistema de riego automatizado.",
+              "adecuada": false,
+              "explicacion": "«Comprender» es un proceso interno; ¿cómo sabría el jurado que lo lograste?"
+            },
+            {
+              "id": "b",
+              "texto": "Diseñar un prototipo de riego automatizado para el invernadero de la facultad.",
+              "adecuada": true,
+              "explicacion": "Produce algo concreto y verificable (el prototipo) en un contexto delimitado."
+            },
+            {
+              "id": "c",
+              "texto": "Diseñar el mejor sistema de riego posible.",
+              "adecuada": false,
+              "explicacion": "«El mejor posible» no se puede comprobar: ¿mejor que cuál, según qué criterio?"
+            },
+            {
+              "id": "d",
+              "texto": "Lograr que los cultivos del invernadero crezcan más rápido.",
+              "adecuada": false,
+              "explicacion": "Es una finalidad deseada que depende de muchos factores fuera de tu control, no una acción de tu proyecto."
+            }
+          ]
+        },
+        {
+          "id": "v3",
+          "enunciado": "Objetivo específico en un estudio con estudiantes:",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Aprender sobre la percepción de los estudiantes acerca de la biblioteca virtual.",
+              "adecuada": false,
+              "explicacion": "«Aprender sobre» describe lo que te pasa a ti, no un resultado que otros puedan revisar."
+            },
+            {
+              "id": "b",
+              "texto": "Identificar las barreras que reportan los estudiantes de primer semestre para usar la biblioteca virtual.",
+              "adecuada": true,
+              "explicacion": "Verbo observable y un producto claro: la lista de barreras, con población definida."
+            },
+            {
+              "id": "c",
+              "texto": "Realizar una encuesta a los estudiantes de primer semestre.",
+              "adecuada": false,
+              "explicacion": "La encuesta es un medio, no un logro: el objetivo es lo que obtienes con ella."
+            },
+            {
+              "id": "d",
+              "texto": "Demostrar que los estudiantes no usan la biblioteca virtual.",
+              "adecuada": false,
+              "explicacion": "«Demostrar que…» anticipa la conclusión antes de investigar; un objetivo no debería presuponer el resultado."
+            }
           ]
         }
       ]
@@ -33,22 +107,96 @@
       "tipo": "elegir",
       "id": "ambiguedad",
       "titulo": "Detecta la ambigüedad",
-      "consigna": "Elige la versión menos ambigua de cada objetivo.",
+      "consigna": "Elige la versión menos ambigua de cada objetivo. Las otras tienen un defecto más sutil de lo que parece.",
       "preguntas": [
         {
           "id": "a1",
           "enunciado": "Objetivo general:",
           "opciones": [
-            { "id": "a", "texto": "Mejorar la educación en el colegio.", "adecuada": false, "explicacion": "«Mejorar la educación» es muy amplio: ¿qué aspecto?, ¿cómo se sabrá si mejoró?" },
-            { "id": "b", "texto": "Evaluar el efecto de las tutorías entre pares en la comprensión lectora de estudiantes de sexto grado.", "adecuada": true, "explicacion": "Precisa qué se hace (evaluar), sobre qué (comprensión lectora) y con quiénes (sexto grado)." }
+            {
+              "id": "a",
+              "texto": "Mejorar la educación en el colegio.",
+              "adecuada": false,
+              "explicacion": "«Mejorar la educación» es muy amplio: ¿qué aspecto?, ¿cómo se sabrá si mejoró?"
+            },
+            {
+              "id": "b",
+              "texto": "Evaluar el efecto de las tutorías entre pares en la comprensión lectora de estudiantes de sexto grado.",
+              "adecuada": true,
+              "explicacion": "Precisa qué se hace (evaluar), sobre qué (comprensión lectora) y con quiénes (sexto grado)."
+            },
+            {
+              "id": "c",
+              "texto": "Evaluar las tutorías entre pares en el colegio.",
+              "adecuada": false,
+              "explicacion": "Falta decir qué aspecto se evalúa (¿su efecto en qué?) y con quiénes."
+            },
+            {
+              "id": "d",
+              "texto": "Evaluar el efecto de las tutorías entre pares en el rendimiento, la motivación, la convivencia y la comprensión lectora de todos los estudiantes.",
+              "adecuada": false,
+              "explicacion": "Demasiados aspectos y toda la población: se vuelve inabarcable para un proyecto de grado."
+            }
           ]
         },
         {
           "id": "a2",
           "enunciado": "Objetivo específico:",
           "opciones": [
-            { "id": "a", "texto": "Analizar y diseñar e implementar una estrategia de comunicación.", "adecuada": false, "explicacion": "Tres verbos en un objetivo suelen ser tres objetivos distintos; sepáralos." },
-            { "id": "b", "texto": "Diseñar una estrategia de comunicación para la junta de acción comunal.", "adecuada": true, "explicacion": "Un verbo y un logro claro: así es más fácil planear y comprobar." }
+            {
+              "id": "a",
+              "texto": "Analizar y diseñar e implementar una estrategia de comunicación.",
+              "adecuada": false,
+              "explicacion": "Tres verbos en un objetivo suelen ser tres objetivos distintos; sepáralos."
+            },
+            {
+              "id": "b",
+              "texto": "Diseñar una estrategia de comunicación para la junta de acción comunal del barrio.",
+              "adecuada": true,
+              "explicacion": "Un verbo y un logro claro, para un destinatario concreto."
+            },
+            {
+              "id": "c",
+              "texto": "Diseñar una estrategia de comunicación innovadora y efectiva.",
+              "adecuada": false,
+              "explicacion": "«Innovadora y efectiva» son valoraciones: no se pueden comprobar al formular el objetivo."
+            },
+            {
+              "id": "d",
+              "texto": "Diseñar una estrategia de comunicación para mejorar la comunidad.",
+              "adecuada": false,
+              "explicacion": "«Mejorar la comunidad» es tan amplio que no orienta el diseño ni permite saber si se logró."
+            }
+          ]
+        },
+        {
+          "id": "a3",
+          "enunciado": "Objetivo específico:",
+          "opciones": [
+            {
+              "id": "a",
+              "texto": "Medir el consumo de agua.",
+              "adecuada": false,
+              "explicacion": "¿De quién, dónde y durante cuánto tiempo? Sin eso no se puede planear la medición."
+            },
+            {
+              "id": "b",
+              "texto": "Medir el consumo de agua de 40 hogares del barrio La Esperanza durante los tres meses de la campaña.",
+              "adecuada": true,
+              "explicacion": "Dice qué, de quiénes, dónde y cuándo: es realista y comprobable."
+            },
+            {
+              "id": "c",
+              "texto": "Medir el consumo de agua de los hogares de la ciudad desde 2010.",
+              "adecuada": false,
+              "explicacion": "El alcance y el periodo son poco realistas para los recursos de un proyecto de grado."
+            },
+            {
+              "id": "d",
+              "texto": "Medir y reducir el consumo de agua de 40 hogares del barrio.",
+              "adecuada": false,
+              "explicacion": "«Reducir» es otro objetivo y depende de factores externos; además mezcla dos acciones."
+            }
           ]
         }
       ]
@@ -59,12 +207,46 @@
       "titulo": "Revisa la coherencia",
       "consigna": "Objetivo general: «Evaluar el efecto de una guía audiovisual en la entrega de tareas de estudiantes de noveno grado». Marca los objetivos específicos que contribuyen directamente a lograrlo.",
       "items": [
-        { "id": "e1", "texto": "Caracterizar el acceso a dispositivos de los estudiantes de noveno.", "marcar": true, "explicacion": "Contribuye: sin conocer el acceso, no se puede diseñar ni interpretar el efecto de la guía." },
-        { "id": "e2", "texto": "Diseñar una guía audiovisual sobre el uso de la plataforma de tareas.", "marcar": true, "explicacion": "Contribuye: es la intervención cuyo efecto se evaluará." },
-        { "id": "e3", "texto": "Comparar la entrega de tareas antes y después del uso de la guía.", "marcar": true, "explicacion": "Contribuye: es la evaluación misma que pide el objetivo general." },
-        { "id": "e4", "texto": "Desarrollar una nueva plataforma educativa para todo el colegio.", "marcar": false, "explicacion": "No contribuye: va más allá del objetivo general y cambiaría el proyecto." },
-        { "id": "e5", "texto": "Analizar la historia de la educación virtual en el país.", "marcar": false, "explicacion": "Puede servir de contexto, pero no es un paso para evaluar el efecto de la guía." }
+        {
+          "id": "e1",
+          "texto": "Caracterizar el acceso a dispositivos de los estudiantes de noveno.",
+          "marcar": true,
+          "explicacion": "Contribuye: sin conocer el acceso, no se puede diseñar ni interpretar el efecto de la guía."
+        },
+        {
+          "id": "e2",
+          "texto": "Diseñar una guía audiovisual sobre el uso de la plataforma de tareas.",
+          "marcar": true,
+          "explicacion": "Contribuye: es la intervención cuyo efecto se evaluará."
+        },
+        {
+          "id": "e3",
+          "texto": "Comparar la entrega de tareas antes y después del uso de la guía.",
+          "marcar": true,
+          "explicacion": "Contribuye: es la evaluación misma que pide el objetivo general."
+        },
+        {
+          "id": "e4",
+          "texto": "Desarrollar una nueva plataforma educativa para todo el colegio.",
+          "marcar": false,
+          "explicacion": "No contribuye: va más allá del objetivo general y cambiaría el proyecto."
+        },
+        {
+          "id": "e5",
+          "texto": "Analizar la historia de la educación virtual en el país.",
+          "marcar": false,
+          "explicacion": "Puede servir de contexto, pero no es un paso para evaluar el efecto de la guía."
+        }
       ]
+    },
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tus objetivos (general y específicos)",
+      "consigna": "Escribe tus objetivos (general y específicos) con tus propias palabras (recomendado: 60 a 220 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "objetivos (general y específicos)",
+      "palabrasMin": 60,
+      "palabrasMax": 220
     }
   ]
 }

@@ -17,9 +17,39 @@
           "categoria": "Metodología",
           "texto": "¿Por qué eligió esta metodología y no otra?",
           "claves": [
-            { "descripcion": "la razón de tu elección", "sugerencia": "Explica por qué esa metodología se ajusta a tu pregunta u objetivo («porque», «permitía»).", "palabras": ["porque", "permit", "ajusta", "adecuad", "razon"] },
-            { "descripcion": "una referencia a tu pregunta u objetivo", "sugerencia": "Conecta la elección con tu pregunta de investigación o tu objetivo.", "palabras": ["pregunta", "objetivo", "propósito", "proposito"] },
-            { "descripcion": "alternativas consideradas", "sugerencia": "Menciona qué otra opción consideraste y por qué la descartaste.", "palabras": ["alternativa", "otra opción", "otra opcion", "descart", "en lugar de", "consider"] }
+            {
+              "descripcion": "la razón de tu elección",
+              "sugerencia": "Explica por qué esa metodología se ajusta a tu pregunta u objetivo («porque», «permitía»).",
+              "palabras": [
+                "porque",
+                "permit",
+                "ajusta",
+                "adecuad",
+                "razon"
+              ]
+            },
+            {
+              "descripcion": "una referencia a tu pregunta u objetivo",
+              "sugerencia": "Conecta la elección con tu pregunta de investigación o tu objetivo.",
+              "palabras": [
+                "pregunta",
+                "objetivo",
+                "propósito",
+                "proposito"
+              ]
+            },
+            {
+              "descripcion": "alternativas consideradas",
+              "sugerencia": "Menciona qué otra opción consideraste y por qué la descartaste.",
+              "palabras": [
+                "alternativa",
+                "otra opción",
+                "otra opcion",
+                "descart",
+                "en lugar de",
+                "consider"
+              ]
+            }
           ]
         },
         {
@@ -27,9 +57,42 @@
           "categoria": "Limitaciones",
           "texto": "¿Cuáles son las principales limitaciones de su trabajo?",
           "claves": [
-            { "descripcion": "una limitación concreta", "sugerencia": "Nombra al menos una limitación específica (muestra, tiempo, contexto, datos).", "palabras": ["limit", "muestra", "tiempo", "solo", "únicamente", "unicamente", "alcance"] },
-            { "descripcion": "su efecto en los resultados", "sugerencia": "Explica cómo esa limitación afecta lo que puedes concluir.", "palabras": ["afect", "conclu", "generaliz", "result", "interpret"] },
-            { "descripcion": "una posible continuación", "sugerencia": "Propón cómo podría abordarse en un trabajo futuro.", "palabras": ["futur", "siguiente", "podría", "podria", "ampliar", "replicar"] }
+            {
+              "descripcion": "una limitación concreta",
+              "sugerencia": "Nombra al menos una limitación específica (muestra, tiempo, contexto, datos).",
+              "palabras": [
+                "limit",
+                "muestra",
+                "tiempo",
+                "solo",
+                "únicamente",
+                "unicamente",
+                "alcance"
+              ]
+            },
+            {
+              "descripcion": "su efecto en los resultados",
+              "sugerencia": "Explica cómo esa limitación afecta lo que puedes concluir.",
+              "palabras": [
+                "afect",
+                "conclu",
+                "generaliz",
+                "result",
+                "interpret"
+              ]
+            },
+            {
+              "descripcion": "una posible continuación",
+              "sugerencia": "Propón cómo podría abordarse en un trabajo futuro.",
+              "palabras": [
+                "futur",
+                "siguiente",
+                "podría",
+                "podria",
+                "ampliar",
+                "replicar"
+              ]
+            }
           ]
         },
         {
@@ -37,9 +100,43 @@
           "categoria": "Aportes",
           "texto": "¿Cuál es el principal aporte de su proyecto?",
           "claves": [
-            { "descripcion": "un aporte concreto", "sugerencia": "Formula el aporte en una frase concreta, no general.", "palabras": ["aport", "contribu", "permite", "ofrece", "propone"] },
-            { "descripcion": "evidencia de tus resultados", "sugerencia": "Respáldalo con un resultado o dato de tu trabajo.", "palabras": ["result", "dato", "encontr", "%", "evidencia", "mostr"] },
-            { "descripcion": "a quién beneficia", "sugerencia": "Di quién se beneficia o en qué contexto es útil.", "palabras": ["benefici", "comunidad", "usuarios", "estudiantes", "organizacion", "organización", "útil", "util"] }
+            {
+              "descripcion": "un aporte concreto",
+              "sugerencia": "Formula el aporte en una frase concreta, no general.",
+              "palabras": [
+                "aport",
+                "contribu",
+                "permite",
+                "ofrece",
+                "propone"
+              ]
+            },
+            {
+              "descripcion": "evidencia de tus resultados",
+              "sugerencia": "Respáldalo con un resultado o dato de tu trabajo.",
+              "palabras": [
+                "result",
+                "dato",
+                "encontr",
+                "%",
+                "evidencia",
+                "mostr"
+              ]
+            },
+            {
+              "descripcion": "a quién beneficia",
+              "sugerencia": "Di quién se beneficia o en qué contexto es útil.",
+              "palabras": [
+                "benefici",
+                "comunidad",
+                "usuarios",
+                "estudiantes",
+                "organizacion",
+                "organización",
+                "útil",
+                "util"
+              ]
+            }
           ]
         },
         {
@@ -47,12 +144,54 @@
           "categoria": "Resultados",
           "texto": "¿Qué resultado le sorprendió y cómo lo explica?",
           "claves": [
-            { "descripcion": "el resultado específico", "sugerencia": "Describe concretamente qué resultado fue inesperado.", "palabras": ["result", "encontr", "esperaba", "sorprend", "dato"] },
-            { "descripcion": "una explicación posible", "sugerencia": "Propón una explicación posible para ese resultado.", "palabras": ["porque", "explica", "posible", "podría", "podria", "debido"] },
-            { "descripcion": "relación con otros trabajos", "sugerencia": "Relaciónalo con lo que dicen otros estudios o tu marco teórico.", "palabras": ["autor", "estudio", "literatura", "teoría", "teoria", "antecedente", "coincide"] }
+            {
+              "descripcion": "el resultado específico",
+              "sugerencia": "Describe concretamente qué resultado fue inesperado.",
+              "palabras": [
+                "result",
+                "encontr",
+                "esperaba",
+                "sorprend",
+                "dato"
+              ]
+            },
+            {
+              "descripcion": "una explicación posible",
+              "sugerencia": "Propón una explicación posible para ese resultado.",
+              "palabras": [
+                "porque",
+                "explica",
+                "posible",
+                "podría",
+                "podria",
+                "debido"
+              ]
+            },
+            {
+              "descripcion": "relación con otros trabajos",
+              "sugerencia": "Relaciónalo con lo que dicen otros estudios o tu marco teórico.",
+              "palabras": [
+                "autor",
+                "estudio",
+                "literatura",
+                "teoría",
+                "teoria",
+                "antecedente",
+                "coincide"
+              ]
+            }
           ]
         }
       ]
+    },
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu respuesta a una pregunta del jurado",
+      "consigna": "Escribe tu respuesta a una pregunta del jurado con tus propias palabras (recomendado: 60 a 250 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "respuesta a una pregunta del jurado",
+      "palabrasMin": 60,
+      "palabrasMax": 250
     }
   ]
 }

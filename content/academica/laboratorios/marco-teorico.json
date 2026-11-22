@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "marco-teorico",
+  "titulo": "Laboratorio de marco teórico",
+  "descripcion": "Escribe un fragmento de tu marco teórico y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "marco-teorico",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe un fragmento de tu marco teórico",
+      "consigna": "Escribe un fragmento de tu marco teórico con tus propias palabras (recomendado: 500 a 1200 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "un fragmento de marco teórico",
+      "palabrasMin": 500,
+      "palabrasMax": 1200
+    }
+  ]
+}

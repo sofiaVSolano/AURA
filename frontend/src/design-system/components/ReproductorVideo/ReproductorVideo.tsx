@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { Link } from 'react-router';
 import { cx } from '../../../lib/cx.ts';
+import { formatoTiempo } from '../../../lib/tiempo.ts';
 import { EstadoVista } from '../EstadoVista/EstadoVista.tsx';
 import { Icono } from '../Icono/Icono.tsx';
 import estilos from './ReproductorVideo.module.css';
@@ -29,10 +30,9 @@ interface ReproductorVideoProps {
 type Estado = 'inactivo' | 'cargando' | 'listo' | 'error';
 type Transcripcion = { tipo: 'inactiva' } | { tipo: 'cargando' } | { tipo: 'lista'; texto: string } | { tipo: 'error' };
 
-export const formatoTiempo = (s: number) => {
-  const t = Number.isFinite(s) && s > 0 ? Math.floor(s) : 0;
-  return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`;
-};
+// El reproductor no está en el barril del sistema de diseño (index.ts) a propósito:
+// así solo lo descargan las páginas que reproducen video.
+export { formatoTiempo };
 
 /**
  * Reproductor accesible con controles propios sobre <video> nativo.

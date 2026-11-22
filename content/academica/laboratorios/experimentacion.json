@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "id": "experimentacion",
+  "titulo": "Laboratorio de experimentación",
+  "descripcion": "Escribe tu diseño experimental y recibe una evaluación formativa con IA: falencias, fortalezas y cómo mejorar.",
+  "tema": "experimentacion",
+  "actividades": [
+    {
+      "tipo": "redactar",
+      "id": "redacta",
+      "titulo": "Escribe tu diseño experimental",
+      "consigna": "Escribe tu diseño experimental con tus propias palabras (recomendado: 300 a 800 palabras). Tu AURA lo evaluará con IA: qué falta, qué falla y cómo mejorarlo. Tienes 2 evaluaciones, úsalas bien.",
+      "elemento": "diseño experimental",
+      "palabrasMin": 300,
+      "palabrasMax": 800
+    }
+  ]
+}

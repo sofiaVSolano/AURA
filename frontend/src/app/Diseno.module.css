@@ -120,3 +120,21 @@
   font-size: var(--texto-sm);
   color: var(--color-texto-suave);
 }
+
+/* — Escena inmersiva (Inicio): la cabecera flota transparente sobre la portada — */
+.app[data-inmersiva] .cabecera {
+  position: absolute;
+  inset-inline: 0;
+  background: transparent;
+  border-bottom: 0;
+  backdrop-filter: none;
+}
+
+.app[data-inmersiva] .contenido {
+  max-width: none;
+  padding-inline: 0;
+}
+
+.app[data-inmersiva] .pie {
+  display: none;
+}

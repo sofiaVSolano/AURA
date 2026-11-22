@@ -20,11 +20,13 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true
   },
   "include": [
     "vite.config.ts",
     "tests",
-    "scripts/**/*.ts"
+    "scripts/**/*.ts",
+    "servidor/*.json"
   ]
 }

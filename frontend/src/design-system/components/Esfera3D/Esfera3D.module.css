@@ -1,0 +1,26 @@
+.lienzo {
+  display: block;
+  opacity: 0;
+  transition: opacity 1200ms var(--ease-salida);
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Sin WebGL: una esfera de luz estática en los colores del usuario */
+.respaldo {
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 70% 50%,
+    hsl(var(--matiz-b) 85% 75%) 0,
+    hsl(var(--matiz-a) 70% 55%) 14vmin,
+    hsl(var(--matiz-a) 70% 40% / 0.35) 24vmin,
+    transparent 40vmin
+  );
+}
+
+.lienzo[data-listo] {
+  opacity: 1;
+}
