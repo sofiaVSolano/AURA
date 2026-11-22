@@ -31,8 +31,8 @@ Los nombres van en kebab-case ASCII. Los archivos de video no se versionan en Gi
 | `area`, `categoria`, `subtema` | `emocional` \| `academico`; kebab-case |
 | `titulo` (≤ 90) y `descripcion` (idea principal, ≤ 280) | Obligatorios |
 | `estado` | `idea` → `guion` → `storyboard` → `animacion` → `revision` → `publicado` |
-| `duracionObjetivoSegundos` | 30–60 (duración a la que se ajusta el guion) |
-| `duracionSegundos` | `null` o 1–60: **60 s es el máximo absoluto** |
+| `duracionObjetivoSegundos` | 30–360 (duración a la que se ajusta el guion) |
+| `duracionSegundos` | `null` o 1–360: **360 s (6 min) es el máximo absoluto** |
 | `archivos.video` | **Ruta del recurso**: `.mp4` (H.264/AAC) o `null` |
 | `archivos.videoAlterno` | `.webm` optimizado (AV1/VP9) o `null` |
 | `archivos.poster` | `.webp`, `.avif` o `.jpg`, o `null` |
@@ -47,7 +47,7 @@ Los nombres van en kebab-case ASCII. Los archivos de video no se versionan en Gi
 ### Flujo editorial
 
 1. Copiar `_plantilla/` a `content/videos/<area>/<categoria>/<subtema>/` y ajustar `metadata.json`. Si es emocional, añadir el subtema en `categorias.json`.
-2. Avanzar el estado a medida que se completan el guion (ajustado a ≤ 60 s con pausas naturales), el storyboard y la animación.
+2. Avanzar el estado a medida que se completan el guion (ajustado a ≤ 6 min con pausas naturales; los videos de acompañamiento rondan 3–5 min), el storyboard y la animación.
 3. Revisión: lenguaje empático, no clínico ni culpabilizador; subtítulos sincronizados; recursos autorizados.
 4. Añadir los archivos finales, pasar el estado a `publicado` y ejecutar `npm test`.
 

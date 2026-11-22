@@ -18,7 +18,7 @@ Las tres rutas se cargan de forma diferida. (Corrección en F5: el JS inicial re
 - **Las pruebas exigen:**
   - correspondencia 1:1 entre la taxonomía y las carpetas, sin carpetas huérfanas;
   - los tres documentos en cada carpeta;
-  - duración objetivo de 30–60 s y máximo absoluto de 60 s;
+  - duración objetivo de 30–360 s y máximo absoluto de 360 s (6 min);
   - que todo video publicado tenga sus archivos en disco.
 
 ## Reproductor (`design-system/components/ReproductorVideo`)

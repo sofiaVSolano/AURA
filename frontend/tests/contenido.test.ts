@@ -57,10 +57,11 @@ test('acepta un video publicado completo y lo filtra por perfil', () => {
   assert.equal(archivosRequeridos(r.valor).length, 5);
 });
 
-test('duración controlada: objetivo 30–60 s y máximo absoluto 60 s', () => {
-  assert.equal(validarMetadatosVideo({ ...completo, duracionSegundos: 61 }, carpeta).ok, false);
+test('duración controlada: objetivo 30–360 s y máximo absoluto 360 s', () => {
+  assert.equal(validarMetadatosVideo({ ...completo, duracionSegundos: 361 }, carpeta).ok, false);
+  assert.equal(validarMetadatosVideo({ ...completo, duracionSegundos: 283 }, carpeta).ok, true);
   assert.equal(validarMetadatosVideo({ ...base, duracionObjetivoSegundos: 25 }, carpeta).ok, false);
-  assert.equal(validarMetadatosVideo({ ...base, duracionObjetivoSegundos: 90 }, carpeta).ok, false);
+  assert.equal(validarMetadatosVideo({ ...base, duracionObjetivoSegundos: 400 }, carpeta).ok, false);
 });
 
 test('rechaza rutas con carpetas o "..", formatos no permitidos y carpetas que no coinciden', () => {

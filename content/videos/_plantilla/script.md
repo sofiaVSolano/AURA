@@ -4,7 +4,7 @@
 
 - **Categoría:** <categoría>
 - **Idea principal (una sola):** Idea principal del video, en una frase.
-- **Duración objetivo:** 45 s (máximo absoluto 60 s). Ritmo aproximado: 2 palabras por segundo, con pausas.
+- **Duración objetivo:** 3–5 min (máximo absoluto 6 min). Ritmo aproximado: 2 palabras por segundo, con pausas.
 - **Tono:** empático y cercano. Sin diagnosticar, sin prometer resultados, sin culpabilizar ni minimizar.
 - **Mi AURA:** puede aparecer al cierre como compañía discreta; no reemplaza a los personajes narrativos.
 
@@ -22,5 +22,5 @@
 
 - [ ] Lenguaje claro, no culpabilizador, no clínico
 - [ ] Una sola idea principal
-- [ ] Ajustado a ≤ 60 s leído en voz alta, con pausas naturales
+- [ ] Ajustado a ≤ 6 min leído en voz alta, con pausas naturales
 - [ ] Revisado por:

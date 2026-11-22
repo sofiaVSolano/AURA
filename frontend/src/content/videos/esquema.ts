@@ -8,9 +8,9 @@ export type AreaVideo = (typeof AREAS)[number];
 export const ESTADOS = ['idea', 'guion', 'storyboard', 'animacion', 'revision', 'publicado'] as const;
 export type EstadoVideo = (typeof ESTADOS)[number];
 
-/** Duración: recomendada 30–60 s; máximo absoluto 60 s. */
+/** Duración: entre 30 s y 6 min (los videos de acompañamiento rondan 3–5 min); máximo absoluto 360 s. */
 export const DURACION_MINIMA_OBJETIVO = 30;
-export const DURACION_MAXIMA_SEGUNDOS = 60;
+export const DURACION_MAXIMA_SEGUNDOS = 360;
 
 export interface ArchivosVideo {
   /** Ruta del recurso: archivo final MP4 (H.264/AAC, compatible) dentro de la carpeta; null si no existe. */
@@ -36,9 +36,9 @@ export interface MetadatosVideo {
   /** Idea principal del video (una sola). */
   descripcion: string;
   estado: EstadoVideo;
-  /** Duración a la que se ajusta el guion (30–60 s). */
+  /** Duración a la que se ajusta el guion (30–360 s). */
   duracionObjetivoSegundos: number;
-  /** Duración real del archivo final (≤ 60 s); null mientras no exista. */
+  /** Duración real del archivo final (≤ 360 s); null mientras no exista. */
   duracionSegundos: number | null;
   archivos: ArchivosVideo;
   /** Perfiles institucionales donde aplica; ["*"] = todos. */
