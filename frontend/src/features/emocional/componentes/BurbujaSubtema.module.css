@@ -114,6 +114,8 @@
   height: calc(100% + 16px);
   rotate: -90deg;
   pointer-events: none;
+  /* Sigue a la burbuja cuando crece o se encoge, para que nunca se descentre */
+  transition: scale 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .anillo circle {
@@ -151,14 +153,26 @@
   .enlace:hover .play {
     transform: scale(1.18);
   }
+
+  .enlace:hover .anillo {
+    scale: 1.06;
+  }
 }
 
 .enlace:focus-visible .burbuja {
   transform: scale(1.06);
 }
 
+.enlace:focus-visible .anillo {
+  scale: 1.06;
+}
+
 .enlace:active .burbuja {
   transform: scale(0.94);
+}
+
+.enlace:active .anillo {
+  scale: 0.94;
 }
 
 @media (prefers-reduced-motion: reduce) {

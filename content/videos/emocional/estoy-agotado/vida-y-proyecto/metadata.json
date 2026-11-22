@@ -5,21 +5,34 @@
   "categoria": "estoy-agotado",
   "subtema": "vida-y-proyecto",
   "titulo": "No equilibro vida y proyecto",
-  "descripcion": "El equilibrio no es perfecto ni fijo: pequeños límites pueden darte espacio para respirar.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "El equilibrio no es perfecto ni fijo: once consejos para repartir tu tiempo entre la tesis y todo lo demás.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 200,
+  "duracionSegundos": 200,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "tesis",
+    "tiempo",
+    "equilibrio",
+    "límites",
+    "organización"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: Slow Piano — Millennials Melody Originals",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-22"
 }

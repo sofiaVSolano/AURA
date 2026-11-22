@@ -5,21 +5,34 @@
   "categoria": "tengo-miedo",
   "subtema": "hablar-en-publico",
   "titulo": "Hablar en público",
-  "descripcion": "Sentir nervios antes de hablar es una reacción del cuerpo, no una prueba de que no estás preparado o preparada.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Sentir nervios antes de hablar es una reacción del cuerpo, no una prueba de que te falte preparación. Once consejos para volar con tus mariposas.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 210,
+  "duracionSegundos": 212,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "nervios",
+    "exposición",
+    "sustentación",
+    "hablar en público",
+    "respiración"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Brian)",
+    "Música: Favorite Things (lo-fi, sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-22"
 }
