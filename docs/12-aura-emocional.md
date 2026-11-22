@@ -12,7 +12,7 @@ Las tres rutas se cargan de forma diferida. (Corrección en F5: el JS inicial re
 
 ## Contenido
 
-- **Taxonomía:** `content/emocional/categorias.json` contiene 7 categorías × 4 subtemas, con su color (sin rojos de alarma) y las categorías relacionadas.
+- **Taxonomía:** `content/emocional/categorias.json` contiene 7 categorías × 4 subtemas, con su color (sin rojos de alarma; «Tengo miedo» usa un rojo suave, matiz 352, para distinguirse del fucsia de «Estoy agotado») y las categorías relacionadas.
 - **Un video por subtema:** `content/videos/emocional/<categoria>/<subtema>/` con `metadata.json`, `script.md`, `storyboard.md`, `animation.md` y `assets/`. El esquema v2 está en docs/10.
 - **Estado actual: los 28 videos están en `idea`. Ninguno se publica ni se muestra como disponible.** Cada `script.md` trae la idea principal y una estructura de 45 s con pausas, pendiente de redacción y de revisión por el equipo de contenido y bienestar.
 - **Las pruebas exigen:**
