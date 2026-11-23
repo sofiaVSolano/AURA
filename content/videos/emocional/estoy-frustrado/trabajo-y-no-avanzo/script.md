@@ -1,12 +1,12 @@
 # Guion — Trabajo y no avanzo
 
-> **Estado: guion (borrador, 2026-11-23).** Pendiente del visto bueno. Sección «Estoy frustrado»: colorimetría naranja rojiza (matiz 18), narración grabada por el equipo AURA (5 bloques) y la pista lo-fi de la sección («My Vlog»). **Escenarios propios**: ninguna escena repite las de otros videos.
+> **Estado: publicado (2026-11-23).** Proyecto de animación en `aura-videos/trabajo-y-no-avanzo`. Sección «Estoy frustrado»: colorimetría naranja rojiza (matiz 18), narración grabada por el equipo AURA (5 bloques) y la pista lo-fi de la sección («My Vlog»). **Escenarios propios**: ninguna escena repite las de otros videos.
 
 - **Categoría:** Estoy frustrado
 - **Idea principal (la de la app):** A veces el avance aún no se ve; registrar lo que haces cada día puede mostrarte el camino recorrido.
 - **Situaciones que cubre:** le dedicas horas al proyecto y el documento parece igual, reescribes lo mismo, sientes que das vueltas en círculo, ves que otras personas avanzan y tú no.
 - **Diferencia con otros videos:** «Nada funciona» y «Mi código falla» tratan de algo que **falla**; este trata de algo que **no se mueve**, aunque trabajes. No repite consejos de «La tesis me consume» (medir el esfuerzo, cierre del día), «No terminar a tiempo» (dividir en pasos, tachar lo avanzado) ni «Que el proyecto fracase» (bitácora de decisiones).
-- **Duración estimada:** ~4:00–4:30 (según el ritmo de la grabación) + pantalla de título + cierre de marca.
+- **Duración:** 4:46 (voz grabada + pantalla de título + cierre de marca).
 - **Tono:** cálido, práctico, en segunda persona; valida el cansancio de «tanto esfuerzo para nada» sin dramatizarlo. Narración sin adjetivos con género.
 - **Recurso visual guía — «la semilla bajo tierra»:** en el alféizar de Lu hay una maceta de vidrio en la que se ve la tierra por dentro. Arriba no asoma nada, pero debajo una semilla va echando raíces. Con cada capítulo las raíces son más largas, aunque la superficie siga vacía. En el cierre brota el tallo con dos hojas. Las tarjetas de capítulo muestran el corte de la maceta con las raíces cada vez más largas.
 - **Escenarios nuevos de este video:** la caminadora con el letrero «Tesis» que no se acerca, el tablero de salidas del aeropuerto, la maceta de vidrio con la semilla, el hilo de cuentas, la mesa de luz con dos versiones superpuestas, la rotonda con el letrero «Salida», la cinta de meta con tres casillas, la hoja que rodea la roca en el río, la manguera doblada, la bifurcación con el banderín «Viernes», la máquina de escribir con la frase a medias, la altimetría de una etapa de ciclismo, el mosaico de cuadritos que revela un dibujo, la olla que rompe a hervir, el ascensor de la facultad con el botón «Bienestar», la servilleta del café para el reto.
@@ -94,6 +94,6 @@ No tienes que recorrer este camino a ciegas.
 
 ## Revisión
 
-- [ ] Visto bueno del guion y las escenas
+- [x] Visto bueno del guion y las escenas
 - [ ] Lenguaje claro, no culpabilizador, no clínico; sin promesas de resultado
-- [ ] Narración grabada por el equipo AURA (5 bloques en `assets/audioVideos`), cortada por frase con transcripción
+- [x] Narración grabada por el equipo AURA (5 bloques en `assets/audioVideos`), cortada por frase con transcripción

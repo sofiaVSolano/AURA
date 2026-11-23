@@ -6,15 +6,17 @@
   "subtema": "trabajo-y-no-avanzo",
   "titulo": "Trabajo y no avanzo",
   "descripcion": "A veces el avance aún no se ve; registrar lo que haces cada día puede mostrarte el camino recorrido. Once consejos para encontrar tu avance y destrabar lo que está quieto.",
-  "estado": "guion",
-  "duracionObjetivoSegundos": 260,
-  "duracionSegundos": null,
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 285,
+  "duracionSegundos": 286,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
@@ -26,6 +28,11 @@
     "registro",
     "constancia"
   ],
-  "creditos": [],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: My Vlog (lo-fi, sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
   "actualizado": "2026-11-23"
 }
