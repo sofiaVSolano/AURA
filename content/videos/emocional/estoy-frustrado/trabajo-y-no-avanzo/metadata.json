@@ -5,9 +5,9 @@
   "categoria": "estoy-frustrado",
   "subtema": "trabajo-y-no-avanzo",
   "titulo": "Trabajo y no avanzo",
-  "descripcion": "A veces el avance aún no se ve; registrar lo que haces cada día puede mostrarte el camino recorrido.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
+  "descripcion": "A veces el avance aún no se ve; registrar lo que haces cada día puede mostrarte el camino recorrido. Once consejos para encontrar tu avance y destrabar lo que está quieto.",
+  "estado": "guion",
+  "duracionObjetivoSegundos": 260,
   "duracionSegundos": null,
   "archivos": {
     "video": null,
@@ -19,7 +19,13 @@
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
+  "etiquetas": [
+    "frustración",
+    "estancamiento",
+    "progreso",
+    "registro",
+    "constancia"
+  ],
   "creditos": [],
-  "actualizado": "2026-11-20"
+  "actualizado": "2026-11-23"
 }

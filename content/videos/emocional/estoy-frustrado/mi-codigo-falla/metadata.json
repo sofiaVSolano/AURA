@@ -5,21 +5,34 @@
   "categoria": "estoy-frustrado",
   "subtema": "mi-codigo-falla",
   "titulo": "Mi código falla",
-  "descripcion": "Los errores son información: leerlos con calma y en partes pequeñas suele acercarte a la solución.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Los errores son información: leerlos con calma y en partes pequeñas suele acercarte a la solución. Once consejos para depurar sin perder la calma.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 190,
+  "duracionSegundos": 194,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "programación",
+    "errores",
+    "depurar",
+    "frustración",
+    "pedir ayuda"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: My Vlog (lo-fi, sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-22"
 }
