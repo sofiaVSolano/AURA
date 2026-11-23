@@ -5,21 +5,34 @@
   "categoria": "tengo-miedo",
   "subtema": "que-el-proyecto-fracase",
   "titulo": "Que el proyecto fracase",
-  "descripcion": "Un proyecto puede cambiar de rumbo sin que eso signifique fracasar: los ajustes también son avances.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Un proyecto puede cambiar de rumbo sin que eso signifique fracasar: los ajustes también son avances. Once consejos para navegar con ese miedo.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 210,
+  "duracionSegundos": 214,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "miedo al fracaso",
+    "incertidumbre",
+    "plan B",
+    "resultados",
+    "cambio de rumbo"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Brian)",
+    "Música: Favorite Things (lo-fi, sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-22"
 }
