@@ -1,7 +1,7 @@
 // API de AURA. Sin frameworks: un enrutador mínimo sobre node:http.
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { calcularEvolucion } from '../../frontend/src/features/mi-aura/dominio/evolucion.ts';
-import { ESTADO_INICIAL, LISTA_TIPOS, type EstadoAura, type Experiencia, type TipoExperiencia } from '../../frontend/src/features/mi-aura/dominio/modelo.ts';
+import { LISTA_TIPOS, type EstadoAura, type Experiencia, type TipoExperiencia } from '../../frontend/src/features/mi-aura/dominio/modelo.ts';
 import { esExperienciaValida, validarEstadoAura } from '../../frontend/src/features/mi-aura/dominio/validar.ts';
 import { validarEstadoEmocional } from '../../frontend/src/features/emocional/dominio/estadoEmocional.ts';
 import { validarEstadoAcademico } from '../../frontend/src/features/academica/dominio/estadoAcademico.ts';
@@ -18,6 +18,7 @@ import {
   verificarContrasena,
   type Sesion,
 } from './auth.ts';
+import { borrarModulo, escribirModulo, leerModulo as leerModuloBd, MODULOS, type Modulo } from './almacen.ts';
 import { abrirBd } from './bd.ts';
 import type { Config } from './config.ts';
 import { cargarContenido, referenciaValida } from './contenido.ts';
@@ -29,8 +30,6 @@ import { aplicarCors, crearLimitador, ipCliente, verificarOrigen } from './segur
 /** Versión del consentimiento: fuente única compartida con el formulario del frontend. */
 export { VERSION_CONSENTIMIENTO } from '../../frontend/src/lib/consentimiento.ts';
 import { VERSION_CONSENTIMIENTO } from '../../frontend/src/lib/consentimiento.ts';
-const MODULOS = ['mi-aura', 'emocional', 'academica'] as const;
-type Modulo = (typeof MODULOS)[number];
 const VALIDADORES: Record<Modulo, (d: unknown) => { ok: boolean; errores?: string[]; valor?: unknown }> = {
   'mi-aura': (d) => {
     const r = validarEstadoAura(d);
@@ -57,12 +56,12 @@ export function crearApp(config: Config) {
   const limiteRegistro = crearLimitador(config.limiteRegistro, 60 * 60_000);
   const limiteExperiencias = crearLimitador(120, 60 * 60_000);
   const limiteIa = crearLimitador(30, 60 * 60_000);
-  const usadas = (usuarioId: string, clave: string) =>
+  const usadas = (usuarioId: number, clave: string) =>
     (db.prepare('SELECT COUNT(*) AS n FROM evaluaciones_ia WHERE usuario_id = ? AND clave = ?').get(usuarioId, clave) as { n: number }).n;
-  const anotarUso = (usuarioId: string, clave: string) =>
-    db.prepare('INSERT INTO evaluaciones_ia (id, usuario_id, clave, fecha) VALUES (?, ?, ?, ?)').run(nuevoId(), usuarioId, clave, new Date().toISOString());
+  const anotarUso = (usuarioId: number, clave: string) =>
+    db.prepare('INSERT INTO evaluaciones_ia (usuario_id, clave, fecha) VALUES (?, ?, ?)').run(usuarioId, clave, new Date().toISOString());
   /** Laboratorios: cuántas actividades completó la persona (validado con sus experiencias). */
-  const avanceLabs = (usuarioId: string) => {
+  const avanceLabs = (usuarioId: number) => {
     const hechas = new Set(
       (db.prepare("SELECT ref_id FROM experiencias WHERE usuario_id = ? AND tipo = 'ejercicio-completado'").all(usuarioId) as Array<{ ref_id: string }>).map((r) =>
         r.ref_id.replace(/^lab:/, ''),
@@ -76,7 +75,10 @@ export function crearApp(config: Config) {
     if (!config.claveIa) throw new ErrorHttp(503, 'ia_no_disponible', 'La evaluación con IA no está disponible ahora.');
     return config.claveIa;
   };
-  const limpieza = setInterval(() => limpiarSesionesVencidas(db), 60 * 60_000);
+  const limpieza = setInterval(() => {
+    limpiarSesionesVencidas(db);
+    db.exec('PRAGMA optimize');
+  }, 60 * 60_000);
   limpieza.unref();
 
   const sesionDe = (req: IncomingMessage) => buscarSesion(db, leerCookies(req)[nombreCookie]);
@@ -90,29 +92,19 @@ export function crearApp(config: Config) {
     res.setHeader('Set-Cookie', cookie(nombreCookie, token, { maxAge: config.diasSesion * 86_400, segura: config.cookieSegura }));
   const borrarCookie = (res: ServerResponse) => res.setHeader('Set-Cookie', cookie(nombreCookie, '', { maxAge: 0, segura: config.cookieSegura }));
 
-  const experienciasDe = (usuarioId: string): Experiencia[] =>
+  const experienciasDe = (usuarioId: number): Experiencia[] =>
     (
-      db.prepare('SELECT id, tipo, dimension, ref_id, fecha FROM experiencias WHERE usuario_id = ? ORDER BY fecha, id').all(usuarioId) as Array<{
-        id: string;
+      db.prepare('SELECT uid, tipo, dimension, ref_id, fecha FROM experiencias WHERE usuario_id = ? ORDER BY fecha, id').all(usuarioId) as Array<{
+        uid: string;
         tipo: TipoExperiencia;
         dimension: 'emocional' | 'academica';
         ref_id: string;
         fecha: string;
       }>
-    ).map((e) => ({ id: e.id, tipo: e.tipo, dimension: e.dimension, refId: e.ref_id, fecha: e.fecha }));
+    ).map((e) => ({ id: e.uid, tipo: e.tipo, dimension: e.dimension, refId: e.ref_id, fecha: e.fecha }));
 
-  /** El estado de Mi AURA siempre lleva las experiencias del servidor (nunca las del cliente). */
-  const leerModulo = (usuarioId: string, modulo: Modulo): unknown => {
-    const fila = db.prepare('SELECT estado FROM datos WHERE usuario_id = ? AND modulo = ?').get(usuarioId, modulo) as { estado: string } | undefined;
-    if (modulo === 'mi-aura') {
-      const experiencias = experienciasDe(usuarioId);
-      if (!fila && experiencias.length === 0) return null;
-      // Si aún no guardó preferencias pero ya tiene experiencias (p. ej. hizo un laboratorio antes del onboarding).
-      const base = fila ? (JSON.parse(fila.estado) as EstadoAura) : ESTADO_INICIAL;
-      return { ...base, experiencias };
-    }
-    return fila ? JSON.parse(fila.estado) : null;
-  };
+  /** Estado de un módulo leído de sus tablas (Mi AURA siempre con las experiencias del servidor). */
+  const leerModulo = (usuarioId: number, modulo: Modulo): unknown => leerModuloBd(db, usuarioId, modulo);
 
   const rutas: Array<[string, RegExp, Manejador]> = [];
   const ruta = (metodo: string, patron: string, m: Manejador) =>
@@ -134,16 +126,11 @@ export function crearApp(config: Config) {
     if (db.prepare('SELECT 1 FROM usuarios WHERE correo = ?').get(correo)) {
       throw new ErrorHttp(409, 'correo_en_uso', 'Ya existe una cuenta con ese correo. Inicia sesión.');
     }
-    const id = nuevoId();
     const ahora = new Date().toISOString();
-    db.prepare('INSERT INTO usuarios (id, correo, hash, creado, consentimiento_version, consentimiento_fecha) VALUES (?, ?, ?, ?, ?, ?)').run(
-      id,
-      correo,
-      await hashContrasena(d.contrasena as string),
-      ahora,
-      VERSION_CONSENTIMIENTO,
-      ahora,
-    );
+    // El id lo asigna la base (entero incremental)
+    const { id } = db
+      .prepare('INSERT INTO usuarios (correo, hash, creado, consentimiento_version, consentimiento_fecha) VALUES (?, ?, ?, ?, ?) RETURNING id')
+      .get(correo, await hashContrasena(d.contrasena as string), ahora, VERSION_CONSENTIMIENTO, ahora) as { id: number };
     const s = crearSesion(db, id, config.diasSesion);
     fijarCookie(res, s.token);
     responder(res, 201, { usuario: { correo }, csrf: s.csrf }, { 'Set-Cookie': res.getHeader('Set-Cookie') as string });
@@ -154,7 +141,7 @@ export function crearApp(config: Config) {
     const correo = typeof d.correo === 'string' ? d.correo.trim().toLowerCase() : '';
     limiteIngreso.consumir(`${ip}|${correo}`);
     const fila = validarCorreo(correo)
-      ? (db.prepare('SELECT id, hash FROM usuarios WHERE correo = ?').get(correo) as { id: string; hash: string } | undefined)
+      ? (db.prepare('SELECT id, hash FROM usuarios WHERE correo = ?').get(correo) as { id: number; hash: string } | undefined)
       : undefined;
     const clave = typeof d.contrasena === 'string' ? d.contrasena.slice(0, 128) : '';
     // Siempre se verifica un hash (real o de relleno): mismo tiempo exista o no la cuenta.
@@ -195,10 +182,7 @@ export function crearApp(config: Config) {
     if (!v.ok) throw new ErrorHttp(422, 'datos_invalidos', 'Los datos enviados no son válidos.');
     // Las experiencias de Mi AURA no se aceptan aquí: solo por /api/experiencias (validadas).
     const estado = modulo === 'mi-aura' ? { ...(v.valor as EstadoAura), experiencias: [] } : v.valor;
-    db.prepare(
-      `INSERT INTO datos (usuario_id, modulo, estado, actualizado) VALUES (?, ?, ?, ?)
-       ON CONFLICT (usuario_id, modulo) DO UPDATE SET estado = excluded.estado, actualizado = excluded.actualizado`,
-    ).run(s.usuarioId, modulo, JSON.stringify(estado), new Date().toISOString());
+    escribirModulo(db, s.usuarioId, modulo, estado);
     responder(res, 204);
   });
 
@@ -206,15 +190,14 @@ export function crearApp(config: Config) {
     const s = exigirSesion(req);
     const modulo = params.modulo as Modulo;
     if (!MODULOS.includes(modulo)) throw new ErrorHttp(404, 'no_encontrado', 'Módulo desconocido.');
-    db.prepare('DELETE FROM datos WHERE usuario_id = ? AND modulo = ?').run(s.usuarioId, modulo);
-    if (modulo === 'mi-aura') db.prepare('DELETE FROM experiencias WHERE usuario_id = ?').run(s.usuarioId);
+    borrarModulo(db, s.usuarioId, modulo);
     responder(res, 204);
   });
 
   // — Progreso: el servidor decide si una experiencia cuenta —
   ruta('POST', '/api/experiencias', async ({ req, res }) => {
     const s = exigirSesion(req);
-    limiteExperiencias.consumir(s.usuarioId);
+    limiteExperiencias.consumir(`u${s.usuarioId}`);
     const d = (await leerJson(req, 2048)) as Record<string, unknown>;
     const tipo = d.tipo as TipoExperiencia;
     const refId = typeof d.refId === 'string' ? d.refId : '';
@@ -224,7 +207,7 @@ export function crearApp(config: Config) {
     const nueva: Experiencia = { id: nuevoId(), tipo, dimension, refId, fecha: new Date().toISOString() };
     if (!esExperienciaValida(nueva)) throw new ErrorHttp(422, 'experiencia_invalida', 'La experiencia no es válida.');
     const r = db
-      .prepare('INSERT OR IGNORE INTO experiencias (id, usuario_id, tipo, dimension, ref_id, fecha) VALUES (?, ?, ?, ?, ?, ?)')
+      .prepare('INSERT OR IGNORE INTO experiencias (uid, usuario_id, tipo, dimension, ref_id, fecha) VALUES (?, ?, ?, ?, ?, ?)')
       .run(nueva.id, s.usuarioId, tipo, dimension, refId, nueva.fecha);
     const experiencias = experienciasDe(s.usuarioId);
     const ev = calcularEvolucion(experiencias);
@@ -244,7 +227,7 @@ export function crearApp(config: Config) {
   ruta('POST', '/api/ia/redaccion', async ({ req, res }) => {
     const s = exigirSesion(req);
     const clave = exigirIa();
-    limiteIa.consumir(s.usuarioId);
+    limiteIa.consumir(`u${s.usuarioId}`);
     const d = (await leerJson(req, 64 * 1024)) as Record<string, unknown>;
     const id = `${typeof d.lab === 'string' ? d.lab : ''}/${typeof d.actividad === 'string' ? d.actividad : ''}`;
     const r = contenido.redacciones.get(id);
@@ -266,7 +249,7 @@ export function crearApp(config: Config) {
   ruta('POST', '/api/ia/tesis', async ({ req, res }) => {
     const s = exigirSesion(req);
     const clave = exigirIa();
-    limiteIa.consumir(s.usuarioId);
+    limiteIa.consumir(`u${s.usuarioId}`);
     const avance = avanceLabs(s.usuarioId);
     if (!avance.desbloqueada) {
       throw new ErrorHttp(403, 'tesis_bloqueada', `Completa los laboratorios para desbloquear la revisión de tu tesis (${avance.completadas} de ${avance.total}).`);
@@ -333,6 +316,8 @@ export function crearApp(config: Config) {
     db,
     cerrar: () => {
       clearInterval(limpieza);
+      // Actualiza las estadísticas del planificador de consultas antes de cerrar (recomendado por SQLite)
+      db.exec('PRAGMA optimize');
       db.close();
     },
   };

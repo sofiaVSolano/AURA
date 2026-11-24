@@ -6,12 +6,12 @@ import { fuentesDe } from '../../content/videos/catalogo.ts';
 import { NoEncontrado } from '../../app/Errores.tsx';
 import { useEmocional } from '../emocional/estado/EmocionalContexto.tsx';
 import { AvancesTema } from './componentes/AvancesTema.tsx';
+import { MarcaTema } from './componentes/MarcaTema.tsx';
 import { EjemploDesglosado } from './componentes/EjemploDesglosado.tsx';
 import { ErroresFrecuentes } from './componentes/ErroresFrecuentes.tsx';
 import { cargarGuia, laboratorioPorId, listaLaboratorios, rutaLaboratorio, rutaTema, temaPorId } from './datos/catalogoAcademico.ts';
 import type { Guia } from './dominio/modelo.ts';
 import { useAcademica } from './estado/AcademicaContexto.tsx';
-import type { EstadoTema } from './dominio/estadoAcademico.ts';
 import estilos from './componentes/Guia.module.css';
 
 const SECCIONES = [
@@ -28,12 +28,6 @@ const SECCIONES = [
 
 const IDS_SECCIONES: readonly string[] = SECCIONES.map(([id]) => id);
 const SIN_SECCIONES: readonly string[] = [];
-
-const OPCIONES_ESTADO: Array<[EstadoTema | null, string]> = [
-  [null, 'Sin marcar'],
-  ['en-curso', 'Lo estoy trabajando'],
-  ['explorado', 'Ya lo exploré'],
-];
 
 /** Índice que sigue la lectura (scroll-spy) sin reaccionar a cada píxel. */
 function useSeccionActiva(ids: readonly string[]) {
@@ -104,21 +98,7 @@ export function TemaPage() {
         <h1 className={estilos.titulo}>{tema.titulo}</h1>
         {/* Estable: no cambia cuando llega la guía (evita desplazar el contenido). */}
         <p className={estilos.lead}>{tema.resumen}</p>
-        <fieldset className={estilos.marca}>
-          <legend className="visualmente-oculto">¿Cómo vas con este tema?</legend>
-          {OPCIONES_ESTADO.map(([valor, etiqueta]) => (
-            <label key={etiqueta} className={estilos.opcionMarca}>
-              <input
-                type="radio"
-                name="estado-tema"
-                checked={marca === valor}
-                onChange={() => marcarTema(tema.id, valor)}
-                disabled={carga.estado !== 'listo'}
-              />
-              {etiqueta}
-            </label>
-          ))}
-        </fieldset>
+        <MarcaTema variante="cabecera" marca={marca} onMarcar={(v) => marcarTema(tema.id, v)} deshabilitado={carga.estado !== 'listo'} />
       </header>
 
       {cargaGuia.estado === 'cargando' ? (
@@ -266,11 +246,15 @@ export function TemaPage() {
           <h2 id="video-tema">En un minuto</h2>
           <p className={estilos.nota}>{video.descripcion}</p>
           {fuentes ? (
-            <ReproductorVideo titulo={video.titulo} fuentes={fuentes} duracion={video.duracionSegundos ?? undefined} onProgreso={(f) => registrarAvance(video.id, f)} />
+            <ReproductorVideo key={video.id} titulo={video.titulo} fuentes={fuentes} duracion={video.duracionSegundos ?? undefined} onProgreso={(f) => registrarAvance(video.id, f)} />
           ) : (
             <VideoPendiente />
           )}
         </section>
+      )}
+
+      {cargaGuia.estado !== 'cargando' && (
+        <MarcaTema variante="cierre" marca={marca} onMarcar={(v) => marcarTema(tema.id, v)} deshabilitado={carga.estado !== 'listo'} />
       )}
 
       {cargaGuia.estado !== 'cargando' && <AvancesTema temaId={tema.id} titulo={tema.titulo} />}

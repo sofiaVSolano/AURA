@@ -4,17 +4,10 @@ import { Boton, BotonEnlace, CampoTexto, EstadoVista, GrupoOpciones, Icono } fro
 import { ruta } from '../../academica/datos/catalogoAcademico.ts';
 import { Personaje } from '../avatar/Personaje.tsx';
 import { SelectorColor, SelectorVisual } from '../componentes/Selectores.tsx';
-import { EXPRESIONES, FORMAS, LARGO_MAXIMO_NOMBRE, type PreferenciasAvatar } from '../dominio/modelo.ts';
+import { EXPRESIONES, FORMAS, LARGO_MAXIMO_NOMBRE, MOMENTOS_GENERALES, type PreferenciasAvatar } from '../dominio/modelo.ts';
 import { validarNombre } from '../dominio/validar.ts';
 import { useMiAura } from '../estado/MiAuraContexto.tsx';
 import estilos from './OnboardingPage.module.css';
-
-const MOMENTOS_GENERALES = [
-  { valor: 'eligiendo-tema', etiqueta: 'Eligiendo o definiendo mi tema' },
-  { valor: 'construyendo', etiqueta: 'Construyendo mi proyecto' },
-  { valor: 'escribiendo', etiqueta: 'Escribiendo o analizando resultados' },
-  { valor: 'cerrando', etiqueta: 'Preparando la entrega o la sustentación' },
-];
 
 // Cómo llegas hoy: NO se guarda. Solo orienta la respuesta inmediata.
 const SENTIRES = [

@@ -537,6 +537,9 @@ function Cierre({ nacida, preferencias, etapa }: { nacida: boolean; preferencias
       <div className={estilos.marca}>
         <PalabraAjustada texto="AURA" />
       </div>
+      <p className={estilos.autora}>
+        Autora: <strong>Sofia Valencia Solano</strong>
+      </p>
       <p className={estilos.legal}>
         AURA acompaña; no reemplaza la atención profesional. Tus datos son tuyos: puedes verlos y borrarlos en Mi AURA.
       </p>

@@ -35,7 +35,7 @@ export interface EstadoEsfera {
   energia: number;
   /** Forma del personaje: 0 gota · 1 nube · 2 brote · 3 canto rodado (no se interpola). */
   forma: number;
-  /** Expresión: 0 serena · 1 curiosa · 2 alegre · 3 pensativa (no se interpola). */
+  /** Expresión: 0 serena · 1 curiosa · 2 alegre · 3 pensativa · 4 tierna · 5 decidida (no se interpola). */
   expresion: number;
   /** Vestuario de graduación (0 = sin ninguna prenda, 1 = la de su etapa). Por defecto 0 (desactivado). */
   vestuario?: number;
@@ -130,32 +130,35 @@ float cuerpoForma(vec3 p) {
   float f = uForma;
   if (f < 0.5) return elipsoide(p - vec3(0.0, -0.5, 0.0), vec3(0.6, 0.58, 0.54));           // gota: pera
   if (f < 1.5) {                                                                             // nube: bolitas
-    float d = length(p - vec3(0.0, -0.46, 0.0)) - 0.47;
-    d = smin(d, length(p - vec3(-0.44, -0.64, 0.02)) - 0.34, 0.16);
-    d = smin(d, length(p - vec3(0.44, -0.64, 0.02)) - 0.34, 0.16);
-    return smin(d, length(p - vec3(0.0, -0.8, 0.16)) - 0.33, 0.16);
+    float d = length(p - vec3(0.0, -0.46, 0.0)) - 0.45;
+    d = smin(d, length(p - vec3(-0.5, -0.6, 0.04)) - 0.33, 0.1);
+    d = smin(d, length(p - vec3(0.5, -0.6, 0.04)) - 0.33, 0.1);
+    d = smin(d, length(p - vec3(-0.24, -0.84, 0.14)) - 0.3, 0.1);
+    return smin(d, length(p - vec3(0.24, -0.84, 0.14)) - 0.3, 0.1);
   }
-  if (f < 2.5) return length(p - vec3(0.0, -0.52, 0.0)) - 0.53;                              // brote: redondo
-  return elipsoide(p - vec3(0.0, -0.5, 0.0), vec3(0.72, 0.45, 0.58));                        // canto rodado
+  if (f < 2.5) return elipsoide(p - vec3(0.0, -0.54, 0.0), vec3(0.5, 0.56, 0.5));             // brote: semilla
+  return elipsoide(p - vec3(0.02, -0.56, 0.0), vec3(0.76, 0.46, 0.6));                       // canto rodado: ancho y bajo
 }
 // Detalle sobre la cabeza (rizo, copos, tallo o piedrita)
 float detalle(vec3 p) {
   float f = uForma;
-  if (f < 0.5) return capsula(p, vec3(0.0, 0.97, 0.0), vec3(0.13, 1.15, 0.0), 0.075);
-  if (f < 1.5) return min(length(p - vec3(-0.3, 0.97, 0.02)) - 0.16, length(p - vec3(-0.08, 1.04, 0.0)) - 0.17);
-  if (f < 2.5) return capsula(p, vec3(0.0, 0.96, 0.0), vec3(0.0, 1.1, 0.0), 0.045);
-  return elipsoide(p - vec3(0.3, 0.96, 0.04), vec3(0.16, 0.1, 0.13));
+  // gota: la cabeza termina en punta, como una gota que cae
+  if (f < 0.5) return smin(smin(length(p - vec3(0.0, 0.9, 0.0)) - 0.26, length(p - vec3(0.05, 1.1, 0.0)) - 0.14, 0.14), length(p - vec3(0.13, 1.24, 0.0)) - 0.055, 0.1);
+  // nube: tres copos sobre la cabeza
+  if (f < 1.5) return min(min(length(p - vec3(-0.34, 0.88, 0.06)) - 0.2, length(p - vec3(0.0, 1.0, 0.0)) - 0.23), length(p - vec3(0.34, 0.88, 0.06)) - 0.19);
+  if (f < 2.5) return capsula(p, vec3(0.0, 0.96, 0.0), vec3(0.0, 1.16, 0.0), 0.05);
+  return elipsoide(p - vec3(0.3, 0.96, 0.04), vec3(0.18, 0.11, 0.14));
 }
 float hojas(vec3 p) {
   if (uForma < 1.5 || uForma > 2.5 || uEtapa > 3.7) return 9.0;
   // Brotan: crecen desde el tallo
   float r = max(rasgos(), 0.01);
   // Brotan desde la punta del tallo: se abren hacia los lados al crecer
-  vec3 a = p - vec3(-0.17 * r, 1.1 + 0.05 * r, 0.0);
-  a.xy *= rot(0.65);
-  vec3 b = p - vec3(0.17 * r, 1.1 + 0.05 * r, 0.0);
-  b.xy *= rot(-0.65);
-  return min(elipsoide(a, vec3(0.21, 0.055, 0.12) * r), elipsoide(b, vec3(0.21, 0.055, 0.12) * r));
+  vec3 a = p - vec3(-0.23 * r, 1.16 + 0.06 * r, 0.0);
+  a.xy *= rot(0.55);
+  vec3 b = p - vec3(0.23 * r, 1.16 + 0.06 * r, 0.0);
+  b.xy *= rot(-0.55);
+  return min(elipsoide(a, vec3(0.28, 0.065, 0.15) * r), elipsoide(b, vec3(0.28, 0.065, 0.15) * r));
 }
 
 // ——— Vestuario de graduación ———
@@ -315,6 +318,9 @@ vec3 local(vec3 p) {
   float giro = mix(uT * 0.12 + uPuntero.x * 0.7, sin(uT * 0.6) * 0.16 + uPuntero.x * 0.5, def);
   p.xz *= rot(giro);
   p.yz *= rot(-uPuntero.y * mix(0.45, 0.22, def));
+  // Curiosa ladea la cabeza; tierna la inclina un poco al otro lado
+  float ladeo = (abs(uExpresion - 1.0) < 0.5 ? 0.13 : (abs(uExpresion - 4.0) < 0.5 ? -0.07 : 0.0)) * rasgos();
+  p.xy *= rot(ladeo);
   // Respira: un leve estiramiento vertical
   p.y /= 1.0 + 0.025 * def * sin(uT * 1.7);
   return p;
@@ -364,53 +370,108 @@ float segmento(vec2 p, vec2 a, vec2 b, float r) {
 }
 float lleno(float d) { return 1.0 - smoothstep(-0.006, 0.006, d); }
 
+// Ceja: un trazo corto, con el extremo interior y el exterior a distinta altura
+float ceja(vec2 uv, float lado, float yIn, float yOut) {
+  vec2 a = vec2(lado * 0.24, yIn);
+  vec2 b = vec2(lado * 0.43, yOut);
+  vec2 m = (a + b) * 0.5 + vec2(0.0, 0.018);
+  return min(segmento(uv, a, m, 0.022), segmento(uv, m, b, 0.022));
+}
+
 vec3 cara(vec2 uv, vec3 col, vec3 tinta) {
   float vo = ojos();
   float vr = rasgos();
   // Antes de Transformación los ojos son neutros (abiertos); luego, la expresión elegida
-  float ex = vr > 0.5 ? uExpresion : 1.0;
+  int e = vr > 0.5 ? int(uExpresion + 0.5) : 1;
   float t = fract(uT / 4.3);
   float parpado = smoothstep(0.0, 0.025, t) * (1.0 - smoothstep(0.025, 0.06, t));
   // Al aparecer, los ojos se abren poco a poco
   parpado = max(parpado, 1.0 - vo);
   vec2 mirada = clamp(uPuntero * vec2(0.085, -0.07), -0.085, 0.085);
-  if (ex > 2.5) mirada += vec2(-0.03, 0.035); // pensativa: mira hacia arriba
+  if (e == 3) mirada += vec2(-0.04, 0.045); // pensativa: mira hacia arriba, a un lado
+  if (e == 4) mirada += vec2(0.02, -0.04);  // tierna: mira un poco hacia abajo
 
-  // Mejillas
-  float mej = min(length(uv - vec2(-0.5, -0.15)), length(uv - vec2(0.5, -0.15)));
-  col = mix(col, mix(col, vec3(1.0, 0.55, 0.62), 0.6), (1.0 - smoothstep(0.04, 0.14, mej)) * 0.85 * vr);
+  // Mejillas: más grandes en alegre y tierna
+  float tamMej = e == 4 ? 0.2 : (e == 2 ? 0.17 : 0.14);
+  float mej = min(length((uv - vec2(-0.5, -0.15)) * vec2(1.0, 1.4)), length((uv - vec2(0.5, -0.15)) * vec2(1.0, 1.4)));
+  col = mix(col, mix(col, vec3(1.0, 0.55, 0.62), e == 4 ? 0.8 : 0.6), (1.0 - smoothstep(tamMej - 0.1, tamMej, mej)) * 0.85 * vr);
+  if (e == 4) {
+    // Tierna: rayitas de rubor
+    for (int k = 0; k < 3; k++) {
+      float x = float(k) * 0.055 - 0.055;
+      float dl = min(segmento(uv, vec2(-0.5 + x - 0.012, -0.12), vec2(-0.5 + x + 0.012, -0.18), 0.008),
+                     segmento(uv, vec2(0.5 + x - 0.012, -0.12), vec2(0.5 + x + 0.012, -0.18), 0.008));
+      col = mix(col, vec3(0.92, 0.36, 0.48), lleno(dl) * vr);
+    }
+  }
 
   // Ojos
-  vec2 r = ex < 1.5 ? vec2(0.135, 0.175) : (ex < 2.5 ? vec2(0.12, 0.158) : vec2(0.1, 0.132));
+  vec2 r = e == 1 ? vec2(0.15, 0.19) : (e == 4 ? vec2(0.135, 0.17) : (e == 3 ? vec2(0.105, 0.135) : vec2(0.125, 0.16)));
   r.y *= 1.0 - 0.92 * parpado;
   for (int i = 0; i < 2; i++) {
-    vec2 c = vec2(i == 0 ? -0.33 : 0.33, 0.06);
-    if (ex < 0.5) {
-      // Serena: ojos cerrados, en arco (como sonriendo)
-      col = mix(col, tinta, lleno(arco(vec2(uv.x - c.x, -(uv.y - c.y) + 0.02), vec2(0.8, 0.6), 0.1, 0.022)) * vo);
+    float lado = i == 0 ? -1.0 : 1.0;
+    vec2 c = vec2(lado * 0.33, 0.06);
+    if (e == 0) {
+      // Serena: ojos cerrados, en arco hacia abajo, con una pestañita
+      vec2 q = vec2(uv.x - c.x, -(uv.y - c.y) + 0.02);
+      float d = min(arco(q, vec2(0.8, 0.6), 0.1, 0.024), segmento(uv, c + vec2(lado * 0.1, -0.06), c + vec2(lado * 0.14, -0.09), 0.014));
+      col = mix(col, tinta, lleno(d) * vo);
+    } else if (e == 2) {
+      // Alegre: ojos felices (^ ^)
+      col = mix(col, tinta, lleno(arco(vec2(uv.x - c.x, uv.y - c.y + 0.05), vec2(0.82, 0.57), 0.1, 0.028)) * vo);
     } else {
       vec2 o = uv - c - mirada;
-      col = mix(col, tinta, lleno(elipse2(o, r)) * vo);
-      col = mix(col, vec3(1.0), lleno(length(o - vec2(-0.035, 0.05) * (r.y / 0.14)) - 0.038) * (1.0 - parpado));
-      col = mix(col, vec3(1.0), lleno(length(o - vec2(0.035, -0.045)) - 0.016) * (1.0 - parpado));
+      float d = elipse2(o, r);
+      // Párpado: pensativa lo baja recto; decidida, inclinado hacia el centro
+      if (e == 3) d = max(d, (uv.y - c.y) - r.y * 0.45);
+      if (e == 5) d = max(d, (uv.y - c.y) - r.y * 0.55 + lado * (uv.x - c.x) * 0.55);
+      col = mix(col, tinta, lleno(d) * vo);
+      float brillo = (e == 1 || e == 4) ? 1.3 : 1.0;
+      col = mix(col, vec3(1.0), lleno(max(length(o - vec2(-0.035, 0.05) * (r.y / 0.14)) - 0.038 * brillo, d)) * (1.0 - parpado));
+      col = mix(col, vec3(1.0), lleno(max(length(o - vec2(0.035, -0.045)) - 0.016 * brillo, d)) * (1.0 - parpado));
+      if (e == 4) col = mix(col, vec3(1.0), lleno(max(length(o - vec2(0.05, 0.03)) - 0.012, d)) * (1.0 - parpado));
     }
+  }
+
+  // Cejas (Transformación): cada expresión las pone a su manera
+  for (int i = 0; i < 2; i++) {
+    float lado = i == 0 ? -1.0 : 1.0;
+    vec2 y = vec2(0.2, 0.29);                                       // decidida: el centro abajo
+    if (e == 0) y = vec2(0.25, 0.24);                               // serena: relajadas
+    if (e == 1) y = vec2(0.36, 0.33);                               // curiosa: muy arriba
+    if (e == 2) y = vec2(0.29, 0.28);                               // alegre: arriba
+    if (e == 3) y = lado < 0.0 ? vec2(0.29, 0.34) : vec2(0.21, 0.22); // pensativa: una arriba
+    if (e == 4) y = vec2(0.3, 0.24);                                // tierna: el centro arriba
+    col = mix(col, tinta, lleno(ceja(uv, lado, y.x, y.y)) * vr);
   }
 
   // Boca (Transformación)
   vec2 b = uv - vec2(0.0, -0.27);
-  if (ex < 0.5) {
-    col = mix(col, tinta, lleno(arco(vec2(b.x, -b.y + 0.03), vec2(0.8, 0.6), 0.09, 0.018)) * vr);
-  } else if (ex < 1.5) {
-    col = mix(col, tinta, lleno(elipse2(b, vec2(0.045, 0.055))) * vr);
-  } else if (ex < 2.5) {
-    // Alegre: sonrisa abierta (media luna) con lengüita
-    float boca = max(elipse2(b - vec2(0.0, 0.03), vec2(0.15, 0.12)), b.y - 0.03);
-    col = mix(col, tinta, lleno(boca) * vr);
-    float lengua = max(boca + 0.015, elipse2(b + vec2(0.0, 0.07), vec2(0.075, 0.05)));
+  float boca = 9.0;
+  if (e == 0) {
+    boca = arco(vec2(b.x, -b.y + 0.03), vec2(0.8, 0.6), 0.09, 0.02);
+  } else if (e == 1) {
+    boca = elipse2(b + vec2(0.0, 0.01), vec2(0.05, 0.065));
+  } else if (e == 2) {
+    // Alegre: sonrisa grande y abierta, con lengüita
+    float bo = max(elipse2(b - vec2(0.0, 0.035), vec2(0.18, 0.15)), b.y - 0.035);
+    col = mix(col, tinta, lleno(bo) * vr);
+    float lengua = max(bo + 0.015, elipse2(b + vec2(0.0, 0.085), vec2(0.085, 0.055)));
     col = mix(col, vec3(1.0, 0.45, 0.55), lleno(lengua) * vr);
+  } else if (e == 3) {
+    // Pensativa: la boca se va a un lado
+    boca = segmento(b, vec2(0.0, -0.01), vec2(0.11, 0.025), 0.018);
+  } else if (e == 4) {
+    // Tierna: boquita en «w»
+    boca = min(arco(vec2(b.x + 0.045, -b.y + 0.02), vec2(0.85, 0.53), 0.045, 0.016),
+               arco(vec2(b.x - 0.045, -b.y + 0.02), vec2(0.85, 0.53), 0.045, 0.016));
   } else {
-    col = mix(col, tinta, lleno(segmento(b, vec2(-0.07, -0.005), vec2(0.08, 0.02), 0.017)) * vr);
+    // Decidida: media sonrisa segura
+    vec2 q = b - vec2(0.02, 0.0);
+    q *= rot(0.3);
+    boca = arco(vec2(q.x, -q.y + 0.03), vec2(0.8, 0.6), 0.1, 0.02);
   }
+  col = mix(col, tinta, lleno(boca) * vr);
   return col;
 }
 
@@ -454,6 +515,12 @@ void main() {
     vec3 fig = mix(mix(uColA, vec3(1.0), 0.12), uColB, smoothstep(0.15, -0.95, q.y));
     vec3 base = mix(esfera, fig, def);
     if (hojas(q) < 0.01) base = mix(uColB, vec3(0.45, 0.85, 0.5), 0.55);
+    // Canto rodado: motitas, como una piedra de río
+    if (uForma > 2.5 && s0 > 0.5) {
+      // Solo en el cuerpo: la cara queda limpia
+      float mota = smoothstep(0.76, 0.8, ruido(q * 11.0 + 3.0)) * smoothstep(-0.12, -0.3, q.y);
+      base = mix(base, mix(base, vec3(1.0), 0.3), mota * rasgos() * 0.7);
+    }
     // Vestuario
     vec3 tela = mix(vec3(0.07, 0.06, 0.14), uColA * 0.3, 0.4);
     vec3 oro = mix(vec3(1.0, 0.78, 0.32), uColB, 0.25);

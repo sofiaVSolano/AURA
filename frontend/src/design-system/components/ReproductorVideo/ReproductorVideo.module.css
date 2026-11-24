@@ -307,6 +307,40 @@
   white-space: pre-line;
 }
 
+.velocidad {
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+
+.velocidad select {
+  height: 34px;
+  padding: 0 var(--espacio-2);
+  border: 1px solid rgb(255 255 255 / 0.35);
+  border-radius: 17px;
+  background: rgb(255 255 255 / 0.08);
+  color: #fff;
+  font: inherit;
+  font-size: var(--texto-xs);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color var(--dur-rapida) ease;
+}
+
+.velocidad select:hover {
+  background: rgb(255 255 255 / 0.18);
+}
+
+.velocidad select:focus-visible {
+  outline: 3px solid var(--luz-100);
+  outline-offset: 2px;
+}
+
+.velocidad option {
+  color: #1e1b3a;
+  background: #fff;
+}
+
 @media (max-width: 30rem) {
   .tiempo {
     display: none;

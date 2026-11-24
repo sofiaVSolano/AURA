@@ -419,3 +419,27 @@
   font-weight: 600;
   animation: subir 700ms var(--ease-entrada) 380ms both;
 }
+
+/* Enlace de texto (descarga en formato técnico) */
+.enlace {
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-acento-texto);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.enlace:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.enlace:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+  border-radius: var(--radio-sm);
+}

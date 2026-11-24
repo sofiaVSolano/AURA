@@ -25,3 +25,4 @@ Fecha del reconocimiento: 2026-11-20. Aún no se ha escrito código ni se ha eli
 | 13 | [AURA académica](13-aura-academica.md) | Ruta configurable, guías, laboratorios, simulador, cómo agregar temas |
 | 14 | [Auditoría F5](14-auditoria.md) | Pruebas, cadena de suministro, seguridad, rendimiento, accesibilidad, riesgos |
 | 15 | [Backend y despliegue](15-backend-y-despliegue.md) | API, cuentas, seguridad, ejecución local y pasos de despliegue (4046/4054) |
+| 16 | [Datos y base de datos](16-base-de-datos.md) | Inventario de todo lo que se recolecta, diccionario del esquema SQLite, migraciones y cómo revisar la base |

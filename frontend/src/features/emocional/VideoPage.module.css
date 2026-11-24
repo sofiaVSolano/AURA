@@ -248,3 +248,26 @@
     animation: none;
   }
 }
+
+/* Dónde quedó el video guardado (se anuncia a lectores de pantalla) */
+.dondeGuardado {
+  flex-basis: 100%;
+  min-height: 1.5em;
+  margin: 0;
+  font-size: var(--texto-sm);
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.dondeGuardado svg {
+  vertical-align: -3px;
+}
+
+.dondeGuardado strong {
+  color: var(--color-texto);
+}
+
+.dondeGuardado a {
+  font-weight: 600;
+  color: var(--color-acento-texto);
+}

@@ -30,6 +30,10 @@ interface ReproductorVideoProps {
 type Estado = 'inactivo' | 'cargando' | 'listo' | 'error';
 type Transcripcion = { tipo: 'inactiva' } | { tipo: 'cargando' } | { tipo: 'lista'; texto: string } | { tipo: 'error' };
 
+/** Velocidades de reproducción disponibles (1 = normal). */
+export const VELOCIDADES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
+const textoVelocidad = (v: number) => `${v.toLocaleString('es')}×`;
+
 // El reproductor no está en el barril del sistema de diseño (index.ts) a propósito:
 // así solo lo descargan las páginas que reproducen video.
 export { formatoTiempo };
@@ -37,7 +41,8 @@ export { formatoTiempo };
 /**
  * Reproductor accesible con controles propios sobre <video> nativo.
  * Nunca reproduce automáticamente; preload="none" (carga diferida real).
- * Atajos con el foco dentro: espacio/K reproducir, ←/→ 5 s, M silencio, C subtítulos, F pantalla completa.
+ * Atajos con el foco dentro: espacio/K reproducir, ←/→ 5 s, M silencio, C subtítulos, F pantalla completa,
+ * < y > bajar y subir la velocidad.
  */
 export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, siguiente, onProgreso }: ReproductorVideoProps) {
   const id = useId();
@@ -51,6 +56,7 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
   const [duracion, setDuracion] = useState(duracionConocida ?? 0);
   const [volumen, setVolumen] = useState(1);
   const [silencio, setSilencio] = useState(false);
+  const [velocidad, setVelocidad] = useState(1);
   const [subtitulos, setSubtitulos] = useState(fuentes.subtitulos.some((s) => s.idioma === 'es'));
   const [completa, setCompleta] = useState(false);
   const [terminado, setTerminado] = useState(false);
@@ -141,6 +147,12 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
     if (reproduciendo) temporizador.current = window.setTimeout(() => setOcultar(true), 2600);
   };
 
+  const cambiarVelocidad = (paso: 1 | -1) =>
+    setVelocidad((actual) => {
+      const i = VELOCIDADES.indexOf(actual as (typeof VELOCIDADES)[number]);
+      return VELOCIDADES[Math.min(Math.max(i + paso, 0), VELOCIDADES.length - 1)] ?? 1;
+    });
+
   const teclas = (e: KeyboardEvent) => {
     const enRango = (e.target as HTMLElement).tagName === 'INPUT';
     const k = e.key.toLowerCase();
@@ -157,6 +169,9 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
       setSubtitulos((s) => !s);
     } else if (k === 'f') {
       void alternarCompleta();
+    } else if (k === '<' || k === '>') {
+      e.preventDefault();
+      cambiarVelocidad(k === '>' ? 1 : -1);
     }
     mostrarControles();
   };
@@ -167,6 +182,14 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
       video.current.muted = silencio;
     }
   }, [volumen, silencio]);
+
+  // La velocidad se aplica también como predeterminada, para que se conserve si el video se recarga.
+  useEffect(() => {
+    const v = video.current;
+    if (!v) return;
+    v.defaultPlaybackRate = velocidad;
+    v.playbackRate = velocidad;
+  }, [velocidad]);
 
   const cargarTranscripcion = async () => {
     if (!fuentes.transcripcion || transcripcion.tipo === 'lista' || transcripcion.tipo === 'cargando') return;
@@ -215,7 +238,10 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
           onWaiting={() => setEstado('cargando')}
           onPlaying={() => setEstado('listo')}
           onCanPlay={() => setEstado((s) => (s === 'cargando' ? 'listo' : s))}
-          onLoadedMetadata={(e) => setDuracion(e.currentTarget.duration)}
+          onLoadedMetadata={(e) => {
+            setDuracion(e.currentTarget.duration);
+            e.currentTarget.playbackRate = velocidad;
+          }}
           onDurationChange={(e) => Number.isFinite(e.currentTarget.duration) && setDuracion(e.currentTarget.duration)}
           onTimeUpdate={(e) => {
             setTiempo(e.currentTarget.currentTime);
@@ -334,6 +360,16 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
               <Icono nombre="subtitulos" />
             </button>
           )}
+          <label className={estilos.velocidad}>
+            <span className="visualmente-oculto">Velocidad de reproducción</span>
+            <select value={velocidad} onChange={(e) => setVelocidad(Number(e.target.value))}>
+              {VELOCIDADES.map((v) => (
+                <option key={v} value={v}>
+                  {textoVelocidad(v)}
+                </option>
+              ))}
+            </select>
+          </label>
           {siguiente && (
             <Link to={siguiente.a} viewTransition className={estilos.control} aria-label={`Siguiente: ${siguiente.titulo}`}>
               <Icono nombre="siguiente" />

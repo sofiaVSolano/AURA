@@ -9,14 +9,16 @@ Navegador ──HTTP(S)──► frontend/servidor/servidor.mjs  (puerto 4046, p
                                          ├─ cuentas y sesiones
                                          ├─ datos por módulo (mi-aura, emocional, academica)
                                          ├─ experiencias validadas (progreso de Mi AURA)
-                                         └─ SQLite (node:sqlite)  backend/datos/aura.db
+                                         ├─ evaluaciones con IA (GPT-4o mini; la clave solo vive aquí)
+                                         └─ SQLite (node:sqlite)  backend/datos/aura.db  → docs/16
 content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 ```
 
 - **Mismo origen:** el navegador solo habla con el puerto 4046, que reenvía `/api` al backend. Así la cookie de sesión no necesita CORS y la CSP `connect-src 'self'` se mantiene.
 - **Sin dependencias en ejecución.** El backend usa solo `node:http`, `node:sqlite` y `node:crypto`; el servidor del frontend, solo `node:http`, `node:fs` y `node:zlib`. Como dependencias de desarrollo, el backend solo tiene `typescript` y `@types/node`, ya auditadas.
 - **Reglas compartidas:** el backend importa los validadores y reglas puras del frontend (`frontend/src/features/*/dominio`, `frontend/src/content/**/validar.ts` y `frontend/src/lib/consentimiento.ts`). Cliente y servidor aplican **exactamente las mismas reglas**.
-- **Sin cuenta, AURA funciona igual que antes,** con los datos en el navegador. Con cuenta, cada módulo guarda en el servidor (`src/lib/almacenLocal.ts` elige el almacén) y las pantallas no cambian.
+- **Hay que iniciar sesión para entrar a AURA** (salvo Inicio y Recursos). Con cuenta, cada módulo guarda en el servidor (`src/lib/almacenLocal.ts` elige el almacén). Si el servidor de cuentas no responde, la app sigue funcionando con los datos en el navegador para no bloquear a nadie.
+- **Base de datos:** una tabla por tipo de dato, con restricciones y borrado en cascada. El diccionario y el inventario de todo lo que se recolecta están en [16-base-de-datos.md](16-base-de-datos.md).
 
 ## API (`/api`)
 
@@ -31,6 +33,10 @@ content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 | `PUT /datos/:modulo` | sí | sí | Guarda un módulo validado; en Mi AURA **se ignoran las experiencias enviadas** |
 | `DELETE /datos/:modulo` | sí | sí | Borra los datos de un módulo |
 | `POST /experiencias` | sí | sí | `{ tipo, refId }` → solo cuenta si apunta a contenido real; la dimensión y la etapa se calculan en el servidor |
+| `GET /ia/estado` | — | — | `{ disponible, intentos }` |
+| `GET /ia/uso` | sí | — | Evaluaciones usadas por actividad y avance hacia la revisión de tesis |
+| `POST /ia/redaccion` | sí | sí | `{ lab, actividad, texto }` → evaluación formativa; máximo 2 por actividad |
+| `POST /ia/tesis` | sí | sí | `{ nombre, tipo, datos }` (base64, hasta 8 MB) → solo con todos los laboratorios completos; máximo 2 |
 | `GET /cuenta/exportar` | sí | — | Todos los datos de la cuenta en JSON (portabilidad) |
 | `DELETE /cuenta` | sí | sí | `{ contrasena }` → elimina la cuenta y **todos** sus datos |
 
@@ -94,7 +100,7 @@ npm run build && npm run servir
 | `npm run test:integracion` | 15 comprobaciones de cuenta y sincronización entre dos navegadores |
 | `npm run test:auditoria` | 152 comprobaciones de accesibilidad, CSP, caché, gzip y rendimiento sobre la pila real |
 
-En `backend/`, `npm test` ejecuta las 10 pruebas del API.
+En `backend/`, `npm test` ejecuta las 14 pruebas del API y de la base de datos.
 
 ## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**)
 

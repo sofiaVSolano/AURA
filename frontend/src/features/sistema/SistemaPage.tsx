@@ -18,7 +18,7 @@ import { ReproductorVideo } from '../../design-system/components/ReproductorVide
 import { Actividad } from '../academica/componentes/Actividades.tsx';
 import { laboratorioPorId } from '../academica/datos/catalogoAcademico.ts';
 import { Personaje } from '../mi-aura/avatar/Personaje.tsx';
-import { PREFERENCIAS_INICIALES } from '../mi-aura/dominio/modelo.ts';
+import { EXPRESIONES, FORMAS, PREFERENCIAS_INICIALES } from '../mi-aura/dominio/modelo.ts';
 import { FilaSubtema } from '../emocional/componentes/FilaSubtema.tsx';
 import { subtemasDe } from '../emocional/datos/catalogoEmocional.ts';
 import type { Ambito } from '../../app/rutas.ts';
@@ -169,6 +169,17 @@ export function SistemaPage() {
             <Personaje key={e} tamano={120} etapa={e} preferencias={{ ...PREFERENCIAS_INICIALES, expresion: 'alegre' }} decoraciones={e === 4 ? ['aurora', 'anillo', 'luciernagas'] : []} />
           ))}
         </div>
+      </section>
+
+      <section className={estilos.muestra} id="formas-expresiones">
+        <h2>Mi AURA: formas y expresiones</h2>
+        {FORMAS.map((f) => (
+          <div key={f.id} data-ambito="mi-aura" className={`${estilos.ambito} ${estilos.fila}`}>
+            {EXPRESIONES.map((x) => (
+              <Personaje key={x.id} tamano={96} etapa={3} preferencias={{ ...PREFERENCIAS_INICIALES, forma: f.id, expresion: x.id }} quieto />
+            ))}
+          </div>
+        ))}
       </section>
 
       <section className={estilos.muestra}>

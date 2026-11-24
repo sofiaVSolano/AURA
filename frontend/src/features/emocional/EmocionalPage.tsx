@@ -1,5 +1,5 @@
-import { Fragment, useRef, type CSSProperties, type PointerEvent } from 'react';
-import { Link } from 'react-router';
+import { Fragment, useEffect, useRef, type CSSProperties, type PointerEvent } from 'react';
+import { Link, useLocation } from 'react-router';
 import { useParalaje } from '../../design-system/index.ts';
 import { Orbe } from './componentes/Orbe.tsx';
 import { useAperturaBurbuja } from './componentes/aperturaBurbuja.ts';
@@ -51,6 +51,12 @@ export function EmocionalPage() {
   const guardados = estado ? todosLosSubtemas().filter((s) => s.video && estado.guardados.includes(s.video.id)) : [];
   const categorias = catalogoEmocional.categorias;
   const palabras = catalogoEmocional.pregunta.split(' ');
+  const { hash } = useLocation();
+  // «Ver mis guardados» desde un video: baja hasta la lista cuando ya está cargada
+  const hayGuardados = guardados.length > 0;
+  useEffect(() => {
+    if (hash === '#guardados' && hayGuardados) document.getElementById('tus-guardados')?.scrollIntoView({ block: 'start' });
+  }, [hash, hayGuardados]);
 
   return (
     <>
@@ -115,7 +121,7 @@ export function EmocionalPage() {
       </section>
 
       {guardados.length > 0 && estado && (
-        <section className={estilos.seccion} aria-labelledby="guardados">
+        <section id="tus-guardados" className={estilos.seccion} aria-labelledby="guardados">
           <h2 id="guardados">Tus guardados</h2>
           <ol className={estilos.lista}>
             {guardados.map((s, i) => (

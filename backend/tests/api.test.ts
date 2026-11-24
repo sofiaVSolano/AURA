@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createServer, type Server } from 'node:http';
 import { crearApp, VERSION_CONSENTIMIENTO } from '../src/app.ts';
 import { leerConfig } from '../src/config.ts';
+import { cargarContenido } from '../src/contenido.ts';
 
 const ORIGEN = 'http://localhost:4046';
 let servidor: Server;
@@ -107,7 +108,10 @@ test('experiencias: solo cuentan si apuntan a contenido real, una vez, con dimen
   const { cookie, csrf } = await cuenta('progreso@aura.test');
   const exp = (tipo: string, refId: string, dimension = 'emocional') => pedir('POST', '/api/experiencias', { tipo, refId, dimension }, { cookie, csrf });
   assert.equal((await exp('ejercicio-completado', 'lab:no-existe/x')).estado, 422);
-  assert.equal((await exp('contenido-explorado', 'video:emocional.tengo-miedo.hablar-en-publico')).estado, 422, 'un video no publicado no se puede haber visto');
+  // Se busca en el catálogo real: la lista de publicados cambia a medida que se terminan videos.
+  const sinPublicar = [...cargarContenido(leerConfig({} as NodeJS.ProcessEnv).rutaContenido).videos].find(([, v]) => !v.publicado)?.[0];
+  assert.ok(sinPublicar, 'el catálogo debe tener al menos un video sin publicar');
+  assert.equal((await exp('contenido-explorado', `video:${sinPublicar}`)).estado, 422, 'un video no publicado no se puede haber visto');
   assert.equal((await exp('experiencia-compartida', 'algo')).estado, 422);
   assert.equal((await exp('clics', 'x')).estado, 422);
   const ok = await exp('ejercicio-completado', 'lab:resumen/ordenar-fragmentos');

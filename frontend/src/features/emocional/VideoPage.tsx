@@ -50,6 +50,7 @@ export function VideoPage() {
         <span className={estilos.resplandor} aria-hidden="true" />
       {fuentes ? (
         <ReproductorVideo
+          key={video.id}
           titulo={video.titulo}
           fuentes={fuentes}
           duracion={video.duracionSegundos ?? undefined}
@@ -71,6 +72,16 @@ export function VideoPage() {
             Siguiente: {siguiente.titulo}
           </BotonEnlace>
         )}
+        <p className={estilos.dondeGuardado} role="status">
+          {guardado && (
+            <>
+              <Icono nombre="check" tamano={16} /> Quedó en <strong>Tus guardados</strong>, al final de la portada de AURA emocional.{' '}
+              <Link to="/emocional#guardados" viewTransition>
+                Ver mis guardados
+              </Link>
+            </>
+          )}
+        </p>
       </div>
 
       <Aprendizajes videoId={video.id} />

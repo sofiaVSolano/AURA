@@ -40,13 +40,14 @@ export function validarContrasena(c: unknown): string | null {
 const hashToken = (t: string) => createHash('sha256').update(t).digest('hex');
 
 export interface Sesion {
-  usuarioId: string;
+  /** Id interno (entero incremental) de la cuenta. */
+  usuarioId: number;
   correo: string;
   csrf: string;
   tokenHash: string;
 }
 
-export function crearSesion(db: DatabaseSync, usuarioId: string, dias: number): { token: string; csrf: string } {
+export function crearSesion(db: DatabaseSync, usuarioId: number, dias: number): { token: string; csrf: string } {
   const token = randomBytes(32).toString('base64url');
   const csrf = randomBytes(24).toString('base64url');
   const ahora = new Date();
@@ -67,7 +68,7 @@ export function buscarSesion(db: DatabaseSync, token: string | undefined): Sesio
       `SELECT s.token_hash, s.usuario_id, s.csrf, s.expira, u.correo FROM sesiones s
        JOIN usuarios u ON u.id = s.usuario_id WHERE s.token_hash = ?`,
     )
-    .get(hashToken(token)) as { token_hash: string; usuario_id: string; csrf: string; expira: string; correo: string } | undefined;
+    .get(hashToken(token)) as { token_hash: string; usuario_id: number; csrf: string; expira: string; correo: string } | undefined;
   if (!fila) return null;
   if (Date.parse(fila.expira) <= Date.now()) {
     db.prepare('DELETE FROM sesiones WHERE token_hash = ?').run(fila.token_hash);
@@ -78,4 +79,5 @@ export function buscarSesion(db: DatabaseSync, token: string | undefined): Sesio
 
 export const cerrarSesion = (db: DatabaseSync, tokenHash: string) => db.prepare('DELETE FROM sesiones WHERE token_hash = ?').run(tokenHash);
 export const limpiarSesionesVencidas = (db: DatabaseSync) => db.prepare('DELETE FROM sesiones WHERE expira <= ?').run(new Date().toISOString());
+/** Identificador público aleatorio (para los registros que viajan al navegador). */
 export const nuevoId = () => randomUUID();
