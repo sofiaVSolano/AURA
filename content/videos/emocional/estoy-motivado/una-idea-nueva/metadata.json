@@ -5,21 +5,28 @@
   "categoria": "estoy-motivado",
   "subtema": "una-idea-nueva",
   "titulo": "Tengo una idea nueva",
-  "descripcion": "Anota tu idea y piensa cómo se conecta con tu objetivo antes de cambiar todo el rumbo.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Anota tu idea y piensa cómo se conecta con tu objetivo antes de cambiar todo el rumbo. Once consejos para aprovechar una idea nueva sin perder el rumbo.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 214,
+  "duracionSegundos": 214,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy motivado» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

@@ -5,21 +5,28 @@
   "categoria": "estoy-motivado",
   "subtema": "veo-resultados",
   "titulo": "Veo resultados",
-  "descripcion": "Celebrar los avances, aunque sean pequeños, ayuda a sostener el esfuerzo.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Celebrar los avances, aunque sean pequeños, ayuda a sostener el esfuerzo. Once consejos para disfrutar tus avances y mantener el ritmo.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 206,
+  "duracionSegundos": 206,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy motivado» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

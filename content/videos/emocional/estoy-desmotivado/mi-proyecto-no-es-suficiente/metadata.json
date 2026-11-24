@@ -5,21 +5,33 @@
   "categoria": "estoy-desmotivado",
   "subtema": "mi-proyecto-no-es-suficiente",
   "titulo": "Mi proyecto no es suficientemente bueno",
-  "descripcion": "Un proyecto de grado no tiene que ser perfecto para ser valioso.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Un proyecto de grado no tiene que ser perfecto para ser valioso. Once consejos para ver su valor, mejorarlo sin perfeccionismo y contarlo bien.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 253,
+  "duracionSegundos": 253,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "perfeccionismo",
+    "valor",
+    "autocrítica",
+    "calidad"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Juan Carlos)",
+    "Música: arpa relajante instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

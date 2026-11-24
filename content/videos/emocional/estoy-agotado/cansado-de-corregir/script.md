@@ -11,7 +11,7 @@
 - **Idea principal:** Cansarse de corregir es parte del camino; cambiando cómo recibes, haces y descansas de las correcciones, pueden pesar mucho menos.
 - **Duración objetivo:** ~285 s. Narración ≈ 600 palabras a ~2,1 palabras/s + pausas.
 - **Tono:** alguien que ya pasó por ahí y te acompaña. Cálido, práctico, en segunda persona. Sin diagnosticar, sin prometer resultados, sin culpabilizar.
-- **Personaje:** **Lu**, estudiante de último año. No habla; la voz en off le acompaña.
+- **Personaje:** **Teo**, estudiante de último año. No habla; la voz en off le acompaña.
 
 ## Capítulos
 

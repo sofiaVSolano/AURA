@@ -5,21 +5,34 @@
   "categoria": "me-siento-perdido",
   "subtema": "no-se-empezar",
   "titulo": "No sé por dónde empezar",
-  "descripcion": "No necesitas tenerlo todo claro para empezar: un primer paso pequeño ya es un comienzo.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "No necesitas tenerlo todo claro para empezar: un primer paso pequeño ya es un comienzo. Once consejos para arrancar tu proyecto.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 215,
+  "duracionSegundos": 213,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "sin rumbo",
+    "empezar",
+    "primer paso",
+    "organización",
+    "claridad"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: guitarra acústica instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

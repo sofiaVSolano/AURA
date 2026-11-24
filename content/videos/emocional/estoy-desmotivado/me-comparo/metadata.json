@@ -5,21 +5,33 @@
   "categoria": "estoy-desmotivado",
   "subtema": "me-comparo",
   "titulo": "Me comparo con otros",
-  "descripcion": "Cada proyecto tiene su propio ritmo y contexto; compararte muestra solo una parte de la historia.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Cada proyecto tiene su propio ritmo y contexto; compararte muestra solo una parte de la historia. Once consejos para medirte con tu propia regla.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 248,
+  "duracionSegundos": 248,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "comparación",
+    "ritmo propio",
+    "redes",
+    "envidia"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Juan Carlos)",
+    "Música: arpa relajante instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

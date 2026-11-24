@@ -5,21 +5,28 @@
   "categoria": "estoy-cerca-del-final",
   "subtema": "presentar-resultados",
   "titulo": "No sé cómo presentar resultados",
-  "descripcion": "Presentar resultados es contar una historia: qué buscabas, qué encontraste y qué significa.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Presentar resultados es contar una historia: qué buscabas, qué encontraste y qué significa. Once consejos para contar tus resultados como una historia clara.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 185,
+  "duracionSegundos": 185,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: equipo AURA y ElevenLabs (Superior)",
+    "Música: pista de «Estoy cerca del final» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

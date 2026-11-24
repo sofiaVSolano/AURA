@@ -5,21 +5,28 @@
   "categoria": "estoy-cerca-del-final",
   "subtema": "temo-no-responder",
   "titulo": "Temo no saber responder",
-  "descripcion": "No saber una respuesta no invalida tu trabajo; puedes reconocerlo con calma y explicar cómo lo abordarías.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "No saber una respuesta no invalida tu trabajo; puedes reconocerlo con calma y explicar cómo lo abordarías. Once consejos para responder las preguntas del jurado con calma.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 197,
+  "duracionSegundos": 197,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy cerca del final» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }
