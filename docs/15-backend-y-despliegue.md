@@ -102,27 +102,27 @@ npm run build && npm run servir
 
 En `backend/`, `npm test` ejecuta las 14 pruebas del API y de la base de datos.
 
-## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**)
+## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**: el acceso SSH con las credenciales recibidas fue rechazado)
 
-Datos recibidos: el servidor tiene una IP pública, usuario `sofia` y los puertos **4046** (frontend) y **4054** (API). La IP y las credenciales **no se guardan en el repositorio**: van solo en los `.env` del servidor. Faltan por confirmar: sistema operativo, si `4054` es el puerto de SSH o el del API, si hay dominio o HTTPS, y si hay firewall.
+Datos comprobados: Ubuntu con OpenSSH 9.6, usuario `sofia`, **SSH en el puerto 4054** (y en el 22) y el **4046** abierto para el frontend. Como el 4054 lo ocupa el SSH, en el servidor el API escucha en **127.0.0.1:4055** (no se expone). La IP y las credenciales **no se guardan en el repositorio**: van solo en los `.env` del servidor. Falta por confirmar si hay dominio o HTTPS.
 
 1. **Node.js 24 LTS** en el servidor (`node --version` ≥ 24). No hace falta nada más: sin base de datos externa ni servidor web adicional.
 2. Copiar el repositorio (por `git clone` o `scp`) a, por ejemplo, `~/aura`.
 3. **Frontend:**
    ```bash
    cd ~/aura/frontend && npm ci && npm run build
-   cp .env.servidor.example .env.servidor   # PUERTO=4046, HOST=0.0.0.0, API_URL=http://127.0.0.1:4054
+   cp .env.servidor.example .env.servidor   # PUERTO=4046, HOST=0.0.0.0, API_URL=http://127.0.0.1:4055
    ```
 4. **Backend:**
    ```bash
    cd ~/aura/backend && npm ci --omit=dev
    cp .env.example .env
-   # PUERTO=4054, HOST=127.0.0.1 (no se expone), ORIGENES_PERMITIDOS=http://<IP>:4046
+   # PUERTO=4055, HOST=127.0.0.1 (no se expone), ORIGENES_PERMITIDOS=http://<IP>:4046
    # COOKIE_SEGURA=true con HTTPS; sin HTTPS habría que poner false (INSEGURO: solo para pruebas internas)
    chmod 600 .env
    ```
 5. **Arrancar ambos servicios** de forma persistente. Si el servidor usa systemd, con dos unidades (`ExecStart=/usr/bin/node src/servidor.ts` en `backend/` y `ExecStart=/usr/bin/node servidor/servidor.mjs` en `frontend/`, ambas con `Restart=on-failure` y `User=sofia`). Si no, con el gestor de procesos que exista en el servidor.
-6. **Firewall:** abrir solo el 4046 (y el SSH). El 4054 escucha en `127.0.0.1` y no debe abrirse.
+6. **Firewall:** abrir solo el 4046 y el SSH (4054). El API (4055) escucha en `127.0.0.1` y no debe abrirse.
 7. **HTTPS (muy recomendado):** con un dominio, un proxy TLS delante del 4046 (Let's Encrypt). Después, poner `HTTPS_PUBLICO=true` en el frontend, `COOKIE_SEGURA=true` en el backend y el origen `https://…` en `ORIGENES_PERMITIDOS`.
 8. **Copias de seguridad:** `backend/datos/aura.db` (y sus archivos `-wal`/`-shm`). Copiarla con el servicio detenido o con `sqlite3 aura.db ".backup copia.db"`.
 9. **Comprobar:** `curl http://<IP>:4046/api/salud` → `{"ok":true}`. Abrir `http://<IP>:4046`, crear una cuenta de prueba y eliminarla.
