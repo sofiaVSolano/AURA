@@ -17,6 +17,11 @@ export interface ArchivosVideo {
   video: string | null;
   /** Formato optimizado opcional (WebM AV1/VP9), servido primero si existe. */
   videoAlterno: string | null;
+  /**
+   * Versión ligera para teléfonos (MP4 720p, ~1/3 de los datos), opcional. La genera
+   * `npm run medios:movil`; el reproductor la usa en pantallas angostas o con ahorro de datos.
+   */
+  videoMovil?: string | null;
   /** Portada (WebP/AVIF). */
   poster: string | null;
   /** Subtítulos WebVTT por idioma: { "es": "subtitulos.es.vtt" }. */
@@ -57,7 +62,7 @@ export interface EntradaVideo extends MetadatosVideo {
 /** Archivos que deben existir en disco si el video está publicado. */
 export function archivosRequeridos(v: MetadatosVideo): string[] {
   const a = v.archivos;
-  return [a.video, a.videoAlterno, a.poster, a.transcripcion, ...Object.values(a.subtitulos)].filter(
+  return [a.video, a.videoAlterno, a.videoMovil ?? null, a.poster, a.transcripcion, ...Object.values(a.subtitulos)].filter(
     (x): x is string => x !== null,
   );
 }

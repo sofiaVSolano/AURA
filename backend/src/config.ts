@@ -23,6 +23,11 @@ export interface Config {
   rutaContenido: string;
   /** Clave del proveedor de IA (opcional). Sin ella, las evaluaciones con IA se desactivan. */
   claveIa: string | undefined;
+  /**
+   * Cuenta de prueba compartida (demostraciones). Si se define, se crea al arrancar y la
+   * página de ingreso ofrece «Usar credenciales de prueba». Sus datos los ve cualquiera.
+   */
+  cuentaPrueba: { correo: string; contrasena: string } | null;
 }
 
 export function leerConfig(env: NodeJS.ProcessEnv = process.env): Config {
@@ -42,5 +47,9 @@ export function leerConfig(env: NodeJS.ProcessEnv = process.env): Config {
     rutaContenido: resolve(raiz, env.RUTA_CONTENIDO ?? '../content'),
     // Se acepta también «CLAUDE_API_KEY =» (con espacio antes del igual), como suele quedar al editar el .env a mano
     claveIa: (env.CLAUDE_API_KEY ?? env['CLAUDE_API_KEY '])?.trim() || undefined,
+    cuentaPrueba:
+      env.CUENTA_PRUEBA_CORREO?.trim() && env.CUENTA_PRUEBA_CLAVE?.trim()
+        ? { correo: env.CUENTA_PRUEBA_CORREO.trim().toLowerCase(), contrasena: env.CUENTA_PRUEBA_CLAVE.trim() }
+        : null,
   };
 }

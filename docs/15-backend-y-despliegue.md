@@ -30,6 +30,7 @@ content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 | `POST /auth/ingreso` | — | origen | `{ correo, contrasena }` |
 | `POST /auth/salida` | sí | sí | Cierra la sesión |
 | `GET /auth/yo` | — | — | `{ usuario, csrf }` o `{ usuario: null }` |
+| `GET /auth/prueba` | — | — | `{ disponible: false }` o las credenciales de la cuenta de prueba (`CUENTA_PRUEBA_*`) |
 | `GET /datos` | sí | — | Los 3 módulos; Mi AURA incluye las experiencias **del servidor** |
 | `PUT /datos/:modulo` | sí | sí | Guarda un módulo validado; en Mi AURA **se ignoran las experiencias enviadas** |
 | `DELETE /datos/:modulo` | sí | sí | Borra los datos de un módulo |
@@ -39,7 +40,7 @@ content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 | `POST /ia/redaccion` | sí | sí | `{ lab, actividad, texto }` → evaluación formativa; máximo 2 por actividad |
 | `POST /ia/tesis` | sí | sí | `{ nombre, tipo, datos }` (base64, hasta 8 MB) → solo con todos los laboratorios completos; máximo 2 |
 | `GET /cuenta/exportar` | sí | — | Todos los datos de la cuenta en JSON (portabilidad) |
-| `DELETE /cuenta` | sí | sí | `{ contrasena }` → elimina la cuenta y **todos** sus datos |
+| `DELETE /cuenta` | sí | sí | `{ contrasena }` → elimina la cuenta y **todos** sus datos (403 en la cuenta de prueba) |
 
 **Validación del progreso en el servidor** (`backend/src/contenido.ts`):
 
@@ -69,6 +70,10 @@ Además:
 | Respuestas | `no-store`, `nosniff`, CSP `default-src 'none'` y `Referrer-Policy: no-referrer`. Los errores son genéricos: sin trazas ni datos personales en respuestas ni registros |
 | Privacidad | Consentimiento explícito y versionado al registrarse; exportación y borrado total. No se guarda cómo se siente la persona ni las respuestas del simulador |
 | Servidor web | CSP estricta y cabeceras (`servidor/cabeceras.json`); HSTS con `HTTPS_PUBLICO=true`; no sirve nada fuera de `dist/`; `X-Forwarded-For` se reescribe con la IP real |
+
+**Cuenta de prueba (demostraciones):** con `CUENTA_PRUEBA_CORREO` y `CUENTA_PRUEBA_CLAVE` en `backend/.env`, el backend crea esa cuenta al arrancar y la página de ingreso ofrece «Usar credenciales de prueba», que rellena el formulario y entra. Las credenciales son públicas a propósito y la cuenta es compartida (la app lo avisa); no se puede eliminar. Para desactivarla, basta con quitar las variables.
+
+**Videos en el teléfono:** `npm run medios:movil` (en `frontend/`, requiere ffmpeg) deja el índice de cada MP4 al inicio (empieza a reproducir sin pedir antes el final del archivo) y genera `video-720.mp4`, registrado como `archivos.videoMovil`. El reproductor lo usa en pantallas angostas, con ahorro de datos o con conexión lenta. Los MP4 no van en Git: se suben al servidor con el resto de medios.
 
 **Pendiente y obligatorio antes de usarlo con estudiantes:**
 - **HTTPS.** Sin él, las contraseñas y la cookie de sesión viajan sin cifrar.

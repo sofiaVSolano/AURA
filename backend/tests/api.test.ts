@@ -191,3 +191,13 @@ test('CORS solo para el origen del frontend', async () => {
   assert.equal(no.status, 403);
   assert.equal(no.headers.get('access-control-allow-origin'), null);
 });
+
+test('auth/yo?datos=1: con sesión incluye los datos (un viaje menos al arrancar); sin sesión, no', async () => {
+  assert.deepEqual((await pedir('GET', '/api/auth/yo?datos=1')).cuerpo, { usuario: null });
+  const { cookie } = await cuenta('arranque@aura.test');
+  const con = await pedir('GET', '/api/auth/yo?datos=1', undefined, { cookie });
+  assert.equal(con.cuerpo.usuario.correo, 'arranque@aura.test');
+  assert.deepEqual(Object.keys(con.cuerpo.datos).sort(), ['academica', 'emocional', 'mi-aura']);
+  assert.deepEqual(con.cuerpo.datos, (await pedir('GET', '/api/datos', undefined, { cookie })).cuerpo, 'mismos datos que GET /api/datos');
+  assert.equal((await pedir('GET', '/api/auth/yo', undefined, { cookie })).cuerpo.datos, undefined, 'sin ?datos=1 no los incluye');
+});

@@ -11,6 +11,8 @@ export interface FuentesVideo {
   video: string;
   /** WebM (AV1/VP9) opcional: se ofrece primero por ser más ligero. */
   videoAlterno?: string | undefined;
+  /** MP4 720p opcional para teléfonos: mismo contenido con ~1/3 de los datos. */
+  videoMovil?: string | undefined;
   poster?: string | undefined;
   subtitulos: Array<{ idioma: string; etiqueta: string; src: string }>;
   /** URL de la transcripción (texto). */
@@ -28,6 +30,18 @@ interface ReproductorVideoProps {
 }
 
 type Estado = 'inactivo' | 'cargando' | 'listo' | 'error';
+
+/**
+ * ¿Conviene la versión ligera? En pantallas angostas (el reproductor mide unos 360 px:
+ * 720p se ve igual de nítido), con ahorro de datos o con una conexión lenta.
+ */
+function preferirLigero(): boolean {
+  if (typeof window === 'undefined') return false;
+  const conexion = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+  return (
+    matchMedia('(max-width: 47.99rem)').matches || conexion?.saveData === true || ['slow-2g', '2g', '3g'].includes(conexion?.effectiveType ?? '')
+  );
+}
 type Transcripcion = { tipo: 'inactiva' } | { tipo: 'cargando' } | { tipo: 'lista'; texto: string } | { tipo: 'error' };
 
 /** Velocidades de reproducción disponibles (1 = normal). */
@@ -50,6 +64,8 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
   const video = useRef<HTMLVideoElement>(null);
   const ultimoReporte = useRef(0);
   const temporizador = useRef<number>(0);
+  // Se decide una vez por video (cambiar de fuente a mitad de la reproducción la reiniciaría)
+  const [mp4] = useState(() => (fuentes.videoMovil && preferirLigero() ? fuentes.videoMovil : fuentes.video));
   const [estado, setEstado] = useState<Estado>('inactivo');
   const [reproduciendo, setReproduciendo] = useState(false);
   const [tiempo, setTiempo] = useState(0);
@@ -256,7 +272,7 @@ export function ReproductorVideo({ titulo, fuentes, duracion: duracionConocida, 
           tabIndex={-1}
         >
           {fuentes.videoAlterno && <source src={fuentes.videoAlterno} type="video/webm" />}
-          <source src={fuentes.video} type="video/mp4" />
+          <source src={mp4} type="video/mp4" />
           {fuentes.subtitulos.map((s) => (
             <track
               key={s.idioma}

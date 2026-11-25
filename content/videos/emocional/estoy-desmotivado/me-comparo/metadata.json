@@ -12,6 +12,7 @@
   "archivos": {
     "video": "video.mp4",
     "videoAlterno": null,
+    "videoMovil": "video-720.mp4",
     "poster": "poster.webp",
     "subtitulos": {
       "es": "subtitulos.es.vtt"

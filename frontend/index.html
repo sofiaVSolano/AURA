@@ -6,6 +6,9 @@
     <meta name="description" content="AURA — Acompañamiento Universitario, Reflexión y Aprendizaje" />
     <meta name="color-scheme" content="dark light" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- La app pregunta por la sesión antes de dibujar: se pide ya, en paralelo con el JavaScript
+         (mismo modo y credenciales que el fetch de src/lib/api.ts, para que lo reutilice) -->
+    <link rel="preload" href="%BASE_URL%api/auth/yo?datos=1" as="fetch" crossorigin="anonymous" />
     <title>AURA</title>
   </head>
   <body>

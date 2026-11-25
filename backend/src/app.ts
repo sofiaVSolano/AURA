@@ -160,17 +160,47 @@ export function crearApp(config: Config) {
     responder(res, 204, undefined, { 'Set-Cookie': res.getHeader('Set-Cookie') as string });
   });
 
+  // — Cuenta de prueba (opcional): se crea al arrancar si no existe —
+  const prueba = config.cuentaPrueba;
+  const cuentaPruebaLista =
+    prueba && validarCorreo(prueba.correo) && !validarContrasena(prueba.contrasena)
+      ? (async () => {
+          if (db.prepare('SELECT 1 FROM usuarios WHERE correo = ?').get(prueba.correo)) return;
+          const ahora = new Date().toISOString();
+          db.prepare('INSERT INTO usuarios (correo, hash, creado, consentimiento_version, consentimiento_fecha) VALUES (?, ?, ?, ?, ?)').run(
+            prueba.correo,
+            await hashContrasena(prueba.contrasena),
+            ahora,
+            VERSION_CONSENTIMIENTO,
+            ahora,
+          );
+        })().catch(() => console.error('[api] no se pudo crear la cuenta de prueba'))
+      : null;
+  if (prueba && !cuentaPruebaLista) console.error('[api] CUENTA_PRUEBA_*: correo o contraseña no válidos; la cuenta de prueba queda desactivada');
+
+  // Credenciales públicas a propósito: solo existen si el servidor las configuró
+  // (sin ella responde 200 con disponible: false, para no ensuciar la consola con un 404)
+  ruta('GET', '/api/auth/prueba', async ({ res }) => {
+    if (!prueba || !cuentaPruebaLista) return responder(res, 200, { disponible: false });
+    await cuentaPruebaLista;
+    responder(res, 200, { disponible: true, correo: prueba.correo, contrasena: prueba.contrasena });
+  });
+
   // Sin sesión responde 200 con usuario null: visitar AURA sin cuenta es lo normal, no un error.
+  // Con ?datos=1 y sesión, incluye también los datos de la cuenta: la app los recibe en la misma
+  // respuesta que el HTML ya pidió por adelantado (un viaje de red menos antes de dibujar).
+  const datosDe = (usuarioId: number) => Object.fromEntries(MODULOS.map((m) => [m, leerModulo(usuarioId, m)]));
   ruta('GET', '/api/auth/yo', async ({ req, res }) => {
     const s = sesionDe(req);
-    responder(res, 200, s ? { usuario: { correo: s.correo }, csrf: s.csrf } : { usuario: null });
+    if (!s) return responder(res, 200, { usuario: null });
+    const conDatos = new URLSearchParams((req.url ?? '').split('?')[1] ?? '').get('datos') === '1';
+    responder(res, 200, { usuario: { correo: s.correo }, csrf: s.csrf, ...(conDatos && { datos: datosDe(s.usuarioId) }) });
   });
 
   // — Datos personales (sincronización) —
   ruta('GET', '/api/datos', async ({ req, res }) => {
     const s = exigirSesion(req, false);
-    const datos = Object.fromEntries(MODULOS.map((m) => [m, leerModulo(s.usuarioId, m)]));
-    responder(res, 200, datos);
+    responder(res, 200, datosDe(s.usuarioId));
   });
 
   ruta('PUT', '/api/datos/:modulo', async ({ req, res, params }) => {
@@ -275,6 +305,8 @@ export function crearApp(config: Config) {
 
   ruta('DELETE', '/api/cuenta', async ({ req, res, ip }) => {
     const s = exigirSesion(req);
+    // La cuenta de prueba es compartida: nadie puede eliminarla desde la app
+    if (prueba && s.correo === prueba.correo) throw new ErrorHttp(403, 'cuenta_prueba', 'La cuenta de prueba es compartida y no se puede eliminar.');
     limiteIngreso.consumir(`${ip}|borrar|${s.usuarioId}`);
     const d = (await leerJson(req, 1024)) as Record<string, unknown>;
     const fila = db.prepare('SELECT hash FROM usuarios WHERE id = ?').get(s.usuarioId) as { hash: string };

@@ -1,6 +1,6 @@
 // Almacén por módulo. Interfaz asíncrona única: sin sesión, IndexedDB (base "aura");
 // con sesión, la cuenta en el servidor. La interfaz de usuario no distingue entre ambos.
-import { api, sesion } from './api.ts';
+import { api, sesion, tomarDatosIniciales } from './api.ts';
 
 export interface Almacen<T> {
   /** true si los datos sobreviven al cerrar el navegador. */
@@ -65,7 +65,8 @@ function almacenRemoto<T>(nombre: NombreAlmacen): Almacen<T> {
   return {
     persistente: true,
     cargar: async () => {
-      datosRemotos ??= api.datos();
+      // Al arrancar, los datos ya vinieron con la sesión; después, se piden al servidor
+      datosRemotos ??= Promise.resolve(tomarDatosIniciales() ?? api.datos());
       return (await datosRemotos)[nombre] ?? null;
     },
     // Agrupa cambios seguidos (p. ej. elegir varios colores) en una sola escritura.

@@ -306,6 +306,19 @@
   color: var(--color-texto-suave);
 }
 
+/* Cuenta de prueba: separada del ingreso normal, con su aviso de que es compartida */
+.prueba {
+  display: grid;
+  gap: var(--espacio-2);
+  padding-block-start: var(--espacio-4);
+  border-top: var(--borde-fino) solid var(--color-borde);
+}
+
+.prueba p {
+  font-size: var(--texto-sm);
+  color: var(--color-texto-suave);
+}
+
 .casilla {
   display: grid;
   grid-template-columns: auto 1fr;
