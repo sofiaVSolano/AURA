@@ -1,0 +1,52 @@
+# AURA completa con un solo comando, desde la raíz del repositorio:
+#   docker compose up -d --build
+# Levanta el API (red interna, sin puerto público) y la web (puerto 4046), que reenvía /api al API.
+# Configuración: backend/.env y frontend/.env.servidor (no versionados; ver los .example).
+# Aquí solo se fija lo propio de Docker: puertos internos, host, rutas y la URL interna del API.
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    image: aura-backend
+    restart: unless-stopped
+    env_file:
+      - path: backend/.env
+        required: false
+    environment:
+      HOST: 0.0.0.0
+      PUERTO: 4054
+      RUTA_BD: /app/backend/datos/aura.db
+      CONFIAR_PROXY: "true"
+      NODE_ENV: production
+    volumes:
+      # Base de datos SQLite: persiste fuera del contenedor (copias de seguridad: docs/15)
+      - ./backend/datos:/app/backend/datos
+      # Contenido editorial: el API valida que el progreso apunte a contenido real
+      - ./content:/app/content:ro
+    expose:
+      - "4054"
+
+  web:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    image: aura-web
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    env_file:
+      - path: frontend/.env.servidor
+        required: false
+    environment:
+      HOST: 0.0.0.0
+      PUERTO: 4046
+      API_URL: http://backend:4054
+    volumes:
+      # Videos, pósters y subtítulos: se enlazan al arrancar (solo los publicados)
+      - ./content:/app/content:ro
+    ports:
+      # Puerto público; se puede cambiar con AURA_PUERTO=8080 docker compose up -d
+      - "${AURA_PUERTO:-4046}:4046"
