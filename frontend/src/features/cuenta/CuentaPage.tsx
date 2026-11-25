@@ -214,14 +214,79 @@ function Acceso({ reaccionar }: { reaccionar: Reaccionar }) {
           {registro ? 'Crear mi cuenta' : 'Entrar'}
         </Boton>
         {!registro && prueba && (
-          <div className={estilos.prueba}>
+          <section className={estilos.prueba} aria-labelledby={`${id}-prueba`}>
+            <h2 id={`${id}-prueba`} className={estilos.pruebaTitulo}>
+              Cuenta de prueba
+            </h2>
+            <dl className={estilos.pruebaDatos}>
+              <DatoCopiable etiqueta="Correo" valor={prueba.correo} />
+              <DatoCopiable etiqueta="Contraseña" valor={prueba.contrasena} />
+            </dl>
             <Boton type="button" variante="secundario" tamano="lg" disabled={enviando} onClick={() => void usarPrueba()}>
               Usar credenciales de prueba
             </Boton>
             <p>Es una cuenta compartida para conocer AURA: lo que hagas ahí lo pueden ver otras personas.</p>
-          </div>
+          </section>
         )}
       </form>
+    </div>
+  );
+}
+
+/**
+ * Copia un texto. El portapapeles moderno solo existe en páginas seguras (HTTPS o localhost);
+ * sin él, se copia seleccionando un campo temporal (funciona también por HTTP).
+ */
+async function copiarTexto(texto: string): Promise<boolean> {
+  try {
+    if (window.isSecureContext && navigator.clipboard) {
+      await navigator.clipboard.writeText(texto);
+      return true;
+    }
+  } catch {
+    /* sigue con el método alternativo */
+  }
+  const campo = document.createElement('textarea');
+  campo.value = texto;
+  campo.setAttribute('readonly', '');
+  campo.style.position = 'fixed';
+  campo.style.opacity = '0';
+  document.body.append(campo);
+  campo.select();
+  campo.setSelectionRange(0, texto.length);
+  let ok = false;
+  try {
+    ok = document.execCommand('copy');
+  } catch {
+    ok = false;
+  }
+  campo.remove();
+  return ok;
+}
+
+/** Un dato de la cuenta de prueba, visible y seleccionable, con su botón para copiarlo. */
+function DatoCopiable({ etiqueta, valor }: { etiqueta: string; valor: string }) {
+  const [estado, setEstado] = useState<'listo' | 'copiado' | 'error'>('listo');
+  const temporizador = useRef(0);
+  useEffect(() => () => clearTimeout(temporizador.current), []);
+  const copiar = async () => {
+    setEstado((await copiarTexto(valor)) ? 'copiado' : 'error');
+    clearTimeout(temporizador.current);
+    temporizador.current = window.setTimeout(() => setEstado('listo'), 2200);
+  };
+  return (
+    <div className={estilos.pruebaDato}>
+      <dt>{etiqueta}</dt>
+      <dd>
+        <code>{valor}</code>
+        <button type="button" className={estilos.copiar} onClick={() => void copiar()} aria-label={`Copiar ${etiqueta.toLowerCase()}`}>
+          <Icono nombre={estado === 'copiado' ? 'check' : 'copiar'} tamano={16} />
+          <span aria-hidden="true">{estado === 'copiado' ? 'Copiado' : estado === 'error' ? 'Selecciónalo' : 'Copiar'}</span>
+        </button>
+        <span className="visualmente-oculto" role="status">
+          {estado === 'copiado' ? `${etiqueta}: copiado al portapapeles` : estado === 'error' ? 'No se pudo copiar; selecciona el texto' : ''}
+        </span>
+      </dd>
     </div>
   );
 }

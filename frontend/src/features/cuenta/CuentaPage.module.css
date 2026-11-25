@@ -319,6 +319,73 @@
   color: var(--color-texto-suave);
 }
 
+.pruebaTitulo {
+  font-size: var(--texto-md);
+  font-weight: 650;
+}
+
+.pruebaDatos {
+  display: grid;
+  gap: var(--espacio-2);
+  margin: 0;
+}
+
+.pruebaDato {
+  display: grid;
+  gap: 2px;
+}
+
+.pruebaDato dt {
+  font-size: var(--texto-xs);
+  font-weight: 650;
+  color: var(--color-texto-suave);
+}
+
+.pruebaDato dd {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: var(--espacio-1) var(--espacio-1) var(--espacio-1) var(--espacio-3);
+  border-radius: var(--radio-md);
+  background: var(--color-superficie-2);
+}
+
+/* Credenciales: monoespaciada (se transcriben carácter a carácter) y fáciles de seleccionar */
+.pruebaDato code {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--texto-sm);
+  user-select: all;
+}
+
+.copiar {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--espacio-1);
+  min-height: var(--objetivo-tactil);
+  padding-inline: var(--espacio-3);
+  border: 0;
+  border-radius: var(--radio-sm);
+  background: transparent;
+  color: var(--color-acento-texto);
+  font: inherit;
+  font-size: var(--texto-sm);
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.copiar:hover {
+  background: var(--color-acento-suave);
+}
+
+.copiar:focus-visible {
+  outline: 3px solid var(--color-foco, var(--color-acento));
+  outline-offset: 2px;
+}
+
 .casilla {
   display: grid;
   grid-template-columns: auto 1fr;
