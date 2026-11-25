@@ -41,7 +41,7 @@
 }
 
 .sm {
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-4);
   font-size: var(--texto-sm);
 }

@@ -246,6 +246,11 @@
   opacity: 0.7;
 }
 
+/* Sobre el morado del paso activo, el tipo necesita más opacidad para leerse (≥4.5:1) */
+.pasoActual .pasoTipo {
+  opacity: 0.92;
+}
+
 .pasoTitulo {
   font-size: var(--texto-sm);
   font-weight: 650;

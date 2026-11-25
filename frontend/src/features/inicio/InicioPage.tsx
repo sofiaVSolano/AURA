@@ -45,15 +45,45 @@ function geometria() {
   return { movil, mitadAncho };
 }
 
+/**
+ * Huecos libres en el teléfono (px desde arriba de la pantalla): la esfera se acomoda
+ * entre lo que tiene encima (cabecera o título) y lo que tiene debajo (el texto).
+ */
+interface Huecos {
+  portada: [number, number];
+  camino: [number, number];
+}
+
+/** Alto visible del mundo 3D (la cámara ve ±1.355) y alto del personaje según su escala. */
+const ALTO_MUNDO = 2.71;
+const ALTO_ESFERA = 2.2;
+const ALTO_PERSONAJE = 2.6; // con la antena de la última etapa
+
+/** Escala y altura para que la figura quepa centrada en el hueco [arriba, abajo] (px). */
+function encajar([arriba, abajo]: [number, number], altoRelativo: number, maximo: number) {
+  const alto = Math.max(1, innerHeight);
+  const disponible = (Math.max(0, abajo - arriba) / alto) * ALTO_MUNDO;
+  const escala = Math.max(0.2, Math.min(maximo, disponible / altoRelativo));
+  const centro = (arriba + abajo) / 2;
+  return { escala, y: ALTO_MUNDO / 2 - (centro / alto) * ALTO_MUNDO };
+}
+
 /** Coloca a tu AURA: `salida` 0 = portada, 1 = camino de etapas. */
-function colocarEsfera(e: EstadoEsfera, salida: number) {
+function colocarEsfera(e: EstadoEsfera, salida: number, huecos?: Huecos | null) {
   const { movil, mitadAncho: m } = geometria();
   if (movil) {
-    // Franja superior; en el camino, del tamaño justo para que quepa con su anillo
-    const escalaCamino = Math.min(0.5, m * 0.78);
     e.x = 0;
-    e.y = 0.72 - salida * 0.17;
-    e.escala = 0.46 + (escalaCamino - 0.46) * salida;
+    if (!huecos) {
+      // Antes de medir: posición aproximada en la franja superior
+      e.y = 0.62 - salida * 0.2;
+      e.escala = 0.42;
+      return;
+    }
+    // Medido: nunca pegada a la cabecera ni al título, ni encima del texto
+    const a = encajar(huecos.portada, ALTO_ESFERA, Math.min(0.46, m * 0.7));
+    const b = encajar(huecos.camino, ALTO_PERSONAJE, Math.min(0.5, m * 0.78));
+    e.escala = a.escala + (b.escala - a.escala) * salida;
+    e.y = a.y + (b.y - a.y) * salida;
     return;
   }
   const escalaPortada = Math.min(0.98, m * 0.4);
@@ -88,6 +118,50 @@ function useAjustarAlAncho(ref: RefObject<HTMLElement | null>) {
   }, [ref]);
 }
 
+/** Distancia desde arriba de la página (con offsetTop: ignora las animaciones de entrada). */
+function arribaEnPagina(el: HTMLElement) {
+  let y = 0;
+  for (let n: HTMLElement | null = el; n; n = n.offsetParent as HTMLElement | null) y += n.offsetTop;
+  return y;
+}
+
+/** Margen entre la figura y el texto que la rodea. */
+const AIRE = 20;
+/** Alto de la cabecera flotante del inicio. */
+const CABECERA = 60;
+
+function medirHuecos(
+  portada: HTMLElement | null,
+  texto: HTMLElement | null,
+  titulo: HTMLElement | null,
+  nombres: HTMLElement | null,
+): Huecos | null {
+  if (!portada || !texto || !titulo || !nombres) return null;
+  // Portada: entre la cabecera y el comienzo del texto
+  const textoArriba = arribaEnPagina(texto) - arribaEnPagina(portada);
+  // Camino (fijo arriba de la pantalla): entre el título y el nombre de la etapa
+  const fijo = titulo.offsetParent as HTMLElement | null;
+  const base = fijo ? arribaEnPagina(fijo) : 0;
+  const tituloAbajo = arribaEnPagina(titulo) - base + titulo.offsetHeight;
+  const nombresArriba = arribaEnPagina(nombres) - base;
+  return {
+    portada: [CABECERA + AIRE, textoArriba - AIRE],
+    camino: [tituloAbajo + AIRE, nombresArriba - AIRE],
+  };
+}
+
+const notaEtapa = (nacida: boolean, nombre: string) =>
+  nacida ? `Así es ${nombre}: con la forma, los colores y la expresión que elegiste.` : 'Así se verá el tuyo: tú eliges su forma, sus colores y su expresión.';
+
+/** Etapa con más texto (descripción, cómo se obtiene y la nota desde la 4.ª). */
+const ETAPA_TEXTO_MAS_LARGO = ETAPAS.reduce(
+  (mayor, e, k) => {
+    const largo = e.descripcion.length + e.comoSeObtiene.length + (k >= 3 ? 80 : 0);
+    return largo > mayor.largo ? { k, largo } : mayor;
+  },
+  { k: 0, largo: -1 },
+).k;
+
 const TITULAR = 'No tienes que recorrer este camino a ciegas.'.split(' ');
 
 /* ————————————————————————————————————————————————————————————————
@@ -99,7 +173,9 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
   const matizB = matizDe(preferencias.colorComplementario);
   const cosmos = useRef<HTMLDivElement>(null);
   const portada = useRef<HTMLElement>(null);
+  const portadaTexto = useRef<HTMLDivElement>(null);
   const camino = useRef<HTMLElement>(null);
+  const caminoTitulo = useRef<HTMLHeadingElement>(null);
   const nombres = useRef<HTMLDivElement>(null);
   const medidor = useRef<HTMLOListElement>(null);
   const [activo, setActivo] = useState(0);
@@ -121,6 +197,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
     portadaAlto: portada.current?.offsetHeight ?? 1,
     caminoArriba: camino.current?.offsetTop ?? 0,
     caminoAlto: camino.current?.offsetHeight ?? 1,
+    huecos: medirHuecos(portada.current, portadaTexto.current, caminoTitulo.current, nombres.current),
   }));
 
   useProgresoScroll(cosmos, (_p, { arriba, velocidad }) => {
@@ -133,7 +210,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
     const recorrido = Math.max(1, m.caminoAlto - innerHeight);
     const etapa = limitar((-arribaCamino / recorrido) * 4.4 - 0.2, 0, 4);
     const e = esfera.current;
-    colocarEsfera(e, salida);
+    colocarEsfera(e, salida, m.huecos);
     e.etapa = etapa;
     // La superficie se agita con la velocidad del scroll y vuelve sola a la calma
     e.energia = Math.min(1, 0.15 + velocidad / 40);
@@ -165,7 +242,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
       </div>
 
       <section ref={portada} className={estilos.portada} aria-labelledby="titulo-inicio">
-        <div className={estilos.portadaTexto}>
+        <div ref={portadaTexto} className={estilos.portadaTexto}>
           {nacida && <p className={estilos.saludo}>Hola de nuevo. {nombre} te estaba esperando.</p>}
           <h1 id="titulo-inicio" className={estilos.titular}>
             {TITULAR.map((palabra, i) => (
@@ -204,7 +281,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
 
       <section ref={camino} className={estilos.camino} aria-labelledby="titulo-camino">
         <div className={estilos.caminoFijo}>
-          <h2 id="titulo-camino" className={estilos.caminoTitulo}>
+          <h2 ref={caminoTitulo} id="titulo-camino" className={estilos.caminoTitulo}>
             Un AURA que crece contigo
           </h2>
           <div ref={nombres} className={estilos.nombres} aria-hidden="true">
@@ -215,15 +292,17 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
             ))}
           </div>
           <div className={estilos.detalle} aria-hidden="true">
-            <p key={activo} className={estilos.detalleTexto}>
-              {ETAPAS[activo]?.descripcion}
-              <span>{ETAPAS[activo]?.comoSeObtiene}</span>
-              {activo >= 3 && (
-                <span className={estilos.detalleNota}>
-                  {nacida ? `Así es ${nombre}: con la forma, los colores y la expresión que elegiste.` : 'Así se verá el tuyo: tú eliges su forma, sus colores y su expresión.'}
-                </span>
-              )}
-            </p>
+            {/* Una copia invisible del texto más largo fija el alto del bloque: así el
+                nombre de la etapa no salta y tu AURA cabe igual en todas las etapas */}
+            <div className={estilos.detalleCaja}>
+              {[{ k: activo, medida: false }, { k: ETAPA_TEXTO_MAS_LARGO, medida: true }].map(({ k, medida }) => (
+                <p key={medida ? 'medida' : k} className={cx(estilos.detalleTexto, medida && estilos.detalleMedida)}>
+                  {ETAPAS[k]?.descripcion}
+                  <span>{ETAPAS[k]?.comoSeObtiene}</span>
+                  {k >= 3 && <span className={estilos.detalleNota}>{notaEtapa(nacida, nombre)}</span>}
+                </p>
+              ))}
+            </div>
             <ol ref={medidor} className={estilos.medidor}>
               {ETAPAS.map((e) => (
                 <li key={e.id} />

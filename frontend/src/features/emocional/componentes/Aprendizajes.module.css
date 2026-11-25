@@ -83,7 +83,7 @@
 }
 
 .inicio {
-  min-height: 38px;
+  min-height: max(38px, var(--alto-control));
   padding: 0 var(--espacio-4);
   border: 1px solid color-mix(in srgb, hsl(var(--matiz, 272) 80% 75%) 40%, transparent);
   border-radius: var(--radio-pildora);
@@ -233,7 +233,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-3);
   border: 0;
   border-radius: var(--radio-pildora);

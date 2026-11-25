@@ -61,7 +61,9 @@
 }
 
 /* — Grano tipo impresión (estático, decorativo, nunca sobre texto pequeño sin contraste) — */
-.textura-grano {
+/* :where() deja la especificidad en 0: si un componente ya posiciona el elemento
+   (absolute, sticky…), su regla gana y el grano no rompe el diseño. */
+:where(.textura-grano) {
   position: relative;
   isolation: isolate;
 }

@@ -83,7 +83,6 @@ export function EjemploDesglosado({ ejemplo }: { ejemplo: Guia['ejemplo'] }) {
                     {...pulsar(i)}
                     className={cx(estilos.anotada, i === activo && estilos.anotadaActiva)}
                     style={{ '--tono': i, '--k': i } as CSSProperties}
-                    aria-label={`${x.elemento}: ${x.texto}`}
                   >
                     <span className={estilos.anotadaMarca} aria-hidden="true">
                       {i + 1}

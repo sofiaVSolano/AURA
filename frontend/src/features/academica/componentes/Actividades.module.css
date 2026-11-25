@@ -91,11 +91,27 @@
   gap: var(--espacio-1);
 }
 
+/* Teléfono: el fragmento usa todo el ancho y las flechas van debajo, en fila */
+@media (max-width: 30rem) {
+  .fila {
+    grid-template-columns: 2.25rem minmax(0, 1fr);
+    align-items: start;
+    row-gap: var(--espacio-2);
+  }
+
+  .mover {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--espacio-2);
+  }
+}
+
 .mover button {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 36px;
+  width: max(40px, var(--alto-control));
+  height: var(--alto-control);
   border: var(--borde-fino) solid var(--color-borde-control);
   border-radius: var(--radio-sm);
   background: var(--color-fondo);
@@ -162,7 +178,7 @@
 .pildora {
   display: inline-flex;
   align-items: center;
-  min-height: 40px;
+  min-height: max(40px, var(--alto-control));
   padding-inline: var(--espacio-4);
   border: var(--borde-fino) solid var(--color-borde-control);
   border-radius: var(--radio-pildora);

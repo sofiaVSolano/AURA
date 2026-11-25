@@ -110,6 +110,32 @@
   rotate: -1deg;
 }
 
+/* Teléfono: las tres cifras en una fila pareja (antes quedaban 2 + 1) */
+@media (max-width: 30rem) {
+  .cifras {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--espacio-2);
+  }
+
+  .cifras div {
+    min-width: 0;
+    padding-inline: var(--espacio-2);
+  }
+
+  .cifras dt {
+    text-align: center;
+  }
+
+  .tarjeta {
+    padding: var(--espacio-4);
+  }
+
+  .cifras dd {
+    font-size: 2rem;
+  }
+}
+
 .cifras dt {
   font-size: 0.68rem;
   font-weight: 700;
@@ -147,7 +173,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-2);
-  min-height: 36px;
+  min-height: var(--alto-control);
   font-weight: 600;
   cursor: pointer;
   list-style: none;
@@ -187,12 +213,15 @@
 .mundo {
   position: relative;
   display: grid;
+  /* La columna nunca supera el ancho disponible (en 360px algo la ensanchaba) */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-5);
 }
 
 .paradas {
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-6);
   margin: 0;
   padding: 0 0 0 var(--espacio-7);
@@ -244,6 +273,7 @@
   --ry: 0deg;
   position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--espacio-3);
   padding: var(--espacio-5);
   border-radius: 6px 6px 22px 22px;
@@ -307,6 +337,7 @@
 
 .temas {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 2px;
   margin: 0;
   padding: 0;

@@ -5,14 +5,25 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { abrirNavegador, dormir, informe, iniciarPila, RAIZ, SALIDA, SIN_CORTES } from './navegador.mjs';
+import { cargarContenido } from '../../../backend/src/contenido.ts';
+import { VERSION_CONSENTIMIENTO } from '../../src/lib/consentimiento.ts';
 
 const AXE = readFileSync(join(RAIZ, 'node_modules/axe-core/axe.min.js'), 'utf8');
 const servidor = await iniciarPila();
 const nav = await abrirNavegador({ base: servidor.url, puerto: 9334, perfil: 'perfil-auditoria' });
 const { cdp, ev, ir, viewport, tecla, errores, foto } = nav;
+
 const resultados = [];
 const verificar = (nombre, cond, detalle = '') => resultados.push(`${cond ? 'OK   ' : 'FALLA'} ${nombre}${!cond && detalle ? ` → ${detalle}` : ''}`);
 const informeJson = { accesibilidad: {}, rendimiento: {}, cabeceras: {} };
+
+// AURA exige iniciar sesión (salvo Inicio y Recursos): se audita con una cuenta de prueba
+// en la base temporal de la pila, para recorrer las mismas pantallas que una persona.
+const pedirApi = (metodo, ruta, cuerpo) =>
+  ev(`fetch('/api/auth/yo').then(r => r.json()).then(({ csrf }) => fetch(${JSON.stringify(ruta)}, { method: ${JSON.stringify(metodo)}, headers: { 'Content-Type': 'application/json', ...(csrf ? { 'X-CSRF-Token': csrf } : {}) }, body: ${JSON.stringify(cuerpo === undefined ? null : JSON.stringify(cuerpo))} })).then(r => r.status)`);
+await ir('/', 1200);
+const registro = await pedirApi('POST', '/api/auth/registro', { correo: 'auditoria@aura.test', contrasena: 'una frase segura de prueba', consentimiento: true, versionConsentimiento: VERSION_CONSENTIMIENTO });
+verificar('Cuenta de prueba creada para auditar con sesión', registro === 201, `registro ${registro}`);
 
 const RUTAS = [
   '/',
@@ -78,22 +89,32 @@ for (const [nombre, w, h, movil] of DISPOSITIVOS) {
 
 // — 2. Estados interactivos: AURA en etapa 5 (con celebración abierta), laboratorio con comentarios —
 await viewport(1440, 900);
-const exp = (tipo, dimension, i) => ({ id: `exp-auditoria-${String(i).padStart(4, '0')}`, tipo, dimension, refId: `auditoria:${tipo}:${i}`, fecha: new Date(Date.UTC(2026, 10, 1 + i)).toISOString() });
-const tipos = [['reflexion-registrada', 'emocional'], ['ejercicio-completado', 'academica'], ['avance-academico', 'academica'], ['sustentacion-practicada', 'academica'], ['experiencia-compartida', 'emocional']];
+// Mi AURA con preferencias guardadas y 15 experiencias reales (5 tipos, ambas dimensiones):
+// llega a la etapa 5 por el mismo camino que una persona, con experiencias validadas por el servidor.
 const ESTADO = {
   version: 1,
   preferencias: { nombre: 'Lumi', colorPrincipal: 'rosa', colorComplementario: 'menta', forma: 'nube', expresion: 'alegre', decoraciones: ['estrellas', 'aurora'] },
   onboarding: { completado: true, momentoProyecto: 'documento', fechaInicio: '2026-11-01T10:00:00.000Z' },
-  experiencias: Array.from({ length: 15 }, (_, i) => exp(...tipos[i % tipos.length], i)),
+  experiencias: [],
   ultimaEtapaVista: 'origen',
 };
+const indice = cargarContenido(join(RAIZ, '../content'));
+const publicados = [...indice.videos].filter(([, v]) => v.publicado).map(([id]) => id);
+const refs = [
+  ...[...indice.actividades].slice(0, 3).map((a) => ['ejercicio-completado', `lab:${a}`]),
+  ...[...indice.preguntasSimulador].slice(0, 3).map((q) => ['sustentacion-practicada', `sim:${q}`]),
+  ...[...indice.temas].slice(0, 3).map((t) => ['avance-academico', `avance:${t}`]),
+  ...publicados.slice(0, 3).map((id) => ['contenido-explorado', `video:${id}`]),
+  ...publicados.slice(3, 6).map((id) => ['reflexion-registrada', `aprendizaje:${id}`]),
+];
 await ir('/', 800);
-await ev(`new Promise((ok, mal) => { const r = indexedDB.open('aura', 3);
-  r.onupgradeneeded = () => { for (const n of ['mi-aura', 'emocional', 'academica']) if (!r.result.objectStoreNames.contains(n)) r.result.createObjectStore(n); };
-  r.onsuccess = () => { const tx = r.result.transaction('mi-aura', 'readwrite'); tx.objectStore('mi-aura').put(${JSON.stringify(ESTADO)}, 'estado'); tx.oncomplete = () => { r.result.close(); ok(true); }; tx.onerror = () => mal(tx.error); };
-  r.onerror = () => mal(r.error); })`);
+const guardado = await pedirApi('PUT', '/api/datos/mi-aura', { estado: ESTADO });
+const registradas = [];
+for (const [tipo, refId] of refs) registradas.push(await pedirApi('POST', '/api/experiencias', { tipo, refId }));
+verificar('Estado de Mi AURA por el API: preferencias y 15 experiencias validadas', guardado === 204 && registradas.every((x) => x === 201), `${guardado} · ${registradas.join(',')}`);
 await ir('/mi-aura', 2200);
-verificar('Estado inyectado: celebración abierta en etapa 5', await ev(`!!document.querySelector('dialog[open]') && document.querySelector('svg[data-etapa]')?.dataset.etapa === '4'`));
+// El personaje de la celebración (dentro del diálogo): la galería también dibuja etapas
+verificar('Celebración abierta en la etapa 5', await ev(`document.querySelector('dialog[open] [data-etapa]')?.dataset.etapa === '4'`));
 let v = await axe('Mi AURA con celebración abierta');
 verificar('axe Mi AURA con modal abierto', v.length === 0, resumir(v));
 await ev(`document.querySelector('dialog[open] button')?.click()`);
