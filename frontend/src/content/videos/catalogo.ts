@@ -52,6 +52,7 @@ export function fuentesDe(video: EntradaVideo): FuentesVideo | null {
   return {
     video: urlArchivoVideo(video, a.video),
     videoAlterno: url(a.videoAlterno),
+    videoMovil: url(a.videoMovil ?? null),
     poster: url(a.poster),
     transcripcion: url(a.transcripcion),
     subtitulos: Object.entries(a.subtitulos).map(([idioma, f]) => ({ idioma, etiqueta: NOMBRES_IDIOMA[idioma] ?? idioma, src: urlArchivoVideo(video, f) })),

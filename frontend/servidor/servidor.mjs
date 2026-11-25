@@ -7,7 +7,7 @@ import { createReadStream, readFileSync, statSync } from 'node:fs';
 import { createServer, request } from 'node:http';
 import { extname, join, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createGzip } from 'node:zlib';
+import { brotliCompressSync, constants as zlib, gzipSync } from 'node:zlib';
 
 const RAIZ = fileURLToPath(new URL('../', import.meta.url));
 try {
@@ -72,6 +72,24 @@ function reenviar(req, res, ruta) {
   req.pipe(p);
 }
 
+/**
+ * Comprimidos en memoria: cada archivo de texto se comprime UNA vez (con el máximo nivel)
+ * en lugar de en cada petición. Se renueva si el archivo cambia (p. ej. tras compilar).
+ */
+const comprimidos = new Map();
+function comprimido(archivo, info, codificacion) {
+  let e = comprimidos.get(archivo);
+  if (!e || e.mtime !== info.mtimeMs || e.tamano !== info.size) {
+    e = { mtime: info.mtimeMs, tamano: info.size, datos: readFileSync(archivo) };
+    comprimidos.set(archivo, e);
+  }
+  e[codificacion] ??=
+    codificacion === 'br'
+      ? brotliCompressSync(e.datos, { params: { [zlib.BROTLI_PARAM_QUALITY]: 9, [zlib.BROTLI_PARAM_SIZE_HINT]: e.datos.length } })
+      : gzipSync(e.datos, { level: 9 });
+  return e[codificacion];
+}
+
 function servirArchivo(req, res, archivo, info, esIndice) {
   const ext = extname(archivo).toLowerCase();
   const tipo = TIPOS[ext];
@@ -95,10 +113,13 @@ function servirArchivo(req, res, archivo, info, esIndice) {
     if (req.method === 'HEAD') return res.end();
     return createReadStream(archivo, { start: inicio, end: fin }).pipe(res);
   }
-  if (COMPRIMIBLES.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '') && info.size > 1024) {
-    res.writeHead(200, { ...cabeceras, 'Content-Encoding': 'gzip', Vary: 'Accept-Encoding' });
-    if (req.method === 'HEAD') return res.end();
-    return createReadStream(archivo).pipe(createGzip()).pipe(res);
+  const acepta = req.headers['accept-encoding'] ?? '';
+  // Brotli (los navegadores solo lo piden por HTTPS) y si no, gzip
+  const codificacion = /\bbr\b/.test(acepta) ? 'br' : /\bgzip\b/.test(acepta) ? 'gzip' : null;
+  if (COMPRIMIBLES.has(ext) && codificacion && info.size > 1024) {
+    const cuerpo = comprimido(archivo, info, codificacion);
+    res.writeHead(200, { ...cabeceras, 'Content-Encoding': codificacion, Vary: 'Accept-Encoding', 'Content-Length': cuerpo.length });
+    return res.end(req.method === 'HEAD' ? undefined : cuerpo);
   }
   res.writeHead(200, { ...cabeceras, 'Content-Length': info.size });
   if (req.method === 'HEAD') return res.end();

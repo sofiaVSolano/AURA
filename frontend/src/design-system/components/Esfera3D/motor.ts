@@ -610,6 +610,8 @@ export interface Motor {
   /** Dibuja un cuadro avanzando el tiempo `dt` segundos (0 = congelado). */
   cuadro(objetivo: EstadoEsfera, dt: number, puntero: [number, number], suavizar: boolean): void;
   redimensionar(): void;
+  /** Factor de resolución dinámica (0.5…1): baja en equipos que no alcanzan la fluidez. */
+  fijarCalidad(calidad: number): void;
   destruir(): void;
 }
 
@@ -647,12 +649,13 @@ export function crearMotor(canvas: HTMLCanvasElement, resolucion: number): Motor
   };
 
   let tiempo = Math.random() * 40;
+  let calidad = 1;
   let actual: Required<EstadoEsfera> | null = null;
   const pt: [number, number] = [0, 0];
 
   const redimensionar = () => {
     const r = canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * resolucion;
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5) * resolucion * calidad;
     const w = Math.max(1, Math.round(r.width * dpr));
     const h = Math.max(1, Math.round(r.height * dpr));
     if (canvas.width !== w || canvas.height !== h) {
@@ -665,6 +668,10 @@ export function crearMotor(canvas: HTMLCanvasElement, resolucion: number): Motor
 
   return {
     redimensionar,
+    fijarCalidad(c) {
+      calidad = Math.min(1, Math.max(0.5, c));
+      redimensionar();
+    },
     cuadro(obj, dt, puntero, suavizar) {
       tiempo += dt;
       const destino: Required<EstadoEsfera> = { ...OPCIONALES, ...obj };

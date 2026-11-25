@@ -55,7 +55,6 @@ function paso(ahora: number) {
     s.anterior = s.actual;
     s.velocidad += (delta - s.velocidad) * 0.3;
     const p = Math.min(1, Math.max(0, -s.actual / Math.max(1, s.alto - alto)));
-    s.el.style.setProperty('--progreso', p.toFixed(4));
     s.cb.current?.(p, { p, arriba: s.actual, velocidad: s.velocidad });
     // Sigue mientras no alcance su objetivo o quede inercia
     if (s.actual !== s.objetivo || s.velocidad > 0.05) seguir = true;
@@ -74,7 +73,8 @@ function pedir() {
  * la rueda del ratón avanza a saltos de ~100 px; aquí la posición se persigue con
  * una interpolación exponencial (independiente de los FPS), así todo lo que cuelga
  * del scroll se desliza en lugar de saltar. Con movimiento reducido no se suaviza.
- * Escribe también `--progreso` en el elemento.
+ * (No escribe estilos en el elemento: una variable CSS en un contenedor grande obliga a
+ * recalcular el estilo de todo su contenido en cada cuadro.)
  */
 export function useProgresoScroll(
   ref: RefObject<HTMLElement | null>,

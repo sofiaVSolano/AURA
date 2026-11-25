@@ -96,6 +96,9 @@
 
 .contenido {
   flex: 1;
+  /* Al menos una pantalla: mientras una página espera sus datos, el pie no queda a la
+     vista para luego saltar hacia abajo cuando llega el contenido (CLS) */
+  min-height: 100dvh;
   width: 100%;
   max-width: var(--ancho-contenido);
   margin-inline: auto;

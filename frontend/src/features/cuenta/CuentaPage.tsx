@@ -54,8 +54,39 @@ function Acceso({ reaccionar }: { reaccionar: Reaccionar }) {
   const [llevar, setLlevar] = useState(true);
   const [errores, setErrores] = useState<{ correo?: string; clave?: string; consentimiento?: string; general?: string }>({});
   const [enviando, setEnviando] = useState(false);
+  const [prueba, setPrueba] = useState<{ correo: string; contrasena: string } | null>(null);
   const id = useId();
   const registro = modo === 'registro';
+
+  // Cuenta de prueba compartida: solo aparece si el servidor la configuró
+  useEffect(() => {
+    let vivo = true;
+    api.cuentaPrueba().then(
+      (c) => vivo && c.disponible && setPrueba({ correo: c.correo, contrasena: c.contrasena }),
+      () => undefined,
+    );
+    return () => {
+      vivo = false;
+    };
+  }, []);
+
+  /** Rellena el formulario con la cuenta de prueba y entra. Sus datos no se mezclan con los de este navegador. */
+  const usarPrueba = async () => {
+    if (!prueba) return;
+    setCorreo(prueba.correo);
+    setClave(prueba.contrasena);
+    setErrores({});
+    setEnviando(true);
+    reaccionar({ tipo: 'enviando' });
+    try {
+      await api.ingreso(prueba.correo, prueba.contrasena);
+      recargarEn(await destinoTrasEntrar());
+    } catch (err) {
+      setErrores({ general: mensajeDe(err) });
+      setEnviando(false);
+      reaccionar({ tipo: 'error' });
+    }
+  };
 
   const enviar = async (e: FormEvent) => {
     e.preventDefault();
@@ -182,6 +213,14 @@ function Acceso({ reaccionar }: { reaccionar: Reaccionar }) {
         <Boton type="submit" tamano="lg" cargando={enviando}>
           {registro ? 'Crear mi cuenta' : 'Entrar'}
         </Boton>
+        {!registro && prueba && (
+          <div className={estilos.prueba}>
+            <Boton type="button" variante="secundario" tamano="lg" disabled={enviando} onClick={() => void usarPrueba()}>
+              Usar credenciales de prueba
+            </Boton>
+            <p>Es una cuenta compartida para conocer AURA: lo que hagas ahí lo pueden ver otras personas.</p>
+          </div>
+        )}
       </form>
     </div>
   );

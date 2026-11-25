@@ -70,10 +70,38 @@ export function Esfera3D({ estado, className, resolucion = 0.85, mirada }: Props
     let ultimo = performance.now();
     let firma = '';
 
+    // Resolución dinámica: el raymarching cuesta por píxel. Si el equipo no llega a ~45 fps,
+    // se dibuja a menos resolución (hasta la mitad); si sobra potencia de forma sostenida, se recupera.
+    let calidad = 1;
+    let suma = 0;
+    let muestras = 0;
+    let holgadas = 0;
+    const medirFluidez = (intervalo: number) => {
+      if (intervalo > 200) return; // pausa o pestaña en segundo plano: no es lentitud
+      suma += intervalo;
+      if (++muestras < 30) return;
+      const promedio = suma / muestras;
+      suma = 0;
+      muestras = 0;
+      if (promedio > 22 && calidad > 0.5) {
+        calidad = Math.max(0.5, calidad * 0.8);
+        motor.fijarCalidad(calidad);
+        holgadas = 0;
+      } else if (promedio < 18 && calidad < 1) {
+        if (++holgadas >= 4) {
+          calidad = Math.min(1, calidad * 1.15);
+          motor.fijarCalidad(calidad);
+          holgadas = 0;
+        }
+      } else holgadas = 0;
+    };
+
     const bucle = (ahora: number) => {
       cuadro = 0;
-      const dt = Math.min((ahora - ultimo) / 1000, 0.05);
+      const intervalo = ahora - ultimo;
+      const dt = Math.min(intervalo / 1000, 0.05);
       ultimo = ahora;
+      if (!reducido.matches) medirFluidez(intervalo);
       if (reducido.matches) {
         const f = JSON.stringify(estado.current);
         if (f !== firma) {

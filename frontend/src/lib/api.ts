@@ -53,6 +53,16 @@ async function pedir<T>(metodo: string, ruta: string, cuerpo?: unknown, espera =
 interface RespuestaSesion {
   usuario: { correo: string } | null;
   csrf?: string;
+  /** Solo en /auth/yo?datos=1 con sesión: los datos de la cuenta. */
+  datos?: Record<ModuloRemoto, unknown>;
+}
+
+/** Datos que llegaron junto con la sesión al arrancar; se entregan una sola vez. */
+let datosIniciales: Record<ModuloRemoto, unknown> | null = null;
+export function tomarDatosIniciales(): Record<ModuloRemoto, unknown> | null {
+  const d = datosIniciales;
+  datosIniciales = null;
+  return d;
 }
 const aplicar = (r: RespuestaSesion) => {
   sesion.activa = Boolean(r.usuario);
@@ -64,7 +74,10 @@ const aplicar = (r: RespuestaSesion) => {
 export async function comprobarSesion(): Promise<void> {
   if (!apiHabilitada) return;
   try {
-    aplicar(await pedir<RespuestaSesion>('GET', '/auth/yo'));
+    // Misma URL que el <link rel="preload"> de index.html: el navegador reutiliza esa respuesta
+    const r = await pedir<RespuestaSesion>('GET', '/auth/yo?datos=1');
+    aplicar(r);
+    datosIniciales = r.datos ?? null;
     sesion.servidorDisponible = true;
   } catch {
     sesion.servidorDisponible = false;
@@ -86,6 +99,9 @@ export const api = {
   borrarModulo: (modulo: ModuloRemoto) => pedir<void>('DELETE', `/datos/${modulo}`),
   experiencia: (tipo: string, refId: string) =>
     pedir<{ registrada: boolean; experiencias: unknown[]; etapa: string }>('POST', '/experiencias', { tipo, refId }),
+  /** Credenciales de la cuenta de prueba compartida, si el servidor la configuró. */
+  cuentaPrueba: () =>
+    pedir<{ disponible: false } | { disponible: true; correo: string; contrasena: string }>('GET', '/auth/prueba', undefined, 5_000),
   exportar: () => pedir<unknown>('GET', '/cuenta/exportar'),
   borrarCuenta: (contrasena: string) => pedir<void>('DELETE', '/cuenta', { contrasena }),
   // — Evaluaciones con IA —

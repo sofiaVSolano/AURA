@@ -139,6 +139,9 @@
 }
 
 .etapa {
+  /* Contiene los textos ocultos para lectores de pantalla: sin esto escapan del
+     scroll horizontal y ensanchan la página en el teléfono (788px en 390px) */
+  position: relative;
   display: grid;
   justify-items: center;
   align-content: start;

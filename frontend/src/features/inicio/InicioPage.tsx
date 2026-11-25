@@ -52,6 +52,8 @@ function geometria() {
 interface Huecos {
   portada: [number, number];
   camino: [number, number];
+  /** Alto real del lienzo 3D (en el teléfono, con la barra del navegador, no siempre es innerHeight). */
+  lienzo: number;
 }
 
 /** Alto visible del mundo 3D (la cámara ve ±1.355) y alto del personaje según su escala. */
@@ -60,8 +62,8 @@ const ALTO_ESFERA = 2.2;
 const ALTO_PERSONAJE = 2.6; // con la antena de la última etapa
 
 /** Escala y altura para que la figura quepa centrada en el hueco [arriba, abajo] (px). */
-function encajar([arriba, abajo]: [number, number], altoRelativo: number, maximo: number) {
-  const alto = Math.max(1, innerHeight);
+function encajar([arriba, abajo]: [number, number], altoRelativo: number, maximo: number, altoLienzo: number) {
+  const alto = Math.max(1, altoLienzo);
   const disponible = (Math.max(0, abajo - arriba) / alto) * ALTO_MUNDO;
   const escala = Math.max(0.2, Math.min(maximo, disponible / altoRelativo));
   const centro = (arriba + abajo) / 2;
@@ -80,8 +82,8 @@ function colocarEsfera(e: EstadoEsfera, salida: number, huecos?: Huecos | null) 
       return;
     }
     // Medido: nunca pegada a la cabecera ni al título, ni encima del texto
-    const a = encajar(huecos.portada, ALTO_ESFERA, Math.min(0.46, m * 0.7));
-    const b = encajar(huecos.camino, ALTO_PERSONAJE, Math.min(0.5, m * 0.78));
+    const a = encajar(huecos.portada, ALTO_ESFERA, Math.min(0.46, m * 0.7), huecos.lienzo);
+    const b = encajar(huecos.camino, ALTO_PERSONAJE, Math.min(0.5, m * 0.78), huecos.lienzo);
     e.escala = a.escala + (b.escala - a.escala) * salida;
     e.y = a.y + (b.y - a.y) * salida;
     return;
@@ -135,6 +137,7 @@ function medirHuecos(
   texto: HTMLElement | null,
   titulo: HTMLElement | null,
   nombres: HTMLElement | null,
+  lienzo: HTMLElement | null,
 ): Huecos | null {
   if (!portada || !texto || !titulo || !nombres) return null;
   // Portada: entre la cabecera y el comienzo del texto
@@ -145,8 +148,9 @@ function medirHuecos(
   const tituloAbajo = arribaEnPagina(titulo) - base + titulo.offsetHeight;
   const nombresArriba = arribaEnPagina(nombres) - base;
   return {
-    portada: [CABECERA + AIRE, textoArriba - AIRE],
+    portada: [CABECERA + 32, textoArriba - AIRE],
     camino: [tituloAbajo + AIRE, nombresArriba - AIRE],
+    lienzo: lienzo?.clientHeight || innerHeight,
   };
 }
 
@@ -174,6 +178,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
   const cosmos = useRef<HTMLDivElement>(null);
   const portada = useRef<HTMLElement>(null);
   const portadaTexto = useRef<HTMLDivElement>(null);
+  const lienzo = useRef<HTMLDivElement>(null);
   const camino = useRef<HTMLElement>(null);
   const caminoTitulo = useRef<HTMLHeadingElement>(null);
   const nombres = useRef<HTMLDivElement>(null);
@@ -197,7 +202,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
     portadaAlto: portada.current?.offsetHeight ?? 1,
     caminoArriba: camino.current?.offsetTop ?? 0,
     caminoAlto: camino.current?.offsetHeight ?? 1,
-    huecos: medirHuecos(portada.current, portadaTexto.current, caminoTitulo.current, nombres.current),
+    huecos: medirHuecos(portada.current, portadaTexto.current, caminoTitulo.current, nombres.current, lienzo.current),
   }));
 
   useProgresoScroll(cosmos, (_p, { arriba, velocidad }) => {
@@ -237,7 +242,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
 
   return (
     <div ref={cosmos} data-ambito="mi-aura" className={cx(estilos.cosmos, 'sangrado')}>
-      <div className={estilos.lienzo}>
+      <div ref={lienzo} className={estilos.lienzo}>
         <Esfera3D estado={esfera} />
       </div>
 

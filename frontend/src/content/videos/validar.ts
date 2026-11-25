@@ -56,6 +56,10 @@ export function validarMetadatosVideo(datos: unknown, carpeta: string): Result<E
     }
     if (typeof a.video === 'string' && !/\.mp4$/i.test(a.video)) e.push('archivos.video debe ser .mp4 (H.264/AAC)');
     if (typeof a.videoAlterno === 'string' && !/\.webm$/i.test(a.videoAlterno)) e.push('archivos.videoAlterno debe ser .webm');
+    // Opcional: versión ligera para teléfonos
+    if (a.videoMovil !== undefined && a.videoMovil !== null && (!esNombreArchivo(a.videoMovil) || !/\.mp4$/i.test(String(a.videoMovil)))) {
+      e.push('archivos.videoMovil debe ser null o un archivo .mp4 simple (sin carpetas)');
+    }
     if (typeof a.poster === 'string' && !/\.(webp|avif|jpg)$/i.test(a.poster)) e.push('archivos.poster debe ser .webp, .avif o .jpg');
     if (
       !esRegistro(a.subtitulos) ||

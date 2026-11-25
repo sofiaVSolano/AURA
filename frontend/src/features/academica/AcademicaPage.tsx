@@ -67,6 +67,9 @@ function enderezar(e: PointerEvent<HTMLElement>) {
   e.currentTarget.style.setProperty('--rx', '0deg');
 }
 
+/** Misma condición que el CSS de la escena del viaje (AcademicaPage.module.css). */
+const ESCENA_VIAJE = typeof window === 'undefined' ? { matches: false } : matchMedia('(min-width: 60rem) and (min-height: 40rem)');
+
 /** El viaje: un camino dibujado sobre papel, con cinco paradas y la meta. */
 function Camino({ portada }: { portada: ReactNode }) {
   const { carga: cargaAura, evolucion } = useMiAura();
@@ -103,6 +106,9 @@ function Camino({ portada }: { portada: ReactNode }) {
   useProgresoScroll(
     seccion,
     (prog, { velocidad }) => {
+      // El viaje animado solo existe en pantallas grandes; en el teléfono la ruta es una
+      // lista y escribir estas variables recalcularía el estilo de toda la sección en cada cuadro
+      if (!ESCENA_VIAJE.matches) return;
       const x = INICIO + prog * RECORRIDO;
       const el = seccion.current;
       el?.style.setProperty('--avance', prog.toFixed(4));
