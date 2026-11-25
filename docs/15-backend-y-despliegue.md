@@ -108,6 +108,29 @@ npm run build && npm run servir
 
 En `backend/`, `npm test` ejecuta las 14 pruebas del API y de la base de datos.
 
+## Despliegue con Docker
+
+Es la forma recomendada: un solo comando levanta las dos partes, desde la raíz del repositorio.
+
+```bash
+docker compose up -d --build     # construye y arranca API + web
+docker compose ps                # estado (ambos deben quedar «healthy»)
+docker compose logs -f           # registros
+docker compose down              # detener
+```
+
+| Servicio | Imagen | Puerto | Volúmenes |
+|---|---|---|---|
+| `backend` | `aura-backend` (`backend/Dockerfile`) | 4054 solo en la red interna de Docker | `backend/datos` (SQLite), `content` (solo lectura) |
+| `web` | `aura-web` (`frontend/Dockerfile`) | **4046** público (`AURA_PUERTO` lo cambia) | `content` (solo lectura) |
+
+- **Configuración:** los mismos `backend/.env` y `frontend/.env.servidor`. `compose.yaml` solo fija lo propio de Docker (host `0.0.0.0`, puertos internos, ruta de la base y `API_URL=http://backend:4054`), que tiene prioridad sobre esos archivos.
+- **Videos fuera de la imagen:** `content/` se monta como volumen y, al arrancar, `web` enlaza los medios **publicados** (`MEDIOS_MODO=enlace` en `publicar-medios.ts`), sin copiar gigas. Para publicar videos nuevos basta con subir los archivos a `content/` y reiniciar: `docker compose restart web`.
+- **Arranque ordenado:** `web` espera a que el API responda `/api/salud` (healthcheck). Ambos se reinician solos si fallan o si se reinicia el servidor (`restart: unless-stopped`).
+- **Seguridad:** los contenedores corren como el usuario `node` (sin privilegios) y el API no se publica fuera de Docker. Las imágenes no llevan secretos, datos ni videos (`.dockerignore`).
+- **Actualizar:** `git pull && docker compose up -d --build`. Las migraciones de la base se aplican solas al arrancar.
+- **Copias de seguridad:** `backend/datos/aura.db` (con sus `-wal`/`-shm`), con el servicio detenido o con `docker compose exec backend node -e "new (require('node:sqlite').DatabaseSync)('datos/aura.db').exec(\"VACUUM INTO 'datos/copia.db'\")"`.
+
 ## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**: el acceso SSH con las credenciales recibidas fue rechazado)
 
 Datos comprobados: Ubuntu con OpenSSH 9.6, usuario `sofia`, **SSH en el puerto 4054** (y en el 22) y el **4046** abierto para el frontend. Como el 4054 lo ocupa el SSH, en el servidor el API escucha en **127.0.0.1:4055** (no se expone). La IP y las credenciales **no se guardan en el repositorio**: van solo en los `.env` del servidor. Falta por confirmar si hay dominio o HTTPS.

@@ -11,6 +11,16 @@ docs/       documentación del proyecto
 
 ## Inicio rápido
 
+### Con Docker (todo de una vez)
+
+```bash
+cp backend/.env.example backend/.env                   # configura orígenes, clave de IA, etc.
+cp frontend/.env.servidor.example frontend/.env.servidor  # opcional
+docker compose up -d --build                           # API + web en http://<servidor>:4046
+```
+
+`compose.yaml` levanta el API (solo en la red interna) y la web (puerto 4046), que le reenvía `/api`. La base de datos queda en `backend/datos/` y los videos se leen de `content/` (volúmenes). Detalles, actualización y copias de seguridad: [docs/15](docs/15-backend-y-despliegue.md#despliegue-con-docker).
+
 Backend: `cd backend && cp .env.example .env && npm start`. Arquitectura, seguridad y despliegue: [docs/15](docs/15-backend-y-despliegue.md).
 
 ### Frontend
