@@ -50,8 +50,8 @@ function geometria() {
  * entre lo que tiene encima (cabecera o título) y lo que tiene debajo (el texto).
  */
 interface Huecos {
-  portada: [number, number];
-  camino: [number, number];
+  portada: [number, number] | null;
+  camino: [number, number] | null;
   /** Alto real del lienzo 3D (en el teléfono, con la barra del navegador, no siempre es innerHeight). */
   lienzo: number;
 }
@@ -75,17 +75,20 @@ function colocarEsfera(e: EstadoEsfera, salida: number, huecos?: Huecos | null) 
   const { movil, mitadAncho: m } = geometria();
   if (movil) {
     e.x = 0;
-    if (!huecos) {
+    const hueco = salida < 0.5 ? huecos?.portada : huecos?.camino;
+    if (!huecos || !hueco) {
       // Antes de medir: posición aproximada en la franja superior
       e.y = 0.62 - salida * 0.2;
       e.escala = 0.42;
       return;
     }
     // Medido: nunca pegada a la cabecera ni al título, ni encima del texto
-    const a = encajar(huecos.portada, ALTO_ESFERA, Math.min(0.46, m * 0.7), huecos.lienzo);
-    const b = encajar(huecos.camino, ALTO_PERSONAJE, Math.min(0.5, m * 0.78), huecos.lienzo);
-    e.escala = a.escala + (b.escala - a.escala) * salida;
-    e.y = a.y + (b.y - a.y) * salida;
+    const f =
+      salida < 0.5
+        ? encajar(hueco, ALTO_ESFERA, Math.min(0.46, m * 0.7), huecos.lienzo)
+        : encajar(hueco, ALTO_PERSONAJE, Math.min(0.5, m * 0.78), huecos.lienzo);
+    e.escala = f.escala;
+    e.y = f.y;
     return;
   }
   const escalaPortada = Math.min(0.98, m * 0.4);
@@ -139,40 +142,48 @@ function medirHuecos(
   nombres: HTMLElement | null,
   lienzo: HTMLElement | null,
 ): Huecos | null {
-  if (!portada || !texto || !titulo || !nombres) return null;
+  if (!(portada && texto) && !(titulo && nombres)) return null;
   // Portada: entre la cabecera y el comienzo del texto
-  const textoArriba = arribaEnPagina(texto) - arribaEnPagina(portada);
+  const enPortada: [number, number] | null =
+    portada && texto ? [CABECERA + 32, arribaEnPagina(texto) - arribaEnPagina(portada) - AIRE] : null;
   // Camino (fijo arriba de la pantalla): entre el título y el nombre de la etapa
-  const fijo = titulo.offsetParent as HTMLElement | null;
-  const base = fijo ? arribaEnPagina(fijo) : 0;
-  const tituloAbajo = arribaEnPagina(titulo) - base + titulo.offsetHeight;
-  const nombresArriba = arribaEnPagina(nombres) - base;
-  return {
-    portada: [CABECERA + 32, textoArriba - AIRE],
-    camino: [tituloAbajo + AIRE, nombresArriba - AIRE],
-    lienzo: lienzo?.clientHeight || innerHeight,
-  };
+  let enCamino: [number, number] | null = null;
+  if (titulo && nombres) {
+    const fijo = titulo.offsetParent as HTMLElement | null;
+    const base = fijo ? arribaEnPagina(fijo) : 0;
+    enCamino = [arribaEnPagina(titulo) - base + titulo.offsetHeight + AIRE, arribaEnPagina(nombres) - base - AIRE];
+  }
+  return { portada: enPortada, camino: enCamino, lienzo: lienzo?.clientHeight || innerHeight };
 }
 
-const notaEtapa = (nacida: boolean, nombre: string) =>
-  nacida ? `Así es ${nombre}: con la forma, los colores y la expresión que elegiste.` : 'Así se verá el tuyo: tú eliges su forma, sus colores y su expresión.';
-
-/** Etapa con más texto (descripción, cómo se obtiene y la nota desde la 4.ª). */
+/** Etapa con la descripción más larga (reserva el alto del texto). */
 const ETAPA_TEXTO_MAS_LARGO = ETAPAS.reduce(
-  (mayor, e, k) => {
-    const largo = e.descripcion.length + e.comoSeObtiene.length + (k >= 3 ? 80 : 0);
-    return largo > mayor.largo ? { k, largo } : mayor;
-  },
+  (mayor, e, k) => (e.descripcion.length > mayor.largo ? { k, largo: e.descripcion.length } : mayor),
   { k: 0, largo: -1 },
 ).k;
 
-const TITULAR = 'No tienes que recorrer este camino a ciegas.'.split(' ');
+const TITULAR = 'Acompañamiento para tu proyecto de grado.'.split(' ');
 
 /* ————————————————————————————————————————————————————————————————
-   1 · Cosmos: portada + evolución. La esfera 3D (tu AURA, en tus colores)
-   queda fija mientras el scroll la lleva de la portada a sus cinco etapas.
+   1 · Cosmos: tu AURA en 3D (en tus colores). Se usa dos veces: en la portada
+   (la esfera junto al mensaje) y, más abajo, en el camino de sus cinco etapas.
    ———————————————————————————————————————————————————————————————— */
-function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAvatar; nombre: string; nacida: boolean }) {
+type ParteCosmos = 'portada' | 'camino';
+
+function Cosmos({
+  parte,
+  preferencias,
+  nombre,
+  nacida,
+  sesionActiva,
+}: {
+  parte: ParteCosmos;
+  preferencias: PreferenciasAvatar;
+  nombre: string;
+  nacida: boolean;
+  sesionActiva: boolean;
+}) {
+  const enPortada = parte === 'portada';
   const matizA = matizDe(preferencias.colorPrincipal);
   const matizB = matizDe(preferencias.colorComplementario);
   const cosmos = useRef<HTMLDivElement>(null);
@@ -189,7 +200,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
   const esfera = useRef<EstadoEsfera>(null as unknown as EstadoEsfera);
   if (!esfera.current) {
     esfera.current = { x: 0, y: 0, escala: 1, etapa: 0, matizA, matizB, energia: 0.15, forma: 0, expresion: 0, birrete: 0, aro: 0 };
-    if (typeof window !== 'undefined') colocarEsfera(esfera.current, 0);
+    if (typeof window !== 'undefined') colocarEsfera(esfera.current, enPortada ? 0 : 1);
   }
   esfera.current.matizA = matizA;
   esfera.current.matizB = matizB;
@@ -211,7 +222,9 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
     // Posiciones derivadas de la lectura suavizada del contenedor (sin saltos de rueda)
     const arribaPortada = arriba + m.portadaArriba;
     const arribaCamino = arriba + m.caminoArriba;
-    const salida = suave(tramo(-arribaPortada / m.portadaAlto, 0, 1));
+    // Portada: la esfera se queda junto al mensaje; camino: en su lugar entre título y texto
+    void arribaPortada;
+    const salida = enPortada ? 0 : 1;
     const recorrido = Math.max(1, m.caminoAlto - innerHeight);
     const etapa = limitar((-arribaCamino / recorrido) * 4.4 - 0.2, 0, 4);
     const e = esfera.current;
@@ -246,6 +259,7 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
         <Esfera3D estado={esfera} />
       </div>
 
+      {enPortada && (
       <section ref={portada} className={estilos.portada} aria-labelledby="titulo-inicio">
         <div ref={portadaTexto} className={estilos.portadaTexto}>
           {nacida && <p className={estilos.saludo}>Hola de nuevo. {nombre} te estaba esperando.</p>}
@@ -258,36 +272,23 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
               </Fragment>
             ))}
           </h1>
-          <p className={estilos.bajada}>
-            AURA te acompaña durante tu proyecto de grado: en lo que sientes y en lo que construyes.
-          </p>
+          <p className={estilos.bajada}>Guías paso a paso para escribirlo y videos breves para los días difíciles.</p>
           <div className={estilos.acciones}>
-            {nacida ? (
-              <BotonEnlace to="/mi-aura" tamano="lg" iconoFin="flecha">
-                Visitar a {nombre}
-              </BotonEnlace>
-            ) : (
-              <>
-                <BotonEnlace to="/comenzar" tamano="lg" iconoFin="flecha">
-                  Dar vida a mi AURA
-                </BotonEnlace>
-                <BotonEnlace to="/emocional" tamano="lg" variante="secundario">
-                  Explorar primero
-                </BotonEnlace>
-              </>
-            )}
+            <AccionPrincipal nacida={nacida} nombre={nombre} sesionActiva={sesionActiva} />
           </div>
         </div>
-        <a href="#titulo-camino" className={estilos.bajar}>
-          Desliza para verla crecer
+        <a href="#que-encuentras" className={estilos.bajar}>
+          Qué encuentras en AURA
           <span aria-hidden="true" />
         </a>
       </section>
+      )}
 
-      <section ref={camino} className={estilos.camino} aria-labelledby="titulo-camino">
+      {!enPortada && (
+      <section ref={camino} className={cx(estilos.camino, estilos.caminoSolo)} aria-labelledby="titulo-camino">
         <div className={estilos.caminoFijo}>
           <h2 ref={caminoTitulo} id="titulo-camino" className={estilos.caminoTitulo}>
-            Un AURA que crece contigo
+            Mi AURA crece con lo que haces
           </h2>
           <div ref={nombres} className={estilos.nombres} aria-hidden="true">
             {ETAPAS.map((e, k) => (
@@ -303,8 +304,6 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
               {[{ k: activo, medida: false }, { k: ETAPA_TEXTO_MAS_LARGO, medida: true }].map(({ k, medida }) => (
                 <p key={medida ? 'medida' : k} className={cx(estilos.detalleTexto, medida && estilos.detalleMedida)}>
                   {ETAPAS[k]?.descripcion}
-                  <span>{ETAPAS[k]?.comoSeObtiene}</span>
-                  {k >= 3 && <span className={estilos.detalleNota}>{notaEtapa(nacida, nombre)}</span>}
                 </p>
               ))}
             </div>
@@ -320,13 +319,69 @@ function Cosmos({ preferencias, nombre, nacida }: { preferencias: PreferenciasAv
           {ETAPAS.map((e) => (
             <li key={e.id}>
               <span className="visualmente-oculto">
-                {e.nombre}. {e.descripcion} {e.comoSeObtiene}
+                {e.nombre}. {e.descripcion}
               </span>
             </li>
           ))}
         </ol>
       </section>
+      )}
     </div>
+  );
+}
+
+/**
+ * El único llamado principal de la portada, según quién visita:
+ * sin cuenta, crearla (AURA pide sesión para guardar tu avance); con cuenta y sin AURA,
+ * darle vida; con AURA, visitarla.
+ */
+function AccionPrincipal({ nacida, nombre, sesionActiva }: { nacida: boolean; nombre: string; sesionActiva: boolean }) {
+  if (nacida)
+    return (
+      <BotonEnlace to="/mi-aura" tamano="lg" iconoFin="flecha">
+        Visitar a {nombre}
+      </BotonEnlace>
+    );
+  if (apiHabilitada && !sesionActiva)
+    return (
+      <BotonEnlace to="/cuenta?modo=registro" tamano="lg" iconoFin="flecha">
+        Crear mi cuenta
+      </BotonEnlace>
+    );
+  return (
+    <BotonEnlace to="/comenzar" tamano="lg" iconoFin="flecha">
+      Empezar
+    </BotonEnlace>
+  );
+}
+
+/* ————————————————————————————————————————————————————————————————
+   Qué encuentras: el propósito de AURA en tres líneas, justo después
+   de la portada (antes, este mapa aparecía recién al final).
+   ———————————————————————————————————————————————————————————————— */
+const SECCIONES = [
+  { to: '/academica', titulo: 'AURA académica', texto: 'Guías, ejemplos y ejercicios para cada parte de tu proyecto, de la idea a la sustentación.' },
+  { to: '/emocional', titulo: 'AURA emocional', texto: 'Videos breves para cuando sientes miedo, cansancio o frustración con tu proyecto.' },
+  { to: '/mi-aura', titulo: 'Mi AURA', texto: 'Un personaje que crece con cada guía, video o práctica que completas.' },
+] as const;
+
+function QueEncuentras() {
+  return (
+    <section id="que-encuentras" data-ambito="mi-aura" className={cx(estilos.encuentras, 'sangrado')} aria-labelledby="titulo-encuentras">
+      <h2 id="titulo-encuentras" className={estilos.encuentrasTitulo}>
+        Qué encuentras en AURA
+      </h2>
+      <nav aria-labelledby="titulo-encuentras" className={estilos.mapa}>
+        {SECCIONES.map((d) => (
+          <Link key={d.to} to={d.to} viewTransition className={estilos.destino}>
+            <span className={estilos.destinoTitulo}>
+              {d.titulo} <Icono nombre="flecha" tamano={18} />
+            </span>
+            <span className={estilos.destinoTexto}>{d.texto}</span>
+          </Link>
+        ))}
+      </nav>
+    </section>
   );
 }
 
@@ -385,16 +440,15 @@ function MundoAcademico() {
         alProgreso={(p) => portada.current?.style.setProperty('--r', suave(tramo(p, 0, 0.32)).toFixed(4))}
       >
         <div ref={portada} className={estilos.academicaPortada}>
-          <p className={estilos.academicaKicker}>
-            {ruta.etapas.length} etapas · {totalTemas} temas · a tu ritmo
-          </p>
           <div className={estilos.academicaMarca}>
             <PalabraAjustada texto="Académica" />
           </div>
           <div className={estilos.academicaTexto}>
             <h2 className={estilos.academicaTitulo}>Tu proyecto de grado, etapa por etapa.</h2>
             <div className={estilos.academicaCuerpo}>
-              <p>Guías, ejemplos y ejercicios para construirlo con calma, adaptados a tu universidad.</p>
+              <p>
+                {ruta.etapas.length} etapas y {totalTemas} temas, cada uno con su guía y ejemplos.
+              </p>
               <Link to="/academica" viewTransition className={estilos.enlaceFuerte}>
                 Entrar a AURA académica <Icono nombre="flecha" tamano={20} />
               </Link>
@@ -437,19 +491,11 @@ function MundoAcademico() {
                   </div>
                   <h3 className={estilos.paginaTitulo}>{etapa.titulo}</h3>
                   <p className={estilos.paginaTexto}>{etapa.descripcion}</p>
-                  <ol className={estilos.temas}>
-                    {etapa.temas.map((tema, j) => (
-                      <li key={tema.id}>
-                        <Link to={rutaTema({ etapa, tema })} viewTransition>
-                          <span className={estilos.temaNumero} aria-hidden="true">
-                            {k + 1}.{j + 1}
-                          </span>
-                          <span className={estilos.temaTitulo}>{tema.titulo}</span>
-                          <Icono nombre="flecha" tamano={18} />
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
+                  {etapa.temas[0] && (
+                    <Link to={rutaTema({ etapa, tema: etapa.temas[0] })} viewTransition className={estilos.paginaEnlace}>
+                      Empezar por «{etapa.temas[0].titulo}» <Icono nombre="flecha" tamano={18} />
+                    </Link>
+                  )}
                 </article>
               ))}
             </div>
@@ -520,13 +566,6 @@ function MundoEmocional() {
    4 · Cierre: tu AURA vuelve, en la etapa en la que está, y la página
    termina con un mapa claro y el nombre a todo lo ancho (sin cortes).
    ———————————————————————————————————————————————————————————————— */
-const DESTINOS = [
-  { to: '/emocional', titulo: 'AURA emocional', texto: 'Videos breves para lo que sientes.' },
-  { to: '/academica', titulo: 'AURA académica', texto: 'Guías, ejemplos y laboratorios.' },
-  { to: '/mi-aura', titulo: 'Mi AURA', texto: 'Tu compañera y lo que has vivido.' },
-  { to: '/recursos', titulo: 'Recursos', texto: 'Apoyo de tu institución.' },
-] as const;
-
 function Cierre({ nacida, preferencias, etapa }: { nacida: boolean; preferencias: PreferenciasAvatar; etapa: number }) {
   const nombre = preferencias.nombre;
   const matizA = matizDe(preferencias.colorPrincipal);
@@ -556,67 +595,18 @@ function Cierre({ nacida, preferencias, etapa }: { nacida: boolean; preferencias
     <section ref={seccion} data-ambito="mi-aura" className={cx(estilos.cierre, 'sangrado', 'textura-grano')} aria-labelledby="titulo-cierre">
       <div className={estilos.cierreEscena}>
         <div className={estilos.cierreTexto}>
-          <p className={estilos.cierreKicker}>{nacida ? `${nombre} · ${ETAPAS[etapa]?.nombre ?? ''}` : 'Cuando quieras'}</p>
           <h2 id="titulo-cierre" className={estilos.cierreFrase}>
-            {nacida ? `${nombre} sigue aquí.` : 'Empieza con una esfera de luz.'}
+            {nacida ? `${nombre} sigue aquí.` : 'No tienes que hacerlo a ciegas.'}
           </h2>
           <p className={estilos.cierreBajada}>
-            {nacida
-              ? 'Cada experiencia con sentido la hace crecer. Las pausas nunca restan.'
-              : 'Tu AURA nace contigo, sin requisitos, y crece a tu ritmo.'}
+            {nacida ? 'Cada paso que das la hace crecer. Las pausas nunca restan.' : 'Empieza cuando quieras y avanza a tu ritmo.'}
           </p>
-          <BotonEnlace to={nacida ? '/mi-aura' : '/comenzar'} tamano="lg" iconoFin="flecha">
-            {nacida ? `Visitar a ${nombre}` : 'Dar vida a mi AURA'}
-          </BotonEnlace>
+          <AccionPrincipal nacida={nacida} nombre={nombre} sesionActiva={sesion.activa} />
         </div>
         <div className={estilos.cierreEsfera}>
           <Esfera3D estado={esfera} />
         </div>
       </div>
-
-      <nav aria-label="Explorar AURA" className={estilos.mapa}>
-        {DESTINOS.map((d) => (
-          <Link key={d.to} to={d.to} viewTransition className={estilos.destino}>
-            <span className={estilos.destinoTitulo}>
-              {d.titulo} <Icono nombre="flecha" tamano={18} />
-            </span>
-            <span className={estilos.destinoTexto}>{d.texto}</span>
-          </Link>
-        ))}
-      </nav>
-
-      {/* Entrar o crear cuenta: la última invitación, justo antes de la firma */}
-      {apiHabilitada && sesion.servidorDisponible && (
-        <div className={estilos.acceso}>
-          <p className={estilos.accesoTexto}>
-            {sesion.activa ? (
-              <>
-                Hola de nuevo. <em>Tu recorrido te espera.</em>
-              </>
-            ) : (
-              <>
-                Empieza hoy. <em>Tu AURA te está esperando.</em>
-              </>
-            )}
-          </p>
-          <div className={estilos.accesoBotones}>
-            {sesion.activa ? (
-              <Link to="/mi-aura" viewTransition className={estilos.accesoPrincipal}>
-                Ir a Mi AURA <span aria-hidden="true">→</span>
-              </Link>
-            ) : (
-              <>
-                <Link to="/cuenta?modo=registro" viewTransition className={estilos.accesoPrincipal}>
-                  Crear mi cuenta <span aria-hidden="true">→</span>
-                </Link>
-                <Link to="/cuenta" viewTransition className={estilos.accesoSecundario}>
-                  Ya tengo cuenta: entrar
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      )}
 
       <div className={estilos.marca}>
         <PalabraAjustada texto="AURA" />
@@ -639,16 +629,18 @@ export function InicioPage() {
   const p = nacida && datos ? datos.preferencias : { ...PREFERENCIAS_INICIALES, expresion: 'alegre' as const };
   return (
     <div className={estilos.inicio}>
-      <Cosmos preferencias={p} nombre={p.nombre} nacida={nacida} />
+      {/* 1 · Qué es AURA  2 · Qué encuentras  3-4 · Académica y emocional  5 · Tu AURA  6 · Cierre */}
+      <Cosmos parte="portada" preferencias={p} nombre={p.nombre} nacida={nacida} sesionActiva={sesion.activa} />
+      <QueEncuentras />
+      <MundoAcademico />
+      <MundoEmocional />
+      <Cosmos parte="camino" preferencias={p} nombre={p.nombre} nacida={nacida} sesionActiva={sesion.activa} />
       {/* Fuera del cosmos: la esfera y los nombres dejan la pantalla juntos, sin pisarse */}
       <div data-ambito="mi-aura" className={cx(estilos.notaFondo, 'sangrado')}>
         <p className={estilos.nota}>
-          Las pausas y las emociones difíciles <strong>nunca restan</strong>. Solo suman las experiencias que tienen
-          sentido para ti.
+          Las pausas y los días difíciles <strong>nunca restan</strong>.
         </p>
       </div>
-      <MundoAcademico />
-      <MundoEmocional />
       <Cierre nacida={nacida} preferencias={p} etapa={nacida ? (evolucion?.indice ?? 0) : 0} />
     </div>
   );
