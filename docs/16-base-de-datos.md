@@ -39,7 +39,7 @@ Principios que se mantienen:
 
 ### Lo que se envía a terceros
 
-- **OpenAI (GPT-4o mini):** solo el texto que la persona pide evaluar en un laboratorio, o el archivo de su tesis.
+- **Anthropic (Claude Haiku 5.5):** solo el texto que la persona pide evaluar en un laboratorio, o el archivo de su tesis.
   - Lo envía el servidor, con la clave de `backend/.env`.
   - No se guarda en AURA y la página avisa antes de enviarlo.
 - **Nada más:** no hay analítica, publicidad ni otros servicios.

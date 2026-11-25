@@ -166,7 +166,7 @@ export function Redactar({ actividad: a, labId, onRevisada }: Props) {
       {evaluacion && <Resultado e={evaluacion} />}
 
       <p className={estilos.privacidad}>
-        Tu texto se envía a un servicio de IA (OpenAI) solo para evaluarlo; AURA no lo guarda en el servidor. No incluyas datos
+        Tu texto se envía a un servicio de IA (Anthropic, Claude) solo para evaluarlo; AURA no lo guarda en el servidor. No incluyas datos
         personales. La IA puede equivocarse: úsala como guía, junto con tu director o directora.
       </p>
     </div>

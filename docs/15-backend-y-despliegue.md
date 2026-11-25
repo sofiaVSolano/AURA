@@ -9,13 +9,14 @@ Navegador ──HTTP(S)──► frontend/servidor/servidor.mjs  (puerto 4046, p
                                          ├─ cuentas y sesiones
                                          ├─ datos por módulo (mi-aura, emocional, academica)
                                          ├─ experiencias validadas (progreso de Mi AURA)
-                                         ├─ evaluaciones con IA (GPT-4o mini; la clave solo vive aquí)
+                                         ├─ evaluaciones con IA (Claude Haiku 5.5; la clave solo vive aquí)
                                          └─ SQLite (node:sqlite)  backend/datos/aura.db  → docs/16
 content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 ```
 
 - **Mismo origen:** el navegador solo habla con el puerto 4046, que reenvía `/api` al backend. Así la cookie de sesión no necesita CORS y la CSP `connect-src 'self'` se mantiene.
-- **Sin dependencias en ejecución.** El backend usa solo `node:http`, `node:sqlite` y `node:crypto`; el servidor del frontend, solo `node:http`, `node:fs` y `node:zlib`. Como dependencias de desarrollo, el backend solo tiene `typescript` y `@types/node`, ya auditadas.
+- **Dependencias mínimas.** El servidor del frontend usa solo `node:http`, `node:fs` y `node:zlib`. El backend usa `node:http`, `node:sqlite` y `node:crypto`, más una única dependencia en ejecución: el SDK oficial de Anthropic (`@anthropic-ai/sdk` 1.9.0) para la evaluación con IA. Se revisó según docs/04 (R6–R8): `npm audit` sin vulnerabilidades, ningún script de instalación y versiones con al menos 7 días; `overrides` fija `@babel/runtime` 7.29.14 y `standardwebhooks` 1.1.1 por esa misma regla. Como dependencias de desarrollo, el backend solo tiene `typescript` y `@types/node`.
+- **IA:** Claude Haiku 5.5 con salidas estructuradas (JSON Schema). La clave va en `CLAUDE_API_KEY` dentro de `backend/.env`; sin ella, las evaluaciones con IA se desactivan.
 - **Reglas compartidas:** el backend importa los validadores y reglas puras del frontend (`frontend/src/features/*/dominio`, `frontend/src/content/**/validar.ts` y `frontend/src/lib/consentimiento.ts`). Cliente y servidor aplican **exactamente las mismas reglas**.
 - **Hay que iniciar sesión para entrar a AURA** (salvo Inicio y Recursos). Con cuenta, cada módulo guarda en el servidor (`src/lib/almacenLocal.ts` elige el almacén). Si el servidor de cuentas no responde, la app sigue funcionando con los datos en el navegador para no bloquear a nadie.
 - **Base de datos:** una tabla por tipo de dato, con restricciones y borrado en cascada. El diccionario y el inventario de todo lo que se recolecta están en [16-base-de-datos.md](16-base-de-datos.md).

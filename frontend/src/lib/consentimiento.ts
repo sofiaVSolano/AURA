@@ -1,6 +1,6 @@
 // Texto y versión del consentimiento para guardar datos en una cuenta.
 // Fuente única: lo usan el frontend (formulario) y el backend (validación del registro).
-export const VERSION_CONSENTIMIENTO = '2026-11-v2';
+export const VERSION_CONSENTIMIENTO = '2026-11-v3';
 
 export const QUE_SE_GUARDA = [
   'Tu correo y una versión cifrada (hash) de tu contraseña; nunca la contraseña en texto plano.',
@@ -13,5 +13,5 @@ export const QUE_SE_GUARDA = [
 export const NO_SE_GUARDA = [
   'Cómo te sientes cuando lo eliges al entrar (solo orienta la navegación).',
   'Tus respuestas del simulador de sustentación.',
-  'Lo que escribes para que la IA lo evalúe ni tu tesis: se envían a OpenAI solo para evaluarlos y no se guardan en AURA.',
+  'Lo que escribes para que la IA lo evalúe ni tu tesis: se envían a Anthropic (Claude) solo para evaluarlos y no se guardan en AURA.',
 ] as const;
