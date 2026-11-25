@@ -113,6 +113,9 @@
   --radio-pildora: 999px;
   --borde-fino: 1px;
   --objetivo-tactil: 44px;
+  /* Alto de los controles secundarios (chips, pastillas, «ver más»): compactos con
+     mouse, y nunca por debajo del objetivo táctil en pantallas táctiles. */
+  --alto-control: 36px;
 
   /* — Profundidad: sombras con desplazamiento y desenfoque suave — */
   --sombra-1: 0 1px 2px rgb(28 23 41 / 0.06), 0 2px 6px rgb(28 23 41 / 0.06);
@@ -134,4 +137,10 @@
   /* — Capas — */
   --capa-nav: 20;
   --capa-modal: 50;
+}
+
+@media (pointer: coarse) {
+  :root {
+    --alto-control: var(--objetivo-tactil);
+  }
 }

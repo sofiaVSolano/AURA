@@ -1,6 +1,6 @@
 /* Tu AURA flotando en la esquina: nunca tapa la navegación inferior del móvil */
 .acompanante {
-  --tam: 104px;
+  --tam: 76px;
   position: fixed;
   inset-inline-end: var(--espacio-3);
   inset-block-end: calc(64px + env(safe-area-inset-bottom) + var(--espacio-2));
@@ -8,6 +8,19 @@
   display: grid;
   justify-items: end;
   gap: var(--espacio-2);
+  pointer-events: none;
+  transition:
+    translate 420ms var(--ease-salida),
+    opacity 260ms ease;
+}
+
+/* Teléfono: se retira hacia abajo mientras bajas leyendo */
+.acompanante[data-retirado] {
+  translate: 0 calc(var(--tam) + 72px);
+  opacity: 0;
+}
+
+.acompanante[data-retirado] .personaje {
   pointer-events: none;
 }
 
@@ -155,7 +168,7 @@
 .enlace {
   display: inline-flex;
   align-items: center;
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-4);
   border-radius: var(--radio-pildora);
   background: #f4f0ff;
@@ -174,7 +187,7 @@
 }
 
 .esconder {
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-2);
   border: 0;
   background: none;
@@ -194,7 +207,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-2);
-  min-height: 40px;
+  min-height: max(40px, var(--alto-control));
   padding-inline: var(--espacio-3) var(--espacio-4);
   border: 0;
   border-radius: var(--radio-pildora);
@@ -224,6 +237,11 @@
 @media (prefers-reduced-motion: reduce) {
   .personaje {
     animation: none;
+  }
+
+  /* Sin desplazamiento: solo se desvanece */
+  .acompanante[data-retirado] {
+    translate: none;
   }
 
   .globo,

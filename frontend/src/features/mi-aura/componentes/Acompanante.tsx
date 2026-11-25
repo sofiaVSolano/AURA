@@ -113,6 +113,31 @@ export function Acompanante() {
 
   useEffect(() => () => clearTimeout(temporizador.current), []);
 
+  // En el teléfono se retira mientras bajas leyendo (no tapa el contenido) y vuelve
+  // cuando subes, al llegar arriba o al cambiar de página, como las barras del navegador.
+  const [retirado, setRetirado] = useState(false);
+  useEffect(() => {
+    setRetirado(false);
+    const telefono = matchMedia('(max-width: 47.99rem)');
+    let ultimo = scrollY;
+    let cuadro = 0;
+    const alDesplazar = () => {
+      cancelAnimationFrame(cuadro);
+      cuadro = requestAnimationFrame(() => {
+        const y = scrollY;
+        if (!telefono.matches || y < 120) setRetirado(false);
+        else if (y > ultimo + 8) setRetirado(true);
+        else if (y < ultimo - 8) setRetirado(false);
+        ultimo = y;
+      });
+    };
+    addEventListener('scroll', alDesplazar, { passive: true });
+    return () => {
+      removeEventListener('scroll', alDesplazar);
+      cancelAnimationFrame(cuadro);
+    };
+  }, [pathname]);
+
   // Un saltito de alegría (Web Animations: no vuelve a montar el lienzo 3D)
   const salto = useRef<HTMLSpanElement>(null);
   useEffect(() => {
@@ -151,7 +176,11 @@ export function Acompanante() {
   const faltan = progreso ? Math.max(0, progreso.requerido - progreso.total) : 0;
 
   return (
-    <aside className={estilos.acompanante} aria-label={nacida ? `${p.nombre}, tu AURA` : 'Tu AURA'}>
+    <aside
+      className={estilos.acompanante}
+      data-retirado={(retirado && !abierto) || undefined}
+      aria-label={nacida ? `${p.nombre}, tu AURA` : 'Tu AURA'}
+    >
       <div className={estilos.globo} data-abierto={abierto || undefined} role="status">
         {abierto && (
           <>

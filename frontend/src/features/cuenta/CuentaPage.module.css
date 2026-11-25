@@ -46,6 +46,14 @@
   animation: aurora 16s var(--ease-respiracion) infinite alternate;
 }
 
+/* Teléfono y tableta: la escena ocupa todo el ancho y recorta el resplandor animado
+   (rota y se escala); sus bordes ya se desvanecen, así que el corte no se nota */
+@media (max-width: 59.99rem) {
+  .escena {
+    overflow: hidden;
+  }
+}
+
 @keyframes aurora {
   50% {
     transform: rotate(8deg) scale(1.08) translate(2%, -2%);
@@ -321,15 +329,14 @@
   color: var(--color-error);
 }
 
+/* Fluye como párrafo: el correo baja de línea entero y solo se parte si no cabe */
 .correo {
-  display: flex;
-  align-items: center;
-  gap: var(--espacio-2);
   overflow-wrap: anywhere;
 }
 
 .correo svg {
-  flex: none;
+  margin-inline-end: var(--espacio-2);
+  vertical-align: -3px;
   color: var(--color-exito);
 }
 
@@ -380,7 +387,7 @@
   align-items: center;
   gap: var(--espacio-2);
   justify-self: start;
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding: 0 var(--espacio-3);
   border: 0;
   border-radius: var(--radio-pildora);

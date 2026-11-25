@@ -140,3 +140,17 @@ data,
 .sangrado {
   margin-inline: calc(50% - 50vw);
 }
+
+/* Pantallas táctiles: los enlaces sueltos de las migas de pan y del pie alcanzan el
+   objetivo táctil sin cambiar su aspecto (los enlaces dentro de un párrafo no se tocan). */
+@media (pointer: coarse) {
+  :where(nav[aria-label='Ruta de navegación']) {
+    align-items: center;
+  }
+
+  :where(nav[aria-label='Ruta de navegación'], body > #root footer) a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--objetivo-tactil);
+  }
+}

@@ -205,6 +205,22 @@
   padding-block-start: var(--espacio-4);
 }
 
+.detalleCaja {
+  display: grid;
+}
+
+.detalleCaja > * {
+  grid-area: 1 / 1;
+  /* El texto real queda junto al nombre; la copia solo reserva el alto */
+  align-self: start;
+}
+
+/* Copia invisible que solo reserva el alto */
+.detalleMedida {
+  visibility: hidden;
+  animation: none;
+}
+
 .detalleTexto {
   display: grid;
   gap: var(--espacio-2);
@@ -974,6 +990,11 @@
     padding: var(--espacio-5);
     transform: none;
     opacity: 1;
+  }
+
+  /* La barra de navegación inferior (64px) no tapa el aviso de privacidad */
+  .emocional {
+    padding-block-end: calc(64px + env(safe-area-inset-bottom) + var(--espacio-4));
   }
 
   .anillo {

@@ -254,7 +254,7 @@
 }
 
 .contribuciones summary {
-  min-height: 32px;
+  min-height: var(--alto-control);
   cursor: pointer;
   color: var(--color-acento-texto);
   font-weight: 600;

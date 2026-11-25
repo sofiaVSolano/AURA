@@ -146,10 +146,6 @@ function Camino({ portada }: { portada: ReactNode }) {
           <span>{activa >= 0 && activa < N ? `Parada ${activa + 1} de ${N} · ${ruta.etapas[activa]?.titulo}` : activa === N ? '¡Meta!' : 'En la salida'}</span>
           <span className={estilos.marcadorBarra} />
         </div>
-        <h2 id="titulo-camino" className="visualmente-oculto">
-          {ruta.nombre}: el camino hasta tu sustentación
-        </h2>
-
         <div className={estilos.mundo}>
           {/* El camino */}
           <svg className={estilos.ruta} viewBox={`0 0 ${ANCHO} 100`} preserveAspectRatio="none" aria-hidden="true">
@@ -171,6 +167,10 @@ function Camino({ portada }: { portada: ReactNode }) {
             Salida
           </span>
 
+          {/* Después del h1 de la portada: el orden de títulos va h1 → h2 → h3 */}
+          <h2 id="titulo-camino" className="visualmente-oculto">
+            {ruta.nombre}: el camino hasta tu sustentación
+          </h2>
           <ol className={estilos.paradas} aria-label={ruta.nombre}>
             {ruta.etapas.map((etapa, i) => {
               const exploradas = etapa.temas.filter((t) => estadoAcad?.temas[t.id] === 'explorado').length;

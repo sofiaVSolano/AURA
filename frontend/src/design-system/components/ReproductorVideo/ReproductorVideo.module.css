@@ -4,6 +4,7 @@
 }
 
 .reproductor {
+  container: reproductor / inline-size;
   position: relative;
   overflow: hidden;
   aspect-ratio: 16 / 9;
@@ -314,7 +315,7 @@
 }
 
 .velocidad select {
-  height: 34px;
+  height: var(--alto-control);
   padding: 0 var(--espacio-2);
   border: 1px solid rgb(255 255 255 / 0.35);
   border-radius: 17px;
@@ -341,9 +342,64 @@
   background: #fff;
 }
 
-@media (max-width: 30rem) {
+/* Reproductor angosto (teléfono): la barra de progreso ocupa su propia fila a todo
+   el ancho, para poder adelantar con el dedo; los botones van debajo. El botón
+   inicial se achica para no tapar el título que traen las portadas. */
+@container reproductor (max-width: 34rem) {
+  .controles {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding: var(--espacio-4) var(--espacio-2) var(--espacio-1);
+  }
+
+  .progreso {
+    order: -1;
+    flex-basis: 100%;
+    /* Zona táctil completa sin agrandar el panel */
+    margin-block: -8px;
+    margin-inline: var(--espacio-2);
+  }
+
+  /* Empuja los botones de la derecha; el tiempo queda junto a reproducir */
   .tiempo {
-    display: none;
+    margin-inline-end: auto;
+    padding-inline: var(--espacio-1);
+  }
+
+  .controles {
+    gap: 0;
+  }
+
+  /* Muy angosto (≈360px): el tiempo cede su lugar; la barra muestra el avance */
+  @container reproductor (max-width: 21rem) {
+    .tiempo {
+      display: none;
+    }
+
+    .velocidad {
+      margin-inline-start: auto;
+    }
+  }
+
+  /* En el teléfono el volumen se maneja con los botones del aparato: sin ese
+     control, el resto cabe en una sola fila bajo la barra de progreso. */
+  @media (pointer: coarse) {
+    .volumen {
+      display: none;
+    }
+  }
+
+  .inicio {
+    width: 60px;
+    height: 60px;
+    box-shadow:
+      0 0 0 6px rgb(255 255 255 / 0.12),
+      var(--sombra-3);
+  }
+
+  .inicio svg {
+    width: 22px;
+    height: 22px;
   }
 }
 

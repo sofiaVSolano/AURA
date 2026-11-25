@@ -261,7 +261,7 @@
 }
 
 .alternar {
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-4);
   border: var(--borde-fino) solid var(--color-borde-control);
   border-radius: var(--radio-pildora);
@@ -326,7 +326,8 @@
   font-size: var(--texto-xs);
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: hsl(var(--h) 55% 35%);
+  /* 28% de luminosidad: ≥4.5:1 en todos los tonos, incluidos amarillos y verdes */
+  color: hsl(var(--h) 60% 28%);
 }
 
 .explicacion {
@@ -412,7 +413,7 @@
   align-items: center;
   gap: var(--espacio-2);
   justify-self: start;
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding: 0;
   border: 0;
   background: none;
@@ -573,7 +574,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--espacio-1);
-  min-height: 36px;
+  min-height: var(--alto-control);
   padding-inline: var(--espacio-3);
   border: 0;
   border-radius: var(--radio-pildora);
@@ -782,8 +783,8 @@
 }
 
 .margenPasos button {
-  width: 42px;
-  height: 42px;
+  width: var(--objetivo-tactil);
+  height: var(--objetivo-tactil);
   border: 0;
   border-radius: 50%;
   background: var(--color-superficie);
