@@ -26,7 +26,7 @@ const verificar = (nombre, cond) => resultados.push(`${cond ? 'OK   ' : 'FALLA'}
 await viewport(1440, 900);
 await ir('/', 2600);
 await foto('01-inicio');
-verificar('Inicio muestra la frase', await ev(`document.querySelector('h1')?.textContent.includes('No tienes que recorrer este camino a ciegas')`));
+verificar('Inicio muestra la frase', await ev(`document.querySelector('h1')?.textContent.includes('Acompañamiento para tu proyecto de grado')`));
 verificar('Inicio invita a dar vida al AURA', await ev(`!!document.querySelector('a[href="/comenzar"]')`));
 verificar('Portada: el titular no se cruza con la esfera (columna izquierda)', await ev(`document.querySelector('h1').getBoundingClientRect().right < innerWidth * 0.56`));
 // Lleva el camino a la mitad de su recorrido: debe verse la etapa 3 (Reconocimiento), entera
