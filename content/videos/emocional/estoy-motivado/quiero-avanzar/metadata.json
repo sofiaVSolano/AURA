@@ -5,21 +5,28 @@
   "categoria": "estoy-motivado",
   "subtema": "quiero-avanzar",
   "titulo": "Quiero avanzar",
-  "descripcion": "Aprovecha este impulso con metas claras y alcanzables, sin olvidar descansar.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Aprovecha este impulso con metas claras y alcanzables, sin olvidar descansar. Once consejos para avanzar con foco y sin agotarte.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 196,
+  "duracionSegundos": 196,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy motivado» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

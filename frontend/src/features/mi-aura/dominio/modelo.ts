@@ -27,6 +27,8 @@ export const EXPRESIONES = [
   { id: 'curiosa', nombre: 'Curiosa' },
   { id: 'alegre', nombre: 'Alegre' },
   { id: 'pensativa', nombre: 'Pensativa' },
+  { id: 'tierna', nombre: 'Tierna' },
+  { id: 'decidida', nombre: 'Decidida' },
 ] as const;
 export type IdExpresion = (typeof EXPRESIONES)[number]['id'];
 
@@ -184,6 +186,15 @@ export const PREFERENCIAS_INICIALES: PreferenciasAvatar = {
 };
 
 export const LARGO_MAXIMO_NOMBRE = 24;
+
+/** Momentos del proyecto para elegir al crear tu AURA cuando no hay ruta académica cargada. */
+export const MOMENTOS_GENERALES = [
+  { valor: 'eligiendo-tema', etiqueta: 'Eligiendo o definiendo mi tema' },
+  { valor: 'construyendo', etiqueta: 'Construyendo mi proyecto' },
+  { valor: 'escribiendo', etiqueta: 'Escribiendo o analizando resultados' },
+  { valor: 'cerrando', etiqueta: 'Preparando la entrega o la sustentación' },
+];
+
 
 export interface EstadoAura {
   version: 1;

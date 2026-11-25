@@ -9,14 +9,17 @@ Navegador ──HTTP(S)──► frontend/servidor/servidor.mjs  (puerto 4046, p
                                          ├─ cuentas y sesiones
                                          ├─ datos por módulo (mi-aura, emocional, academica)
                                          ├─ experiencias validadas (progreso de Mi AURA)
-                                         └─ SQLite (node:sqlite)  backend/datos/aura.db
+                                         ├─ evaluaciones con IA (Claude Haiku 5.5; la clave solo vive aquí)
+                                         └─ SQLite (node:sqlite)  backend/datos/aura.db  → docs/16
 content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 ```
 
 - **Mismo origen:** el navegador solo habla con el puerto 4046, que reenvía `/api` al backend. Así la cookie de sesión no necesita CORS y la CSP `connect-src 'self'` se mantiene.
-- **Sin dependencias en ejecución.** El backend usa solo `node:http`, `node:sqlite` y `node:crypto`; el servidor del frontend, solo `node:http`, `node:fs` y `node:zlib`. Como dependencias de desarrollo, el backend solo tiene `typescript` y `@types/node`, ya auditadas.
+- **Dependencias mínimas.** El servidor del frontend usa solo `node:http`, `node:fs` y `node:zlib`. El backend usa `node:http`, `node:sqlite` y `node:crypto`, más una única dependencia en ejecución: el SDK oficial de Anthropic (`@anthropic-ai/sdk` 1.9.0) para la evaluación con IA. Se revisó según docs/04 (R6–R8): `npm audit` sin vulnerabilidades, ningún script de instalación y versiones con al menos 7 días; `overrides` fija `@babel/runtime` 7.29.14 y `standardwebhooks` 1.1.1 por esa misma regla. Como dependencias de desarrollo, el backend solo tiene `typescript` y `@types/node`.
+- **IA:** Claude Haiku 5.5 con salidas estructuradas (JSON Schema). La clave va en `CLAUDE_API_KEY` dentro de `backend/.env`; sin ella, las evaluaciones con IA se desactivan.
 - **Reglas compartidas:** el backend importa los validadores y reglas puras del frontend (`frontend/src/features/*/dominio`, `frontend/src/content/**/validar.ts` y `frontend/src/lib/consentimiento.ts`). Cliente y servidor aplican **exactamente las mismas reglas**.
-- **Sin cuenta, AURA funciona igual que antes,** con los datos en el navegador. Con cuenta, cada módulo guarda en el servidor (`src/lib/almacenLocal.ts` elige el almacén) y las pantallas no cambian.
+- **Hay que iniciar sesión para entrar a AURA** (salvo Inicio y Recursos). Con cuenta, cada módulo guarda en el servidor (`src/lib/almacenLocal.ts` elige el almacén). Si el servidor de cuentas no responde, la app sigue funcionando con los datos en el navegador para no bloquear a nadie.
+- **Base de datos:** una tabla por tipo de dato, con restricciones y borrado en cascada. El diccionario y el inventario de todo lo que se recolecta están en [16-base-de-datos.md](16-base-de-datos.md).
 
 ## API (`/api`)
 
@@ -31,6 +34,10 @@ content/  ◄── lo leen ambos (el backend lo usa para validar referencias)
 | `PUT /datos/:modulo` | sí | sí | Guarda un módulo validado; en Mi AURA **se ignoran las experiencias enviadas** |
 | `DELETE /datos/:modulo` | sí | sí | Borra los datos de un módulo |
 | `POST /experiencias` | sí | sí | `{ tipo, refId }` → solo cuenta si apunta a contenido real; la dimensión y la etapa se calculan en el servidor |
+| `GET /ia/estado` | — | — | `{ disponible, intentos }` |
+| `GET /ia/uso` | sí | — | Evaluaciones usadas por actividad y avance hacia la revisión de tesis |
+| `POST /ia/redaccion` | sí | sí | `{ lab, actividad, texto }` → evaluación formativa; máximo 2 por actividad |
+| `POST /ia/tesis` | sí | sí | `{ nombre, tipo, datos }` (base64, hasta 8 MB) → solo con todos los laboratorios completos; máximo 2 |
 | `GET /cuenta/exportar` | sí | — | Todos los datos de la cuenta en JSON (portabilidad) |
 | `DELETE /cuenta` | sí | sí | `{ contrasena }` → elimina la cuenta y **todos** sus datos |
 
@@ -94,29 +101,29 @@ npm run build && npm run servir
 | `npm run test:integracion` | 15 comprobaciones de cuenta y sincronización entre dos navegadores |
 | `npm run test:auditoria` | 152 comprobaciones de accesibilidad, CSP, caché, gzip y rendimiento sobre la pila real |
 
-En `backend/`, `npm test` ejecuta las 10 pruebas del API.
+En `backend/`, `npm test` ejecuta las 14 pruebas del API y de la base de datos.
 
-## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**)
+## Despliegue en el servidor del profesor (pasos; **no ejecutados todavía**: el acceso SSH con las credenciales recibidas fue rechazado)
 
-Datos recibidos: el servidor tiene una IP pública, usuario `sofia` y los puertos **4046** (frontend) y **4054** (API). La IP y las credenciales **no se guardan en el repositorio**: van solo en los `.env` del servidor. Faltan por confirmar: sistema operativo, si `4054` es el puerto de SSH o el del API, si hay dominio o HTTPS, y si hay firewall.
+Datos comprobados: Ubuntu con OpenSSH 9.6, usuario `sofia`, **SSH en el puerto 4054** (y en el 22) y el **4046** abierto para el frontend. Como el 4054 lo ocupa el SSH, en el servidor el API escucha en **127.0.0.1:4055** (no se expone). La IP y las credenciales **no se guardan en el repositorio**: van solo en los `.env` del servidor. Falta por confirmar si hay dominio o HTTPS.
 
 1. **Node.js 24 LTS** en el servidor (`node --version` ≥ 24). No hace falta nada más: sin base de datos externa ni servidor web adicional.
 2. Copiar el repositorio (por `git clone` o `scp`) a, por ejemplo, `~/aura`.
 3. **Frontend:**
    ```bash
    cd ~/aura/frontend && npm ci && npm run build
-   cp .env.servidor.example .env.servidor   # PUERTO=4046, HOST=0.0.0.0, API_URL=http://127.0.0.1:4054
+   cp .env.servidor.example .env.servidor   # PUERTO=4046, HOST=0.0.0.0, API_URL=http://127.0.0.1:4055
    ```
 4. **Backend:**
    ```bash
    cd ~/aura/backend && npm ci --omit=dev
    cp .env.example .env
-   # PUERTO=4054, HOST=127.0.0.1 (no se expone), ORIGENES_PERMITIDOS=http://<IP>:4046
+   # PUERTO=4055, HOST=127.0.0.1 (no se expone), ORIGENES_PERMITIDOS=http://<IP>:4046
    # COOKIE_SEGURA=true con HTTPS; sin HTTPS habría que poner false (INSEGURO: solo para pruebas internas)
    chmod 600 .env
    ```
 5. **Arrancar ambos servicios** de forma persistente. Si el servidor usa systemd, con dos unidades (`ExecStart=/usr/bin/node src/servidor.ts` en `backend/` y `ExecStart=/usr/bin/node servidor/servidor.mjs` en `frontend/`, ambas con `Restart=on-failure` y `User=sofia`). Si no, con el gestor de procesos que exista en el servidor.
-6. **Firewall:** abrir solo el 4046 (y el SSH). El 4054 escucha en `127.0.0.1` y no debe abrirse.
+6. **Firewall:** abrir solo el 4046 y el SSH (4054). El API (4055) escucha en `127.0.0.1` y no debe abrirse.
 7. **HTTPS (muy recomendado):** con un dominio, un proxy TLS delante del 4046 (Let's Encrypt). Después, poner `HTTPS_PUBLICO=true` en el frontend, `COOKIE_SEGURA=true` en el backend y el origen `https://…` en `ORIGENES_PERMITIDOS`.
 8. **Copias de seguridad:** `backend/datos/aura.db` (y sus archivos `-wal`/`-shm`). Copiarla con el servicio detenido o con `sqlite3 aura.db ".backup copia.db"`.
 9. **Comprobar:** `curl http://<IP>:4046/api/salud` → `{"ok":true}`. Abrir `http://<IP>:4046`, crear una cuenta de prueba y eliminarla.

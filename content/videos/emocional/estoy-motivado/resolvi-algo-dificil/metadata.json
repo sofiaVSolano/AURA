@@ -5,21 +5,28 @@
   "categoria": "estoy-motivado",
   "subtema": "resolvi-algo-dificil",
   "titulo": "Resolví algo difícil",
-  "descripcion": "Detente a reconocer lo que lograste: lo que aprendiste te servirá en el próximo reto.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Detente a reconocer lo que lograste: lo que aprendiste te servirá en el próximo reto. Once consejos para reconocer tu logro y convertirlo en impulso.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 209,
+  "duracionSegundos": 209,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy motivado» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

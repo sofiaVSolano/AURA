@@ -5,21 +5,34 @@
   "categoria": "me-siento-perdido",
   "subtema": "que-espera-mi-director",
   "titulo": "No entiendo qué espera mi director",
-  "descripcion": "Preguntar también es avanzar: llevar dudas concretas a tu director o directora facilita la conversación.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Preguntar también es avanzar: llevar dudas concretas a tu director o directora facilita la conversación. Once consejos para antes, durante y después de la reunión.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 213,
+  "duracionSegundos": 213,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "director",
+    "reuniones",
+    "expectativas",
+    "preguntar",
+    "comunicación"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Javier)",
+    "Música: guitarra acústica instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

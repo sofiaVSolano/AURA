@@ -5,21 +5,28 @@
   "categoria": "estoy-cerca-del-final",
   "subtema": "me-preocupa-la-sustentacion",
   "titulo": "Me preocupa la sustentación",
-  "descripcion": "Conoces tu proyecto mejor que nadie: la sustentación es una conversación sobre lo que construiste.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Conoces tu proyecto mejor que nadie: la sustentación es una conversación sobre lo que construiste. Once consejos para preparar tu sustentación paso a paso.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 194,
+  "duracionSegundos": 194,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: grabación propia del equipo AURA",
+    "Música: pista de «Estoy cerca del final» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

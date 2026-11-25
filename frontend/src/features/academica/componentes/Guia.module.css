@@ -49,51 +49,6 @@
   max-width: 48ch;
 }
 
-/* Marca personal del tema: control segmentado */
-.marca {
-  min-inline-size: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espacio-1);
-  margin-top: var(--espacio-2);
-  padding: var(--espacio-1);
-  border: 0;
-  border-radius: var(--radio-pildora);
-  background: var(--color-superficie-2);
-}
-
-.opcionMarca {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding-inline: var(--espacio-4);
-  border-radius: var(--radio-pildora);
-  font-size: var(--texto-sm);
-  font-weight: 600;
-  color: var(--color-texto-suave);
-  cursor: pointer;
-  transition:
-    background-color var(--dur-rapida) ease,
-    color var(--dur-rapida) ease;
-}
-
-.opcionMarca input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.opcionMarca:has(:checked) {
-  background: var(--color-superficie);
-  color: var(--color-acento-texto);
-  box-shadow: var(--sombra-1);
-}
-
-.opcionMarca:has(:focus-visible) {
-  outline: 3px solid var(--color-foco);
-  outline-offset: 2px;
-}
-
 /* Mientras se descarga la guía se reserva su espacio */
 .reservaGuia {
   min-height: 100vh;

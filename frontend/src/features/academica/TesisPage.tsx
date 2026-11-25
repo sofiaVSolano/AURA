@@ -239,7 +239,7 @@ export function TesisPage() {
               </p>
             )}
             <p className={estilos.privacidad}>
-              Tu documento se envía a un servicio de IA (OpenAI) solo para revisarlo; AURA no lo guarda. Quita datos personales
+              Tu documento se envía a un servicio de IA (Anthropic, Claude) solo para revisarlo; AURA no lo guarda. Quita datos personales
               sensibles si los tiene. La IA puede equivocarse: contrasta su lectura con tu director o directora.
             </p>
           </div>

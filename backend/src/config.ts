@@ -40,6 +40,7 @@ export function leerConfig(env: NodeJS.ProcessEnv = process.env): Config {
     diasSesion: entero(env.DIAS_SESION, 14),
     limiteRegistro: entero(env.LIMITE_REGISTRO, 5),
     rutaContenido: resolve(raiz, env.RUTA_CONTENIDO ?? '../content'),
-    claveIa: (env.GPT_API_KEY ?? env['GPT_API_KEY '])?.trim() || undefined,
+    // Se acepta también «CLAUDE_API_KEY =» (con espacio antes del igual), como suele quedar al editar el .env a mano
+    claveIa: (env.CLAUDE_API_KEY ?? env['CLAUDE_API_KEY '])?.trim() || undefined,
   };
 }

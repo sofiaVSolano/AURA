@@ -42,3 +42,10 @@ frontend/tests/e2e/.salida/
 frontend/.env.servidor
 backend/.env
 backend/datos/
+
+# Pistas de música de fondo (descargadas, 30–100 MB): se usan al renderizar, no se versionan
+content/videos/**/pista/
+content/videos/emocional/estoy-agotado/cansado-de-corregir/assets/Slow-Piano-*.mp3
+
+# Videos de referencia de estilo
+EstiloAnimación/*.mp4

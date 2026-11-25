@@ -56,7 +56,9 @@ function responderError(res, estado, mensaje) {
 /** Reenvío al backend. X-Forwarded-For se reescribe con la IP real (no se confía en la del cliente). */
 function reenviar(req, res, ruta) {
   const cabeceras = { ...req.headers, host: API.host, 'x-forwarded-for': req.socket.remoteAddress ?? '', 'x-forwarded-proto': HTTPS_PUBLICO ? 'https' : 'http' };
-  const p = request({ hostname: API.hostname, port: API.port, path: ruta, method: req.method, headers: cabeceras, timeout: 15_000 }, (r) => {
+  // Las evaluaciones con IA pueden tardar (una tesis completa, hasta ~90 s); el resto responde rápido
+  const espera = ruta.includes('/api/ia/') ? 150_000 : 15_000;
+  const p = request({ hostname: API.hostname, port: API.port, path: ruta, method: req.method, headers: cabeceras, timeout: espera }, (r) => {
     res.writeHead(r.statusCode ?? 502, r.headers);
     r.pipe(res);
   });
@@ -103,7 +105,8 @@ function servirArchivo(req, res, archivo, info, esIndice) {
   createReadStream(archivo).pipe(res);
 }
 
-const servidor = createServer({ requestTimeout: 30_000 }, (req, res) => {
+// 120 s para recibir la petición completa: una tesis de 8 MB con conexión lenta
+const servidor = createServer({ requestTimeout: 120_000 }, (req, res) => {
   let ruta;
   try {
     ruta = decodeURIComponent(new URL(req.url ?? '/', 'http://x').pathname);

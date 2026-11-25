@@ -11,7 +11,7 @@ import {
   type IdDecoracion,
   type PreferenciasAvatar,
 } from '../dominio/modelo.ts';
-import { BOCAS, CABEZA, CUERPOS, DETALLE_FORMA, ESTRELLA, HOJA, OJOS } from './formas.ts';
+import { BOCAS, CABEZA, CEJAS, CUERPOS, DETALLE_FORMA, ESTRELLA, HOJA, OJOS } from './formas.ts';
 import estilos from './Personaje.module.css';
 
 interface PersonajeProps {
@@ -240,6 +240,16 @@ export function Personaje({
                 <path d={ojos.d} fill="none" stroke={`hsl(${hp + 10} 45% 22%)`} strokeWidth="2.6" strokeLinecap="round" />
               )}
             </g>
+            {/* Cejas (Transformación) */}
+            <path
+              d={CEJAS[p.expresion]}
+              fill="none"
+              stroke={`hsl(${hp + 10} 45% 22%)`}
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              style={{ opacity: i >= 3 ? 1 : 0 }}
+              className={estilos.capa}
+            />
             <path
               d={BOCAS[p.expresion]}
               fill={p.expresion === 'alegre' || p.expresion === 'curiosa' ? `hsl(${hp + 10} 45% 24%)` : 'none'}
@@ -252,6 +262,9 @@ export function Personaje({
             <g style={{ opacity: i >= 3 ? 0.55 : 0 }} className={estilos.capa}>
               <ellipse cx="76" cy="106" rx="6" ry="3.5" fill={`hsl(${hc} 85% 74%)`} />
               <ellipse cx="124" cy="106" rx="6" ry="3.5" fill={`hsl(${hc} 85% 74%)`} />
+              {p.expresion === 'tierna' && (
+                <path d="M72 104 l-1.5 4 M76 104 l-1.5 4 M80 104 l-1.5 4 M120 104 l-1.5 4 M124 104 l-1.5 4 M128 104 l-1.5 4" stroke={`hsl(${hc} 70% 52%)`} strokeWidth="1.2" strokeLinecap="round" />
+              )}
             </g>
           </g>
         </g>

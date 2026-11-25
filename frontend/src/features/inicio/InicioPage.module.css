@@ -894,6 +894,22 @@
   transform: translate3d(0, calc((1 - var(--entrada)) * 60%), 0);
 }
 
+/* Firma de la autora, bajo el AURA grande */
+.autora {
+  width: 100%;
+  max-width: 92rem;
+  margin: var(--espacio-2) auto var(--espacio-4);
+  font-family: var(--fuente-display);
+  font-size: var(--texto-lg);
+  text-align: center;
+  color: var(--color-texto-suave);
+}
+
+.autora strong {
+  font-weight: 600;
+  color: var(--color-texto);
+}
+
 .legal {
   width: 100%;
   max-width: 92rem;

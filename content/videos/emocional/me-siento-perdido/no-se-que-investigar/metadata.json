@@ -5,21 +5,34 @@
   "categoria": "me-siento-perdido",
   "subtema": "no-se-que-investigar",
   "titulo": "No sé qué investigar",
-  "descripcion": "Lo que te genera curiosidad, o incluso incomodidad, puede ser una buena pista para tu tema.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Lo que te genera curiosidad, o incluso incomodidad, puede ser una buena pista para tu tema. Once consejos para encontrarlo.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 216,
+  "duracionSegundos": 216,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "tema de investigación",
+    "curiosidad",
+    "incomodidad",
+    "semilleros",
+    "elegir tema"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Javier)",
+    "Música: guitarra acústica instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

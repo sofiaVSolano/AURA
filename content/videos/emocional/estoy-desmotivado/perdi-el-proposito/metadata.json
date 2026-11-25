@@ -5,21 +5,33 @@
   "categoria": "estoy-desmotivado",
   "subtema": "perdi-el-proposito",
   "titulo": "Perdí el propósito",
-  "descripcion": "Recordar por qué empezaste, o descubrir un motivo nuevo, puede reconectarte con tu proyecto.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Recordar por qué empezaste, o descubrir un motivo nuevo, puede reconectarte con tu proyecto. Once consejos para recuperar el sentido.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 266,
+  "duracionSegundos": 266,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
-  "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "etiquetas": [
+    "propósito",
+    "sentido",
+    "motivación",
+    "porqué"
+  ],
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Juan Carlos)",
+    "Música: arpa relajante instrumental (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-23"
 }

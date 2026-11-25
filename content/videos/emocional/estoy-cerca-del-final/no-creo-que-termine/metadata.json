@@ -5,21 +5,28 @@
   "categoria": "estoy-cerca-del-final",
   "subtema": "no-creo-que-termine",
   "titulo": "No creo que ya termine",
-  "descripcion": "Llegar al final puede sentirse irreal; mira cuánto has recorrido para llegar hasta aquí.",
-  "estado": "idea",
-  "duracionObjetivoSegundos": 45,
-  "duracionSegundos": null,
+  "descripcion": "Llegar al final puede sentirse irreal; mira cuánto has recorrido para llegar hasta aquí. Once consejos para cerrar tu proyecto con orden y darte permiso de terminar.",
+  "estado": "publicado",
+  "duracionObjetivoSegundos": 189,
+  "duracionSegundos": 189,
   "archivos": {
-    "video": null,
+    "video": "video.mp4",
     "videoAlterno": null,
-    "poster": null,
-    "subtitulos": {},
-    "transcripcion": null
+    "poster": "poster.webp",
+    "subtitulos": {
+      "es": "subtitulos.es.vtt"
+    },
+    "transcripcion": "transcripcion.es.md"
   },
   "perfiles": [
     "*"
   ],
   "etiquetas": [],
-  "creditos": [],
-  "actualizado": "2026-11-20"
+  "creditos": [
+    "Guion y animación: equipo AURA (HyperFrames)",
+    "Voz: ElevenLabs (Superior)",
+    "Música: pista de «Estoy cerca del final» (sin copyright)",
+    "Efectos: Freesound CC0 y biblioteca HyperFrames"
+  ],
+  "actualizado": "2026-11-24"
 }

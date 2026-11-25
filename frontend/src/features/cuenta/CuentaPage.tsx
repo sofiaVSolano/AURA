@@ -191,14 +191,23 @@ function MiCuenta() {
   const [confirmar, setConfirmar] = useState(false);
   const [clave, setClave] = useState('');
   const [error, setError] = useState<string>();
-  const [ocupado, setOcupado] = useState<'salir' | 'exportar' | 'borrar' | null>(null);
+  const [ocupado, setOcupado] = useState<'salir' | 'exportar' | 'exportarJson' | 'borrar' | null>(null);
 
-  const exportar = async () => {
-    setOcupado('exportar');
+  // Por defecto, un documento legible (se abre en el navegador y se puede imprimir o
+  // guardar como PDF). El JSON queda como formato técnico para llevar los datos a otro servicio.
+  const exportar = async (formato: 'documento' | 'json') => {
+    setOcupado(formato === 'json' ? 'exportarJson' : 'exportar');
     try {
       const datos = await api.exportar();
-      const url = URL.createObjectURL(new Blob([JSON.stringify(datos, null, 2)], { type: 'application/json' }));
-      const a = Object.assign(document.createElement('a'), { href: url, download: 'mis-datos-aura.json' });
+      let contenido: string;
+      if (formato === 'json') contenido = JSON.stringify(datos, null, 2);
+      else {
+        const [{ informeHtml }, { nombresParaInforme }] = await Promise.all([import('./informeDatos.ts'), import('./nombresInforme.ts')]);
+        contenido = informeHtml(datos, nombresParaInforme(datos));
+      }
+      const tipo = formato === 'json' ? 'application/json' : 'text/html;charset=utf-8';
+      const url = URL.createObjectURL(new Blob([contenido], { type: tipo }));
+      const a = Object.assign(document.createElement('a'), { href: url, download: formato === 'json' ? 'mis-datos-aura.json' : 'mis-datos-aura.html' });
       a.click();
       URL.revokeObjectURL(url);
     } catch (e) {
@@ -215,7 +224,7 @@ function MiCuenta() {
       <p className={estilos.nota}>Tu AURA, tus guardados, tus aprendizajes y tus avances se guardan en tu cuenta y te siguen en cualquier dispositivo.</p>
       {error && <EstadoVista tipo="error" compacto titulo={error} />}
       <div className={estilos.acciones}>
-        <Boton variante="secundario" cargando={ocupado === 'exportar'} onClick={() => void exportar()}>
+        <Boton variante="secundario" cargando={ocupado === 'exportar'} onClick={() => void exportar('documento')}>
           Descargar mis datos
         </Boton>
         <Boton
@@ -238,6 +247,12 @@ function MiCuenta() {
           Eliminar mi cuenta
         </Boton>
       </div>
+      <p className={estilos.nota}>
+        Tus datos se descargan como un documento que puedes abrir en el navegador, imprimir o guardar como PDF.{' '}
+        <button type="button" className={estilos.enlace} onClick={() => void exportar('json')} disabled={ocupado !== null}>
+          {ocupado === 'exportarJson' ? 'Preparando…' : 'Descargar en formato técnico (JSON)'}
+        </button>
+      </p>
       <Modal
         abierto={confirmar}
         onCerrar={() => setConfirmar(false)}
