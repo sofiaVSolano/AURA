@@ -226,7 +226,9 @@ function Cosmos({
     void arribaPortada;
     const salida = enPortada ? 0 : 1;
     const recorrido = Math.max(1, m.caminoAlto - innerHeight);
-    const etapa = limitar((-arribaCamino / recorrido) * 4.4 - 0.2, 0, 4);
+    // En la portada tu AURA es siempre la esfera inicial: se transforma solo a lo largo del
+    // camino (sin camino, el recorrido mediría 1px y saltaría a la última etapa de golpe)
+    const etapa = enPortada ? 0 : limitar((-arribaCamino / recorrido) * 4.4 - 0.2, 0, 4);
     const e = esfera.current;
     colocarEsfera(e, salida, m.huecos);
     e.etapa = etapa;
